@@ -1532,7 +1532,6 @@ const createDailyGrindExplorationSteps = (lessonId: string): Lesson["content"] =
               allow="fullscreen"
             ></iframe>
           </div>
-          <a class="canva-credit-link" href="https://www.canva.com/design/DAHN48np3Ro/4PH1SjOLXxIzXdLvpU-0uw/view?utm_content=DAHN48np3Ro&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">WITH A NEW EPILOGUE</a>
         </div>
 
         <section class="callout scripture-reflection">
