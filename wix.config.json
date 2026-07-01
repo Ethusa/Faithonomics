@@ -1,0 +1,39 @@
+{
+  "$schema": "https://dev.wix.com/wix-cli/schemas/wix-config.schema.json",
+  "appName": "Secure Classroom",
+  "appDescription": "Wix-connected online classroom with student portal, protected backend operations, CMS-backed course data, and lecturer/admin dashboards.",
+  "extensions": {
+    "dashboardPages": [
+      {
+        "title": "Classroom",
+        "route": "classroom-admin",
+        "entry": "./src/extensions/dashboard/pages/classroom-admin/page.tsx"
+      }
+    ],
+    "backendEvents": [
+      {
+        "name": "course-order-approved",
+        "event": "wix.ecom.orders.onOrderApproved",
+        "entry": "./src/extensions/backend/events/order-approved/handler.ts"
+      }
+    ],
+    "backendApis": [
+      "./src/pages/api/me.ts",
+      "./src/pages/api/enrolments.ts",
+      "./src/pages/api/progress.ts",
+      "./src/pages/api/submissions.ts",
+      "./src/pages/api/ai-feedback.ts",
+      "./src/pages/api/reports.ts",
+      "./src/pages/api/certificates/[enrolmentId].ts"
+    ],
+    "dataCollections": "./src/wix/cmsCollections.ts"
+  },
+  "requiredWixApps": [
+    "members-area",
+    "cms",
+    "contacts",
+    "pricing-plans-or-stores",
+    "media-manager",
+    "automations"
+  ]
+}

@@ -1,0 +1,86 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ] || [ -f npm-shrinkwrap.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Configure Pages base path
+        run: |
+          repo_name="${GITHUB_REPOSITORY#*/}"
+          owner_name="$(printf '%s' "$GITHUB_REPOSITORY_OWNER" | tr '[:upper:]' '[:lower:]')"
+          repo_name_lower="$(printf '%s' "$repo_name" | tr '[:upper:]' '[:lower:]')"
+
+          if [ "$repo_name_lower" = "$owner_name.github.io" ]; then
+            echo "VITE_BASE_PATH=/" >> "$GITHUB_ENV"
+          else
+            echo "VITE_BASE_PATH=/$repo_name/" >> "$GITHUB_ENV"
+          fi
+
+      - name: Configure external data basis
+        env:
+          SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          SUPABASE_TABLE: ${{ vars.VITE_SUPABASE_TABLE }}
+        run: |
+          if [ -n "$SUPABASE_URL" ] && [ -n "$SUPABASE_ANON_KEY" ]; then
+            echo "VITE_BACKEND_PROVIDER=supabase" >> "$GITHUB_ENV"
+            echo "VITE_SUPABASE_URL=$SUPABASE_URL" >> "$GITHUB_ENV"
+            echo "VITE_SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" >> "$GITHUB_ENV"
+            echo "VITE_SUPABASE_TABLE=${SUPABASE_TABLE:-classroom_records}" >> "$GITHUB_ENV"
+          else
+            echo "VITE_BACKEND_PROVIDER=mock" >> "$GITHUB_ENV"
+          fi
+
+      - name: Typecheck and build
+        run: npm run build
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

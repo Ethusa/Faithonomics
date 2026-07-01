@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Session 3 Strategic Alignment compass map</title>
+  <desc id="desc">Papercraft strategy map with compass, glowing cross marker, route, metrics and scales.</desc>
+  <defs>
+    <linearGradient id="paper" x1="0" x2="1"><stop stop-color="#f7f3e8"/><stop offset="1" stop-color="#e8d8b8"/></linearGradient>
+    <linearGradient id="gold" x1="0" x2="1"><stop stop-color="#b99245"/><stop offset="1" stop-color="#d99a3d"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="18" stdDeviation="14" flood-color="#17130f" flood-opacity=".28"/></filter>
+    <radialGradient id="glow"><stop stop-color="#f7f3e8"/><stop offset=".35" stop-color="#d99a3d"/><stop offset="1" stop-color="#d99a3d" stop-opacity="0"/></radialGradient>
+    <pattern id="fibres" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M10 18h30M16 38h24" stroke="#9a6b3f" stroke-opacity=".08"/></pattern>
+  </defs>
+  <rect width="1600" height="900" fill="url(#paper)"/><rect width="1600" height="900" fill="url(#fibres)"/>
+  <rect y="655" width="1600" height="245" fill="#5b3a24"/>
+  <g filter="url(#shadow)">
+    <path d="M330 240 1092 176l306 250-160 310-820 66-258-278z" fill="#e8d8b8"/>
+    <path d="M332 240 488 372l122-142 158 136 114-146 154 132 56-176" fill="none" stroke="#9a6b3f" stroke-opacity=".25" stroke-width="3"/>
+    <path d="M430 680c128-100 256-130 430-96 162 31 280-22 398-144" fill="none" stroke="#234638" stroke-width="54" stroke-linecap="round"/>
+    <path d="M452 670c120-76 246-96 392-68 162 31 272-18 390-134" fill="none" stroke="#b99245" stroke-width="20" stroke-linecap="round" stroke-dasharray="10 30"/>
+    <path d="M450 300c80 50 146 58 210 24 84-44 160-36 238 20" fill="none" stroke="#4f6b3a" stroke-width="5" opacity=".4"/>
+    <path d="M520 445c54-42 110-44 170-6s118 38 176-6" fill="none" stroke="#4f6b3a" stroke-width="5" opacity=".4"/>
+  </g>
+  <g filter="url(#shadow)">
+    <circle cx="238" cy="690" r="118" fill="#b99245"/>
+    <circle cx="238" cy="690" r="90" fill="#234638"/>
+    <path d="M238 600 268 690 238 780 208 690z" fill="#f7f3e8"/>
+    <path d="M148 690 238 660 328 690 238 720z" fill="#d99a3d"/>
+    <circle cx="238" cy="690" r="16" fill="#b99245"/>
+  </g>
+  <g filter="url(#shadow)">
+    <circle cx="836" cy="384" r="124" fill="url(#glow)"/>
+    <rect x="827" y="240" width="18" height="252" fill="#d99a3d"/>
+    <rect x="710" y="358" width="252" height="18" fill="#d99a3d"/>
+    <circle cx="836" cy="367" r="24" fill="#b99245"/>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1110" y="460" width="54" height="150" fill="#234638"/><rect x="1186" y="420" width="54" height="190" fill="#234638"/><rect x="1262" y="360" width="54" height="250" fill="#234638"/>
+    <path d="M1100 382l80-66 56 48 110-128 68 72" fill="none" stroke="#b99245" stroke-width="18" stroke-linecap="round"/>
+    <path d="M1392 298l78-90 18 116z" fill="#b99245"/>
+  </g>
+  <g filter="url(#shadow)">
+    <path d="M1325 568h172" stroke="#17130f" stroke-width="9"/><path d="M1410 420v250" stroke="#17130f" stroke-width="12"/><circle cx="1410" cy="420" r="18" fill="#b99245"/>
+    <path d="M1338 578l-52 100h104zM1484 578l-52 100h104z" fill="none" stroke="#b99245" stroke-width="10"/>
+  </g>
+  <g filter="url(#shadow)">
+    <circle cx="1105" cy="700" r="54" fill="#b99245"/><path d="M1080 700h50M1105 675v50" stroke="#f7f3e8" stroke-width="10"/>
+    <circle cx="1230" cy="700" r="54" fill="#b99245"/><path d="M1206 700h48" stroke="#f7f3e8" stroke-width="10"/>
+    <circle cx="1355" cy="700" r="54" fill="#b99245"/><path d="M1332 684h46M1332 704h46M1332 724h46" stroke="#f7f3e8" stroke-width="8"/>
+    <path d="M1158 700h20M1284 700h20" stroke="#b99245" stroke-width="10"/>
+  </g>
+</svg>

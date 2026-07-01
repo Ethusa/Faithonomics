@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Session 2 Competing Paradigms split road</title>
+  <desc id="desc">A divided papercraft landscape, grey decline on the left and green-gold renewal through an open door on the right.</desc>
+  <defs>
+    <linearGradient id="paper" x1="0" x2="1"><stop stop-color="#f7f3e8"/><stop offset="1" stop-color="#e8d8b8"/></linearGradient>
+    <linearGradient id="gold" x1="0" x2="1"><stop stop-color="#b99245"/><stop offset="1" stop-color="#d99a3d"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="18" stdDeviation="15" flood-color="#17130f" flood-opacity=".28"/></filter>
+    <pattern id="fibres" width="52" height="52" patternUnits="userSpaceOnUse"><path d="M8 18h34M14 40h26" stroke="#9a6b3f" stroke-opacity=".08"/></pattern>
+  </defs>
+  <rect width="1600" height="900" fill="url(#paper)"/><rect width="1600" height="900" fill="url(#fibres)"/>
+  <path d="M0 430c180-84 294-65 450-10 190 67 316 72 470 0v480H0z" fill="#8f887c"/>
+  <path d="M0 520c210-70 398-58 565 20s278 60 395 6v354H0z" fill="#5e5d56"/>
+  <path d="M790 450c180-110 372-130 810-6v456H790z" fill="#234638"/>
+  <path d="M872 545c150-92 360-108 728-30v385H872z" fill="#4f6b3a"/>
+  <path d="M0 0h800v900H0z" fill="#17130f" opacity=".12"/>
+  <path d="M42 116 180 170 274 150l106 64 86-44 114 82" fill="none" stroke="#5b3a24" stroke-width="24" opacity=".45"/>
+  <path d="M78 208h70l30 38 36-30 40 64 35-42 54 68 35-34" fill="none" stroke="#5b3a24" stroke-width="14" opacity=".52"/>
+  <g filter="url(#shadow)" opacity=".72">
+    <rect x="155" y="420" width="110" height="185" fill="#5e5d56"/><rect x="290" y="372" width="82" height="232" fill="#6d6b61"/><rect x="398" y="442" width="75" height="162" fill="#777368"/>
+    <path d="M170 640c156-100 292-124 444-74" fill="none" stroke="#e8d8b8" stroke-width="42" stroke-linecap="round"/>
+    <path d="M42 815c72-80 176-120 312-122" stroke="#17130f" stroke-width="22" opacity=".24"/>
+    <path d="M28 760h156M98 732h92M250 706h120M410 720h84" stroke="#e8d8b8" stroke-width="10" opacity=".6"/>
+  </g>
+  <g filter="url(#shadow)">
+    <path d="M816 696c104-148 232-218 390-210" fill="none" stroke="#b99245" stroke-width="66" stroke-linecap="round"/>
+    <path d="M858 682c90-112 204-166 340-160" fill="none" stroke="#f7f3e8" stroke-width="18" stroke-linecap="round"/>
+    <rect x="968" y="336" width="190" height="250" rx="4" fill="url(#gold)"/>
+    <rect x="1008" y="370" width="118" height="186" rx="4" fill="#f7f3e8"/>
+    <path d="M1130 348v222l74-20V330z" fill="#9a6b3f"/>
+    <path d="M1050 420c60-72 124-118 202-138" stroke="#f7f3e8" stroke-width="5" opacity=".55"/>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1330" y="335" width="58" height="230" fill="#b99245"/><rect x="1408" y="286" width="66" height="279" fill="#d99a3d"/><rect x="1280" y="405" width="54" height="160" fill="#9a6b3f"/>
+    <path d="M1235 495l210-210 52 52 42-152 38 170-58-58-226 226z" fill="url(#gold)"/>
+  </g>
+  <g filter="url(#shadow)">
+    <path d="M1262 672h170" stroke="#b99245" stroke-width="10"/><circle cx="1262" cy="672" r="18" fill="#b99245"/><circle cx="1432" cy="672" r="18" fill="#b99245"/><path d="M1347 540v230" stroke="#b99245" stroke-width="12"/><path d="M1270 680l-48 92h96zM1424 680l-48 92h96z" fill="none" stroke="#b99245" stroke-width="10"/>
+  </g>
+  <path d="M780 390v350" stroke="#9a6b3f" stroke-width="8"/><path d="M724 450h112l-56-58z" fill="#9a6b3f"/>
+</svg>
