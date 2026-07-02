@@ -1,5 +1,7 @@
 -- Faithonomics LMS external data basis for GitHub Pages.
 -- Run this in the Supabase SQL editor for the project you want to use.
+-- Legacy note: the maintained setup path is now supabase/schema.sql plus
+-- the generated supabase/seed.sql file from npm run db:seed:sql.
 
 create extension if not exists pgcrypto;
 

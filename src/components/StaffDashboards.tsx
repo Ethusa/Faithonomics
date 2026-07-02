@@ -1,5 +1,7 @@
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { courses, identities, lessons, modules, progress, submissions } from "../data/sampleData";
+import type { ReportRow } from "../domain/types";
+import { repository } from "../services/singleton";
 import { Download, Users } from "./Icons";
 
 const lecturerTools = [
@@ -218,7 +220,7 @@ export const AdminDashboard = () => {
 };
 
 export const Reports = () => {
-  const rows = useMemo(() => {
+  const buildFallbackRows = (): ReportRow[] => {
     const firstCourse = courses[0];
     if (!firstCourse) {
       return [];
@@ -227,10 +229,35 @@ export const Reports = () => {
     return lessons
       .filter((lesson) => lesson.courseId === firstCourse.id)
       .map((lesson) => ({
-        lesson,
-        module: courseModules.find((module) => module.id === lesson.moduleId),
-        status: progress.find((item) => item.lessonId === lesson.id)?.status ?? "notStarted",
+        learnerName: identities.learner.displayName,
+        courseTitle: firstCourse.title,
+        moduleTitle: courseModules.find((module) => module.id === lesson.moduleId)?.title ?? "Unassigned",
+        lessonTitle: lesson.title,
+        completionStatus: progress.find((item) => item.lessonId === lesson.id)?.status ?? "notStarted",
+        score: null,
+        lastActivityAt: progress.find((item) => item.lessonId === lesson.id)?.lastActivityAt ?? null,
       }));
+  };
+  const [rows, setRows] = useState<ReportRow[]>(buildFallbackRows);
+
+  useEffect(() => {
+    let active = true;
+    repository
+      .buildReportRows(courses[0]?.id)
+      .then((records) => {
+        if (active) {
+          setRows(records);
+        }
+      })
+      .catch(() => {
+        if (active) {
+          setRows(buildFallbackRows());
+        }
+      });
+
+    return () => {
+      active = false;
+    };
   }, []);
 
   return (
@@ -249,11 +276,11 @@ export const Reports = () => {
           <span>Status</span>
         </div>
         {rows.map((row) => (
-          <div role="row" className="report-row" key={row.lesson.id}>
-            <span>{identities.learner.displayName}</span>
-            <span>{row.module?.title ?? "Unassigned"}</span>
-            <span>{row.lesson.title}</span>
-            <span>{row.status}</span>
+          <div role="row" className="report-row" key={`${row.learnerName}-${row.lessonTitle}`}>
+            <span>{row.learnerName}</span>
+            <span>{row.moduleTitle}</span>
+            <span>{row.lessonTitle}</span>
+            <span>{row.completionStatus}</span>
           </div>
         ))}
       </div>

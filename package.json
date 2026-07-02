@@ -9,7 +9,8 @@
     "preview": "vite preview --host 127.0.0.1",
     "test": "vitest run --config vitest.config.ts",
     "test:watch": "vitest --config vitest.config.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "db:seed:sql": "node scripts/export-supabase-seed.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.4",

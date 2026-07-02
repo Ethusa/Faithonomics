@@ -29,6 +29,7 @@ import type {
   LessonProgress,
   Question,
 } from "../domain/types";
+import { repository } from "../services/singleton";
 import {
   BookOpen,
   ChevronLeft,
@@ -2142,7 +2143,9 @@ export const LessonView = ({
   const activeLevel = activeLevelId ? allCourseModules.find((module) => module.id === activeLevelId) ?? null : null;
   const lesson = courseLessons.find((item) => item.id === lessonId) ?? courseLessons[0];
   const enrolment = getCourseEnrolment(course.id, identity.memberId);
-  const courseProgress = enrolment ? progress.filter((item) => item.enrolmentId === enrolment.id) : [];
+  const [courseProgress, setCourseProgress] = useState<LessonProgress[]>(
+    () => (enrolment ? progress.filter((item) => item.enrolmentId === enrolment.id) : []),
+  );
   const [activityRecords, setActivityRecords] = useState<ActivityCompletion[]>(seededActivityCompletions);
   const [discussionPostRecords, setDiscussionPostRecords] = useState<DiscussionPost[]>(seededDiscussionPosts);
   const [discussionReplyRecords, setDiscussionReplyRecords] = useState<DiscussionReply[]>(seededDiscussionReplies);
@@ -2162,6 +2165,100 @@ export const LessonView = ({
     setActiveContentIndex(0);
     setOpenLinkedActivityId(null);
   }, [lesson?.id]);
+
+  useEffect(() => {
+    if (!enrolment) {
+      setCourseProgress([]);
+      return;
+    }
+
+    let active = true;
+    repository
+      .listProgress(enrolment.id)
+      .then((records) => {
+        if (active) {
+          setCourseProgress(records);
+        }
+      })
+      .catch(() => {
+        if (active) {
+          setCourseProgress(progress.filter((item) => item.enrolmentId === enrolment.id));
+        }
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [enrolment?.id]);
+
+  useEffect(() => {
+    if (!lesson) {
+      return undefined;
+    }
+
+    let active = true;
+    const discussionActivities = activities.filter(
+      (activity) => activity.lessonId === lesson.id && activity.kind === "discussion",
+    );
+
+    Promise.all([
+      repository.listActivityCompletions(identity.memberId, lesson.id),
+      Promise.all(discussionActivities.map((activity) => repository.listDiscussionPosts(activity.id))),
+    ])
+      .then(async ([completionRecords, postGroups]) => {
+        if (!active) {
+          return;
+        }
+
+        const postRecords = postGroups.flat();
+        const replyGroups = await Promise.all(postRecords.map((post) => repository.listDiscussionReplies(post.id)));
+        if (!active) {
+          return;
+        }
+
+        setActivityRecords((current) => [
+          ...current.filter(
+            (record) =>
+              record.lessonId !== lesson.id ||
+              record.memberId !== identity.memberId,
+          ),
+          ...completionRecords,
+        ]);
+        setDiscussionPostRecords((current) => [
+          ...current.filter((post) => !discussionActivities.some((activity) => activity.id === post.activityId)),
+          ...postRecords,
+        ]);
+        setDiscussionReplyRecords((current) => [
+          ...current.filter((reply) => !postRecords.some((post) => post.id === reply.postId)),
+          ...replyGroups.flat(),
+        ]);
+      })
+      .catch(() => undefined);
+
+    return () => {
+      active = false;
+    };
+  }, [identity.memberId, lesson?.id]);
+
+  useEffect(() => {
+    if (!lesson) {
+      return;
+    }
+
+    const completedRemoteContentIds = activityRecords
+      .filter(
+        (record) =>
+          record.memberId === identity.memberId &&
+          record.lessonId === lesson.id &&
+          record.completed &&
+          lesson.content.some((content) => content.id === record.activityId),
+      )
+      .map((record) => record.activityId);
+
+    if (completedRemoteContentIds.length > 0) {
+      setCompletedContentIds((current) => Array.from(new Set([...current, ...completedRemoteContentIds])));
+    }
+  }, [activityRecords, identity.memberId, lesson]);
 
   const localProgress: LessonProgress[] = [...courseProgress];
   for (const completedLessonId of completedLessonIds) {
@@ -2196,16 +2293,16 @@ export const LessonView = ({
 
   const markActivityComplete = useCallback(
     (activity: Activity, score = activity.maxScore, maxScore = activity.maxScore) => {
+      const nextRecord: ActivityCompletion = {
+        activityId: activity.id,
+        memberId: identity.memberId,
+        lessonId: activity.lessonId,
+        completed: true,
+        score,
+        maxScore,
+        completedAt: new Date().toISOString(),
+      };
       setActivityRecords((current) => {
-        const nextRecord: ActivityCompletion = {
-          activityId: activity.id,
-          memberId: identity.memberId,
-          lessonId: activity.lessonId,
-          completed: true,
-          score,
-          maxScore,
-          completedAt: new Date().toISOString(),
-        };
         const existingIndex = current.findIndex(
           (record) => record.activityId === activity.id && record.memberId === identity.memberId,
         );
@@ -2214,8 +2311,37 @@ export const LessonView = ({
         }
         return current.map((record, index) => (index === existingIndex ? nextRecord : record));
       });
+      void repository.saveActivityCompletion(nextRecord).catch(() => undefined);
     },
     [identity.memberId],
+  );
+
+  const saveLessonCompletion = useCallback(
+    (completedLesson: Lesson) => {
+      if (enrolment) {
+        const completedAt = new Date().toISOString();
+        const nextProgress: LessonProgress = {
+          id: `progress-${enrolment.id}-${completedLesson.id}`,
+          enrolmentId: enrolment.id,
+          courseId: course.id,
+          lessonId: completedLesson.id,
+          memberId: identity.memberId,
+          status: "completed",
+          percent: 100,
+          lastActivityAt: completedAt,
+          completedAt,
+        };
+
+        setCourseProgress((current) => [
+          ...current.filter((item) => item.id !== nextProgress.id && item.lessonId !== completedLesson.id),
+          nextProgress,
+        ]);
+        void repository.saveProgress(nextProgress).catch(() => undefined);
+      }
+
+      onCompleteLesson(completedLesson.id);
+    },
+    [course.id, enrolment, identity.memberId, onCompleteLesson],
   );
 
   const markContentComplete = useCallback(
@@ -2225,11 +2351,32 @@ export const LessonView = ({
       const isFinalDailyGrindStep =
         lesson?.id === "level-1-session-1-the-daily-grind" &&
         contentIndex >= 0 &&
-        contentIndex === contentCount - 1;
+          contentIndex === contentCount - 1;
 
       setCompletedContentIds((current) => (current.includes(contentId) ? current : [...current, contentId]));
+      if (lesson) {
+        const nextRecord: ActivityCompletion = {
+          activityId: contentId,
+          memberId: identity.memberId,
+          lessonId: lesson.id,
+          completed: true,
+          score: 5,
+          maxScore: 5,
+          completedAt: new Date().toISOString(),
+        };
+        setActivityRecords((current) => {
+          const existingIndex = current.findIndex(
+            (record) => record.activityId === contentId && record.memberId === identity.memberId,
+          );
+          if (existingIndex === -1) {
+            return [...current, nextRecord];
+          }
+          return current.map((record, index) => (index === existingIndex ? nextRecord : record));
+        });
+        void repository.saveActivityCompletion(nextRecord).catch(() => undefined);
+      }
       if (isFinalDailyGrindStep && lesson) {
-        onCompleteLesson(lesson.id);
+        saveLessonCompletion(lesson);
         onReturnToDashboard();
         return;
       }
@@ -2237,39 +2384,37 @@ export const LessonView = ({
         setActiveContentIndex(contentIndex + 1);
       }
     },
-    [lesson, onCompleteLesson, onReturnToDashboard],
+    [identity.memberId, lesson, onReturnToDashboard, saveLessonCompletion],
   );
 
   const addDiscussionPost = useCallback(
     (activity: Activity, body: string) => {
-      setDiscussionPostRecords((current) => [
-        ...current,
-        {
-          id: `post-${activity.id}-${Date.now()}`,
-          activityId: activity.id,
-          memberId: identity.memberId,
-          authorName: identity.displayName,
-          body,
-          createdAt: new Date().toISOString(),
-        },
-      ]);
+      const post: DiscussionPost = {
+        id: `post-${activity.id}-${Date.now()}`,
+        activityId: activity.id,
+        memberId: identity.memberId,
+        authorName: identity.displayName,
+        body,
+        createdAt: new Date().toISOString(),
+      };
+      setDiscussionPostRecords((current) => [...current, post]);
+      void repository.saveDiscussionPost(post).catch(() => undefined);
     },
     [identity.displayName, identity.memberId],
   );
 
   const addDiscussionReply = useCallback(
     (post: DiscussionPost, body: string) => {
-      setDiscussionReplyRecords((current) => [
-        ...current,
-        {
-          id: `reply-${post.id}-${Date.now()}`,
-          postId: post.id,
-          memberId: identity.memberId,
-          authorName: identity.displayName,
-          body,
-          createdAt: new Date().toISOString(),
-        },
-      ]);
+      const reply: DiscussionReply = {
+        id: `reply-${post.id}-${Date.now()}`,
+        postId: post.id,
+        memberId: identity.memberId,
+        authorName: identity.displayName,
+        body,
+        createdAt: new Date().toISOString(),
+      };
+      setDiscussionReplyRecords((current) => [...current, reply]);
+      void repository.saveDiscussionReply(reply).catch(() => undefined);
     },
     [identity.displayName, identity.memberId],
   );
@@ -2311,7 +2456,7 @@ export const LessonView = ({
     if (!gate.allowed) {
       return;
     }
-    onCompleteLesson(lesson.id);
+    saveLessonCompletion(lesson);
   };
 
   const renderContentBlock = (content: LessonContentBlock) => {

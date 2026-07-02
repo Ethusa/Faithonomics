@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { courses, enrolments, lessons, modules, progress } from "../data/sampleData";
 import {
   calculateCompletionPercent,
@@ -7,6 +8,7 @@ import {
   sortLessons,
 } from "../domain/progress";
 import type { Course, CourseModule, Enrolment, LearnerIdentity, Lesson, LessonProgress } from "../domain/types";
+import { repository } from "../services/singleton";
 import { Lock, PlayCircle } from "./Icons";
 
 const getCourseEnrolment = (courseId: string, memberId: string): Enrolment | null =>
@@ -17,12 +19,14 @@ const CourseCard = ({
   activeLevel,
   identity,
   completedLessonIds,
+  progressRecords,
   onOpenLesson,
 }: {
   course: Course;
   activeLevel: CourseModule | null;
   identity: LearnerIdentity;
   completedLessonIds: ReadonlySet<string>;
+  progressRecords: LessonProgress[];
   onOpenLesson: (courseId: string, lessonId: string) => void;
 }) => {
   const allCourseLessons = sortLessons(lessons.filter((lesson) => lesson.courseId === course.id));
@@ -33,7 +37,9 @@ const CourseCard = ({
     ),
   );
   const enrolment = getCourseEnrolment(course.id, identity.memberId);
-  const courseProgress = enrolment ? buildLocalProgress(course.id, identity, enrolment, completedLessonIds) : [];
+  const courseProgress = enrolment
+    ? buildLocalProgress(course.id, identity, enrolment, completedLessonIds, progressRecords)
+    : [];
   const percent = enrolment ? calculateCompletionPercent(courseLessons, courseProgress, enrolment.id) : 0;
   const levelLockStates = new Map(
     enrolment
@@ -131,8 +137,9 @@ const buildLocalProgress = (
   identity: LearnerIdentity,
   enrolment: Enrolment,
   completedLessonIds: ReadonlySet<string>,
+  progressRecords: LessonProgress[],
 ): LessonProgress[] => {
-  const baseProgress = progress.filter((item) => item.enrolmentId === enrolment.id);
+  const baseProgress = progressRecords.filter((item) => item.enrolmentId === enrolment.id);
   const merged = [...baseProgress];
   for (const lessonId of completedLessonIds) {
     if (!merged.some((item) => item.lessonId === lessonId)) {
@@ -165,6 +172,28 @@ export const LearnerDashboard = ({
 }) => {
   const activeLevel = modules.find((module) => module.id === activeLevelId) ?? null;
   const activeLevelSessions = lessons.filter((lesson) => !activeLevel || lesson.moduleId === activeLevel.id);
+  const [liveProgress, setLiveProgress] = useState<LessonProgress[]>(progress);
+
+  useEffect(() => {
+    const learnerEnrolments = enrolments.filter((item) => item.memberId === identity.memberId);
+    let active = true;
+
+    Promise.all(learnerEnrolments.map((enrolment) => repository.listProgress(enrolment.id)))
+      .then((progressGroups) => {
+        if (active) {
+          setLiveProgress(progressGroups.flat());
+        }
+      })
+      .catch(() => {
+        if (active) {
+          setLiveProgress(progress);
+        }
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [identity.memberId]);
 
   return (
     <main className="content-shell">
@@ -209,6 +238,7 @@ export const LearnerDashboard = ({
             activeLevel={activeLevel}
             identity={identity}
             completedLessonIds={completedLessonIds}
+            progressRecords={liveProgress}
             onOpenLesson={onOpenLesson}
           />
         ))}

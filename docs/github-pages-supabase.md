@@ -30,10 +30,12 @@ The workflow at `.github/workflows/deploy-pages.yml` builds the app and publishe
 
 1. Create a Supabase project.
 2. Open **SQL Editor**.
-3. Run `docs/supabase-classroom-records.sql`.
-4. Open **Project Settings > API**.
-5. Copy the project URL.
-6. Copy the anon public key.
+3. Run `supabase/schema.sql`.
+4. Run `npm run db:seed:sql` locally.
+5. Run the generated `supabase/seed.sql` in the SQL editor.
+6. Open **Project Settings > API**.
+7. Copy the project URL.
+8. Copy the anon public key.
 
 ## GitHub Variables and Secrets
 
