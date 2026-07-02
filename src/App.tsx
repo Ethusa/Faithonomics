@@ -16,6 +16,7 @@ const usePortalState = () => {
   const [activeLessonId, setActiveLessonId] = useState(lessons[0]?.id ?? "");
   const [activeLevelId, setActiveLevelId] = useState<string | null>(null);
   const [selectedLoginLevelId, setSelectedLoginLevelId] = useState<string | null>(null);
+  const [pendingIntroSlideshowLevelId, setPendingIntroSlideshowLevelId] = useState<string | null>(null);
   const [completedLessonIds, setCompletedLessonIds] = useState<Set<string>>(
     () => new Set(progress.filter((item) => item.status === "completed").map((item) => item.lessonId)),
   );
@@ -34,6 +35,8 @@ const usePortalState = () => {
     setActiveLevelId,
     selectedLoginLevelId,
     setSelectedLoginLevelId,
+    pendingIntroSlideshowLevelId,
+    setPendingIntroSlideshowLevelId,
     completedLessonIds,
     setCompletedLessonIds,
     drawerOpen,
@@ -61,12 +64,14 @@ export const App = () => {
     state.setActiveLessonId(firstLevelLesson?.id ?? lessons[0]?.id ?? "");
     state.setActiveLevelId(access.moduleId);
     state.setSelectedLoginLevelId(null);
+    state.setPendingIntroSlideshowLevelId(access.moduleId);
     state.setView("learner");
   };
 
   const logout = () => {
     state.setActiveLevelId(null);
     state.setSelectedLoginLevelId(null);
+    state.setPendingIntroSlideshowLevelId(null);
     state.setIdentity(identities.learner);
     state.setView("learner");
   };
@@ -110,6 +115,8 @@ export const App = () => {
           identity={state.identity}
           activeLevelId={state.activeLevelId}
           completedLessonIds={state.completedLessonIds}
+          pendingIntroSlideshowLevelId={state.pendingIntroSlideshowLevelId}
+          onIntroSlideshowHandled={() => state.setPendingIntroSlideshowLevelId(null)}
           onOpenLesson={openLesson}
         />
       ) : null}

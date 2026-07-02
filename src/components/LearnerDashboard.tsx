@@ -10,6 +10,7 @@ import {
 import type { Course, CourseModule, Enrolment, LearnerIdentity, Lesson, LessonProgress } from "../domain/types";
 import { repository } from "../services/singleton";
 import { Lock, PlayCircle } from "./Icons";
+import { LevelOneIntroSlideshow } from "./LevelOneIntroSlideshow";
 
 const getCourseEnrolment = (courseId: string, memberId: string): Enrolment | null =>
   enrolments.find((enrolment) => enrolment.courseId === courseId && enrolment.memberId === memberId) ?? null;
@@ -163,30 +164,40 @@ export const LearnerDashboard = ({
   identity,
   activeLevelId,
   completedLessonIds,
+  pendingIntroSlideshowLevelId,
+  onIntroSlideshowHandled,
   onOpenLesson,
 }: {
   identity: LearnerIdentity;
   activeLevelId: string | null;
   completedLessonIds: ReadonlySet<string>;
+  pendingIntroSlideshowLevelId: string | null;
+  onIntroSlideshowHandled: () => void;
   onOpenLesson: (courseId: string, lessonId: string) => void;
 }) => {
   const activeLevel = modules.find((module) => module.id === activeLevelId) ?? null;
   const activeLevelSessions = lessons.filter((lesson) => !activeLevel || lesson.moduleId === activeLevel.id);
   const [liveProgress, setLiveProgress] = useState<LessonProgress[]>(progress);
+  const [progressLoaded, setProgressLoaded] = useState(false);
+  const [showLevelOneIntro, setShowLevelOneIntro] = useState(false);
+  const [levelOneSlideIndex, setLevelOneSlideIndex] = useState(0);
 
   useEffect(() => {
     const learnerEnrolments = enrolments.filter((item) => item.memberId === identity.memberId);
     let active = true;
+    setProgressLoaded(false);
 
     Promise.all(learnerEnrolments.map((enrolment) => repository.listProgress(enrolment.id)))
       .then((progressGroups) => {
         if (active) {
           setLiveProgress(progressGroups.flat());
+          setProgressLoaded(true);
         }
       })
       .catch(() => {
         if (active) {
           setLiveProgress(progress);
+          setProgressLoaded(true);
         }
       });
 
@@ -194,6 +205,61 @@ export const LearnerDashboard = ({
       active = false;
     };
   }, [identity.memberId]);
+
+  useEffect(() => {
+    if (!progressLoaded || !pendingIntroSlideshowLevelId) {
+      return;
+    }
+
+    if (pendingIntroSlideshowLevelId !== "level-1" || activeLevelId !== "level-1") {
+      onIntroSlideshowHandled();
+      return;
+    }
+
+    const primaryCourse = courses[0] ?? null;
+    if (!primaryCourse) {
+      onIntroSlideshowHandled();
+      return;
+    }
+
+    const enrolment = getCourseEnrolment(primaryCourse.id, identity.memberId);
+    const levelLessons = lessons.filter((lesson) => lesson.moduleId === "level-1");
+    const mergedProgress = enrolment
+      ? buildLocalProgress(primaryCourse.id, identity, enrolment, completedLessonIds, liveProgress)
+      : [];
+    const hasCompletedSession = levelLessons.some((lesson) =>
+      mergedProgress.some((item) => item.lessonId === lesson.id && item.status === "completed"),
+    );
+
+    if (hasCompletedSession) {
+      onIntroSlideshowHandled();
+      return;
+    }
+
+    setLevelOneSlideIndex(0);
+    setShowLevelOneIntro(true);
+  }, [
+    activeLevelId,
+    completedLessonIds,
+    identity,
+    liveProgress,
+    onIntroSlideshowHandled,
+    pendingIntroSlideshowLevelId,
+    progressLoaded,
+  ]);
+
+  const closeLevelOneIntro = () => {
+    setShowLevelOneIntro(false);
+    onIntroSlideshowHandled();
+  };
+
+  const openFirstLevelOneLesson = () => {
+    closeLevelOneIntro();
+    const firstLevelLesson = sortLessons(lessons.filter((lesson) => lesson.moduleId === "level-1"))[0] ?? null;
+    if (firstLevelLesson) {
+      onOpenLesson(firstLevelLesson.courseId, firstLevelLesson.id);
+    }
+  };
 
   return (
     <main className="content-shell">
@@ -243,6 +309,15 @@ export const LearnerDashboard = ({
           />
         ))}
       </section>
+      {showLevelOneIntro ? (
+        <LevelOneIntroSlideshow
+          mode="start"
+          slideIndex={levelOneSlideIndex}
+          setSlideIndex={setLevelOneSlideIndex}
+          onOpenCourse={openFirstLevelOneLesson}
+          onClose={closeLevelOneIntro}
+        />
+      ) : null}
     </main>
   );
 };

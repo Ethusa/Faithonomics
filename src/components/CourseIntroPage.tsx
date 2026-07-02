@@ -4,21 +4,13 @@ import { calculateCompletionPercent, sortLessons } from "../domain/progress";
 import type { CourseModule, Enrolment, LessonProgress } from "../domain/types";
 import { repository } from "../services/singleton";
 import { PlayCircle } from "./Icons";
+import { LevelOneIntroSlideshow, type LevelOneSlideshowMode } from "./LevelOneIntroSlideshow";
 
 type CourseStatus = "completed" | "current" | "upcoming";
-type LevelOneSlideshowMode = "about" | "start";
 
 const learner = identities.learner;
 const learnerEnrolment =
   enrolments.find((enrolment) => enrolment.memberId === learner.memberId) ?? null;
-
-const levelOneIntroSlides = [
-  "https://static.wixstatic.com/media/7638b6_7dce53d2b46b43c0a42e8cc509325e3f~mv2.png",
-  "https://static.wixstatic.com/media/7638b6_5565b4e4adcf4e6db1b3e0075c7f44bd~mv2.png",
-  "https://static.wixstatic.com/media/7638b6_d369a23ccc264bed911d2f2662249aa7~mv2.png",
-  "https://static.wixstatic.com/media/7638b6_a63863ef5ce945d6adc25625d8e8e748~mv2.png",
-  "https://static.wixstatic.com/media/7638b6_7fd81c4b4f96408dab20186b2bd32a96~mv2.png",
-];
 
 const getLevelNumber = (module: CourseModule): number => {
   const explicitNumber = Number(module.id.match(/^level-(\d+)$/)?.[1] ?? module.title.match(/Level\s+(\d+)/i)?.[1]);
@@ -135,26 +127,8 @@ export const CourseIntroPage = ({ onSelectLevel }: { onSelectLevel: (moduleId: s
             : status === "completed"
               ? 100
               : 0;
-          const completedSessionCount = learnerEnrolment
-            ? levelLessons.filter((lesson) =>
-                liveProgress.some(
-                  (item) =>
-                    item.enrolmentId === learnerEnrolment.id &&
-                    item.lessonId === lesson.id &&
-                    item.status === "completed",
-                ),
-              ).length
-            : 0;
           const levelNumber = getLevelNumber(module);
-          const shouldShowLevelOneStartSlides =
-            module.id === "level-1" && percent === 0 && completedSessionCount === 0;
-          const openLevel = () => {
-            if (shouldShowLevelOneStartSlides) {
-              openLevelOneSlideshow("start");
-              return;
-            }
-            onSelectLevel(module.id);
-          };
+          const openLevel = () => onSelectLevel(module.id);
           const openAbout = () => {
             if (module.id === "level-1") {
               openLevelOneSlideshow("about");
@@ -222,52 +196,13 @@ export const CourseIntroPage = ({ onSelectLevel }: { onSelectLevel: (moduleId: s
         </div>
       ) : null}
       {levelOneSlideshowMode ? (
-        <div className="level-one-slideshow-modal" role="dialog" aria-modal="true" aria-label="Level 1 introduction">
-          <button
-            className="course-about-backdrop"
-            type="button"
-            aria-label="Close slideshow"
-            onClick={closeLevelOneSlideshow}
-          />
-          <article className="level-one-slideshow-panel">
-            <div className="level-one-slide-stage">
-              <img
-                src={levelOneIntroSlides[levelOneSlideIndex]}
-                alt={`Level 1 introduction slide ${levelOneSlideIndex + 1}`}
-              />
-            </div>
-            <div className="level-one-slide-controls">
-              <button
-                className="about-button"
-                type="button"
-                onClick={() => setLevelOneSlideIndex((current) => Math.max(0, current - 1))}
-                disabled={levelOneSlideIndex === 0}
-              >
-                Previous
-              </button>
-              <span>
-                {levelOneSlideIndex + 1} / {levelOneIntroSlides.length}
-              </span>
-              <button
-                className="about-button"
-                type="button"
-                onClick={() =>
-                  setLevelOneSlideIndex((current) => Math.min(levelOneIntroSlides.length - 1, current + 1))
-                }
-                disabled={levelOneSlideIndex === levelOneIntroSlides.length - 1}
-              >
-                Next
-              </button>
-              <button className="course-link-button" type="button" onClick={() => onSelectLevel("level-1")}>
-                <PlayCircle size={18} />
-                {levelOneSlideshowMode === "start" ? "Start level" : "Open course"}
-              </button>
-              <button className="about-button" type="button" onClick={closeLevelOneSlideshow}>
-                Close
-              </button>
-            </div>
-          </article>
-        </div>
+        <LevelOneIntroSlideshow
+          mode={levelOneSlideshowMode}
+          slideIndex={levelOneSlideIndex}
+          setSlideIndex={setLevelOneSlideIndex}
+          onOpenCourse={() => onSelectLevel("level-1")}
+          onClose={closeLevelOneSlideshow}
+        />
       ) : null}
     </main>
   );
