@@ -2007,6 +2007,7 @@ p {
 }
 
 .youtube-frame-slot,
+.youtube-player-host,
 .youtube-frame-slot iframe,
 .youtube-frame-wrap > iframe {
   position: absolute;

@@ -63,7 +63,10 @@ type YouTubeNamespace = {
   Player: new (
     element: HTMLElement,
     options: {
+      height?: number | string;
+      host?: string;
       videoId: string;
+      width?: number | string;
       playerVars: Record<string, number | string>;
       events: {
         onReady: () => void;
@@ -164,53 +167,6 @@ const loadYouTubeIframeApi = (): Promise<YouTubeNamespace> => {
   });
 
   return youtubeApiPromise;
-};
-
-const buildYouTubeEmbedUrl = (
-  videoId: string,
-  options: { autoplay?: boolean; endSeconds?: number; startSeconds?: number } = {},
-): string => {
-  const params = new URLSearchParams({
-    enablejsapi: "1",
-    modestbranding: "1",
-    origin: window.location.origin,
-    playsinline: "1",
-    rel: "0",
-  });
-  if (options.autoplay) {
-    params.set("autoplay", "1");
-  }
-  if (typeof options.startSeconds === "number") {
-    params.set("start", String(options.startSeconds));
-  }
-  if (typeof options.endSeconds === "number") {
-    params.set("end", String(options.endSeconds));
-  }
-  return `${youTubeEmbedOrigin}/embed/${videoId}?${params.toString()}`;
-};
-
-const isYouTubeMessageOrigin = (origin: string): boolean => {
-  try {
-    const host = new URL(origin).hostname.replace(/^www\./, "");
-    return host === "youtube.com" || host === "youtube-nocookie.com";
-  } catch {
-    return false;
-  }
-};
-
-const parseYouTubeMessage = (data: unknown): Record<string, unknown> | null => {
-  if (typeof data === "object" && data !== null) {
-    return data as Record<string, unknown>;
-  }
-  if (typeof data !== "string" || !data.trim().startsWith("{")) {
-    return null;
-  }
-  try {
-    const parsed = JSON.parse(data) as unknown;
-    return typeof parsed === "object" && parsed !== null ? (parsed as Record<string, unknown>) : null;
-  } catch {
-    return null;
-  }
 };
 
 const isOrderingQuestion = (question: Question, activity: Activity): boolean =>
@@ -802,7 +758,7 @@ const YouTubeCheckpointVideo = ({
 }) => {
   const checkpoint = content.videoCheckpoint;
   const videoId = getYouTubeVideoId(content.url);
-  const iframeRef = useRef<HTMLIFrameElement | null>(null);
+  const playerHostRef = useRef<HTMLDivElement | null>(null);
   const playerRef = useRef<YouTubePlayer | null>(null);
   const pollRef = useRef<number | null>(null);
   const checkpointFallbackTimerRef = useRef<number | null>(null);
@@ -815,7 +771,6 @@ const YouTubeCheckpointVideo = ({
   const [playerStatus, setPlayerStatus] = useState<"loading" | "ready" | "error">("loading");
   const [checkpointOpen, setCheckpointOpen] = useState(false);
   const [quizPassed, setQuizPassed] = useState(completed);
-  const [checkpointFrameLoaded, setCheckpointFrameLoaded] = useState(false);
   const [checkpointFallbackReady, setCheckpointFallbackReady] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
@@ -893,9 +848,8 @@ const YouTubeCheckpointVideo = ({
       checkpointFallbackTimerRef.current = window.setTimeout(() => {
         if (!quizPassedRef.current && !checkpointOpenRef.current && !completedRef.current) {
           setCheckpointFallbackReady(true);
-          openCheckpointQuiz();
         }
-      }, checkpoint.timeSeconds * 1000 + 500);
+      }, 3000);
     };
 
     const checkProgress = () => {
@@ -944,12 +898,12 @@ const YouTubeCheckpointVideo = ({
     setPlayerStatus("loading");
     loadYouTubeIframeApi()
       .then((YT) => {
-        if (!active || !iframeRef.current) {
+        if (!active || !playerHostRef.current) {
           return;
         }
 
         const playerVars: Record<string, number | string> = {
-          autoplay: quizPassedRef.current ? 1 : 0,
+          autoplay: 0,
           enablejsapi: 1,
           modestbranding: 1,
           origin: window.location.origin,
@@ -957,12 +911,11 @@ const YouTubeCheckpointVideo = ({
           rel: 0,
           start: quizPassedRef.current ? checkpoint.timeSeconds : 0,
         };
-        if (!quizPassedRef.current) {
-          playerVars.end = checkpoint.timeSeconds;
-        }
-
-        playerRef.current = new YT.Player(iframeRef.current, {
+        playerRef.current = new YT.Player(playerHostRef.current, {
+          height: "100%",
+          host: youTubeEmbedOrigin,
           videoId,
+          width: "100%",
           playerVars,
           events: {
             onReady: () => {
@@ -991,7 +944,7 @@ const YouTubeCheckpointVideo = ({
               }
             },
             onError: () => {
-              setPlayerStatus("ready");
+              setPlayerStatus("error");
               clearPoll();
               startCheckpointFallbackTimer();
             },
@@ -1002,7 +955,7 @@ const YouTubeCheckpointVideo = ({
         if (!active) {
           return;
         }
-        setPlayerStatus("ready");
+        setPlayerStatus("error");
         clearPoll();
         startCheckpointFallbackTimer();
       });
@@ -1015,22 +968,7 @@ const YouTubeCheckpointVideo = ({
       playerRef.current?.destroy();
       playerRef.current = null;
     };
-  }, [checkpoint, content.id, lockVideoAtCheckpoint, onCompleteContent, openCheckpointQuiz, quizPassed, videoId]);
-
-  useEffect(() => {
-    if (!checkpoint || !videoId || quizPassed || completed || checkpointOpen || !checkpointFrameLoaded) {
-      return undefined;
-    }
-
-    const timer = window.setTimeout(() => {
-      if (!quizPassedRef.current && !checkpointOpenRef.current && !completedRef.current) {
-        setCheckpointFallbackReady(true);
-        openCheckpointQuiz();
-      }
-    }, checkpoint.timeSeconds * 1000 + 700);
-
-    return () => window.clearTimeout(timer);
-  }, [checkpoint, checkpointFrameLoaded, checkpointOpen, completed, openCheckpointQuiz, quizPassed, videoId]);
+  }, [checkpoint, content.id, lockVideoAtCheckpoint, onCompleteContent, openCheckpointQuiz, videoId]);
 
   useEffect(() => {
     if (!checkpoint || !quizPassed || completed) {
@@ -1067,13 +1005,6 @@ const YouTubeCheckpointVideo = ({
   }
 
   const allAnswered = checkpoint.questions.every((question) => Boolean(selectedAnswers[question.id]));
-  const embedUrl = buildYouTubeEmbedUrl(
-    videoId,
-    quizPassed
-      ? { autoplay: true, startSeconds: checkpoint.timeSeconds }
-      : { endSeconds: checkpoint.timeSeconds },
-  );
-  const iframeKey = quizPassed ? `${content.id}-continue` : `${content.id}-checkpoint`;
 
   const finishQuizAndContinueVideo = () => {
     setSubmitted(true);
@@ -1083,30 +1014,22 @@ const YouTubeCheckpointVideo = ({
     setQuizPassed(true);
     quizPassedRef.current = true;
     checkpointOpenRef.current = false;
-    setCheckpointFrameLoaded(false);
     setCheckpointFallbackReady(false);
     setCheckpointOpen(false);
+    const player = playerRef.current;
+    if (player) {
+      const resumeAt = checkpoint.timeSeconds + 0.25;
+      player.seekTo(resumeAt, true);
+      player.playVideo();
+    }
   };
 
   return (
     <div className="checkpoint-video-shell">
       {content.body ? <p>{content.body}</p> : null}
       <div className="youtube-frame-wrap">
-        <div className="youtube-frame-slot">
-          <iframe
-            key={iframeKey}
-            ref={iframeRef}
-            title={content.title}
-            src={embedUrl}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-            referrerPolicy="strict-origin-when-cross-origin"
-            onLoad={() => {
-              if (!quizPassedRef.current) {
-                setCheckpointFrameLoaded(true);
-              }
-            }}
-          />
+        <div className="youtube-frame-slot" aria-label={content.title}>
+          <div className="youtube-player-host" ref={playerHostRef} />
         </div>
         {checkpointOpen && !quizPassed ? (
           <div className="video-blocker" role="status" aria-live="polite">
