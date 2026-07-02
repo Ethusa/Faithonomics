@@ -858,7 +858,8 @@ p {
   width: 100%;
   aspect-ratio: 16 / 8;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
+  background: rgba(247, 243, 232, 0.72);
 }
 
 .course-card-body,
@@ -1111,7 +1112,8 @@ p {
   display: block;
   width: 100%;
   aspect-ratio: 16 / 5.8;
-  object-fit: cover;
+  object-fit: contain;
+  background: rgba(247, 243, 232, 0.72);
 }
 
 .lesson-carousel {
