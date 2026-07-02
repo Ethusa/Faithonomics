@@ -56,11 +56,15 @@ jobs:
           SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
           SUPABASE_TABLE: ${{ vars.VITE_SUPABASE_TABLE }}
         run: |
+          SUPABASE_URL="${SUPABASE_URL:-https://mubisxvbvcdnrhdqnnyy.supabase.co}"
+          SUPABASE_ANON_KEY="${SUPABASE_ANON_KEY:-sb_publishable_7p_-KtzLqPDubr4ebv1zcA_9yvCb59u}"
+          SUPABASE_TABLE="${SUPABASE_TABLE:-classroom_records}"
+
           if [ -n "$SUPABASE_URL" ] && [ -n "$SUPABASE_ANON_KEY" ]; then
             echo "VITE_BACKEND_PROVIDER=supabase" >> "$GITHUB_ENV"
             echo "VITE_SUPABASE_URL=$SUPABASE_URL" >> "$GITHUB_ENV"
             echo "VITE_SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" >> "$GITHUB_ENV"
-            echo "VITE_SUPABASE_TABLE=${SUPABASE_TABLE:-classroom_records}" >> "$GITHUB_ENV"
+            echo "VITE_SUPABASE_TABLE=$SUPABASE_TABLE" >> "$GITHUB_ENV"
           else
             echo "VITE_BACKEND_PROVIDER=mock" >> "$GITHUB_ENV"
           fi
