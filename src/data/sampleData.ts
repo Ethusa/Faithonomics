@@ -69,7 +69,7 @@ const curriculum = [
     title: "Level 1: Economic Alignment",
     description: "Move from economic pressure to intentional alignment.",
     sessions: ["The Daily Grind", "Competing Paradigms", "Strategic Alignment", "Monday Morning"],
-    imageUrl: "https://static.wixstatic.com/media/7638b6_caa7cd7034ef4841a2ed7bcd5fece6f5~mv2.png",
+    imageUrl: "https://static.wixstatic.com/media/7638b6_bf680d1d5dfc468fbd5db89ae370217b~mv2.png",
     imageAlt: "Faithonomics Level 1 course artwork.",
   },
   {
