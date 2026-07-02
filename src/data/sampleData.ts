@@ -1869,7 +1869,7 @@ const createDailyGrindExplorationSteps = (lessonId: string): Lesson["content"] =
             <label class="pillar-flip-card" for="${lessonId}-pillar-property">
               <div class="pillar-face pillar-front">
                 <div class="pillar-icon" aria-hidden="true">
-                  <img src="/assets/pillar-property-clean.png" alt="" />
+                  <img src="${publicAssetUrl("assets/pillar-property-clean.png")}" alt="" />
                 </div>
                 <div>
                   <h3>Property</h3>
@@ -1896,7 +1896,7 @@ const createDailyGrindExplorationSteps = (lessonId: string): Lesson["content"] =
             <label class="pillar-flip-card" for="${lessonId}-pillar-relationships">
               <div class="pillar-face pillar-front">
                 <div class="pillar-icon" aria-hidden="true">
-                  <img src="/assets/pillar-relationships-clean.png" alt="" />
+                  <img src="${publicAssetUrl("assets/pillar-relationships-clean.png")}" alt="" />
                 </div>
                 <div>
                   <h3>Relationships</h3>
@@ -1923,7 +1923,7 @@ const createDailyGrindExplorationSteps = (lessonId: string): Lesson["content"] =
             <label class="pillar-flip-card" for="${lessonId}-pillar-work">
               <div class="pillar-face pillar-front">
                 <div class="pillar-icon" aria-hidden="true">
-                  <img src="/assets/pillar-work-clean.png" alt="" />
+                  <img src="${publicAssetUrl("assets/pillar-work-clean.png")}" alt="" />
                 </div>
                 <div>
                   <h3>Work</h3>
@@ -1950,7 +1950,7 @@ const createDailyGrindExplorationSteps = (lessonId: string): Lesson["content"] =
             <label class="pillar-flip-card" for="${lessonId}-pillar-consumption">
               <div class="pillar-face pillar-front">
                 <div class="pillar-icon" aria-hidden="true">
-                  <img src="/assets/pillar-consumption-clean.png" alt="" />
+                  <img src="${publicAssetUrl("assets/pillar-consumption-clean.png")}" alt="" />
                 </div>
                 <div>
                   <h3>Consumption</h3>
