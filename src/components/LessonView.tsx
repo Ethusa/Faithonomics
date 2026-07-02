@@ -57,6 +57,7 @@ type YouTubePlayer = {
   destroy: () => void;
   getCurrentTime: () => number;
   getDuration: () => number;
+  mute: () => void;
   pauseVideo: () => void;
   playVideo: () => void;
   seekTo: (seconds: number, allowSeekAhead: boolean) => void;
@@ -964,9 +965,10 @@ const YouTubeCheckpointVideo = ({
         }
 
         const playerVars: Record<string, number | string> = {
-          autoplay: 0,
+          autoplay: 1,
           enablejsapi: 1,
           modestbranding: 1,
+          mute: 1,
           origin: window.location.origin,
           playsinline: 1,
           rel: 0,
@@ -981,6 +983,8 @@ const YouTubeCheckpointVideo = ({
           events: {
             onReady: () => {
               setPlayerStatus("ready");
+              playerRef.current?.mute();
+              playerRef.current?.playVideo();
               startPoll();
             },
             onStateChange: (event) => {
