@@ -11,7 +11,13 @@ const learner = identities.learner;
 const learnerEnrolment =
   enrolments.find((enrolment) => enrolment.memberId === learner.memberId) ?? null;
 
-const getLevelNumber = (module: CourseModule): string => module.title.match(/\d+/)?.[0] ?? `${module.sequence}`;
+const getLevelNumber = (module: CourseModule): number => {
+  const explicitNumber = Number(module.id.match(/^level-(\d+)$/)?.[1] ?? module.title.match(/Level\s+(\d+)/i)?.[1]);
+  return Number.isFinite(explicitNumber) && explicitNumber > 0 ? explicitNumber : module.sequence;
+};
+
+const sortModulesNumerically = (courseModules: readonly CourseModule[]): CourseModule[] =>
+  [...courseModules].sort((a, b) => getLevelNumber(a) - getLevelNumber(b) || a.sequence - b.sequence);
 
 const getCourseStatuses = (
   courseModules: CourseModule[],
@@ -50,7 +56,7 @@ const getCourseStatuses = (
 
 export const CourseIntroPage = ({ onSelectLevel }: { onSelectLevel: (moduleId: string) => void }) => {
   const [liveProgress, setLiveProgress] = useState<LessonProgress[]>(progress);
-  const sortedModules = useMemo(() => [...modules].sort((a, b) => a.sequence - b.sequence), []);
+  const sortedModules = useMemo(() => sortModulesNumerically(modules), []);
   const statuses = useMemo(
     () => getCourseStatuses(sortedModules, liveProgress, learnerEnrolment),
     [liveProgress, sortedModules],
@@ -108,7 +114,7 @@ export const CourseIntroPage = ({ onSelectLevel }: { onSelectLevel: (moduleId: s
           const levelNumber = getLevelNumber(module);
 
           return (
-            <article key={module.id} className={`intro-course-card ${status}`}>
+            <article key={module.id} className={`intro-course-card ${status}`} style={{ order: levelNumber }}>
               <button
                 className="intro-course-image-link"
                 type="button"
