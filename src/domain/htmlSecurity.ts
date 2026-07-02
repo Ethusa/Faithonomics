@@ -41,6 +41,38 @@ export const buildSandboxDocument = (trustedHtml: string, activityId: string): s
           target.getAttribute("data-max-score") || 0
         );
       });
+      document.addEventListener("change", function(event) {
+        var target = event.target && event.target.closest
+          ? event.target.closest("[data-rich-popup-toggle], [data-audio-toggle]")
+          : null;
+        if (!target) {
+          return;
+        }
+        if (target.matches("[data-rich-popup-toggle]") && target.checked) {
+          parent.postMessage({
+            type: "classroom.richPopup.opened",
+            activityId: ${JSON.stringify(activityId)}
+          }, "*");
+        }
+        if (!target.matches("[data-audio-toggle]")) {
+          return;
+        }
+        var selector = target.getAttribute("data-audio-target");
+        var audio = selector ? document.querySelector(selector) : null;
+        if (!audio || typeof audio.play !== "function" || typeof audio.pause !== "function") {
+          return;
+        }
+        if (target.checked) {
+          audio.currentTime = 0;
+          var playPromise = audio.play();
+          if (playPromise && typeof playPromise.catch === "function") {
+            playPromise.catch(function() {});
+          }
+          return;
+        }
+        audio.pause();
+        audio.currentTime = 0;
+      });
     </script>
   `;
   return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>${safeHtml}${bridge}</body></html>`;

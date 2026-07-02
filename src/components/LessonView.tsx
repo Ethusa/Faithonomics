@@ -2114,6 +2114,15 @@ const CustomHtmlStep = ({
       if (message?.type === "classroom.activity.completed") {
         onCompleteContent(message.activityId);
       }
+      if (typeof event.data === "object" && event.data !== null) {
+        const richStepMessage = event.data as { activityId?: unknown; type?: unknown };
+        if (
+          richStepMessage.type === "classroom.richPopup.opened" &&
+          richStepMessage.activityId === htmlBlock.id
+        ) {
+          richFrameWrapperRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
     };
     window.addEventListener("message", listener);
     return () => window.removeEventListener("message", listener);

@@ -391,55 +391,478 @@ const richLessonStepHtml = (
       outline-offset: 2px;
     }
 
-    .canva-step-page {
+    .market-theology-page {
       display: grid;
       gap: clamp(18px, 3vw, 26px);
       align-items: stretch;
       justify-items: center;
     }
 
-    .canva-deck-shell {
+    .audio-discussion {
+      width: min(100%, 1180px);
+      display: grid;
+      gap: 10px;
+      justify-items: center;
+      margin-inline: auto;
+    }
+
+    .audio-discussion-copy {
+      margin: 0;
+      color: var(--forest);
+      font-size: clamp(1rem, 1.6vw, 1.18rem);
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .audio-discussion-toggle {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .audio-discussion-button {
+      width: min(100%, 480px);
+      display: block;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      cursor: pointer;
+    }
+
+    .audio-discussion-button img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 16px 22px rgba(91, 58, 36, 0.16));
+      transition: transform 180ms ease;
+    }
+
+    .audio-discussion-button:hover img {
+      transform: translateY(-2px);
+    }
+
+    .audio-popup {
+      position: fixed;
+      inset: 0;
+      z-index: 140;
+      display: none;
+      padding: clamp(18px, 3vw, 32px);
+      background: rgba(23, 19, 15, 0.94);
+    }
+
+    .audio-discussion-toggle:checked ~ .audio-popup {
+      display: grid;
+    }
+
+    .audio-popup-scrim {
+      position: absolute;
+      inset: 0;
+      cursor: pointer;
+    }
+
+    .audio-popup-panel {
+      position: relative;
+      z-index: 1;
+      width: min(100%, 980px);
+      min-height: min(72vh, 680px);
+      display: grid;
+      gap: clamp(20px, 4vw, 34px);
+      align-content: center;
+      justify-self: center;
+      align-self: center;
+      border: 1px solid rgba(232, 216, 184, 0.22);
+      border-radius: 8px;
+      padding: clamp(22px, 4vw, 48px);
+      background:
+        linear-gradient(145deg, rgba(247, 243, 232, 0.96), rgba(232, 216, 184, 0.84)),
+        radial-gradient(circle at 50% 0%, rgba(185, 146, 69, 0.18), transparent 42%);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.42);
+    }
+
+    .soundwave {
+      min-height: clamp(150px, 24vw, 240px);
+      display: flex;
+      gap: clamp(7px, 1.3vw, 14px);
+      align-items: center;
+      justify-content: center;
+      padding: clamp(16px, 3vw, 30px);
+    }
+
+    .soundwave span {
+      width: clamp(7px, 1.2vw, 13px);
+      height: 42%;
+      border-radius: 999px;
+      background: linear-gradient(180deg, var(--gold), var(--forest));
+      animation: soundwave-rise 1.05s ease-in-out infinite;
+      box-shadow: 0 10px 20px rgba(91, 58, 36, 0.16);
+    }
+
+    .soundwave span:nth-child(2) {
+      animation-delay: -0.86s;
+    }
+
+    .soundwave span:nth-child(3) {
+      animation-delay: -0.68s;
+    }
+
+    .soundwave span:nth-child(4) {
+      animation-delay: -0.5s;
+    }
+
+    .soundwave span:nth-child(5) {
+      animation-delay: -0.32s;
+    }
+
+    .soundwave span:nth-child(6) {
+      animation-delay: -0.14s;
+    }
+
+    .soundwave span:nth-child(7) {
+      animation-delay: -0.76s;
+    }
+
+    .soundwave span:nth-child(8) {
+      animation-delay: -0.58s;
+    }
+
+    .soundwave span:nth-child(9) {
+      animation-delay: -0.4s;
+    }
+
+    .soundwave span:nth-child(10) {
+      animation-delay: -0.22s;
+    }
+
+    @keyframes soundwave-rise {
+      0%,
+      100% {
+        transform: scaleY(0.34);
+      }
+
+      50% {
+        transform: scaleY(1);
+      }
+    }
+
+    .audio-popup audio {
+      width: min(100%, 760px);
+      justify-self: center;
+      accent-color: var(--forest);
+    }
+
+    .audio-popup-close {
+      min-height: 42px;
+      width: fit-content;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      justify-self: center;
+      border: 1px solid rgba(35, 70, 56, 0.18);
+      border-radius: 8px;
+      padding: 0 16px;
+      background: var(--forest);
+      color: var(--paper);
+      font-weight: 800;
+      cursor: pointer;
+      transition:
+        background 160ms ease,
+        transform 160ms ease;
+    }
+
+    .audio-popup-close:hover {
+      background: #1d3a2f;
+      transform: translateY(-1px);
+    }
+
+    .wrong-thinking-section {
+      width: min(100%, 1180px);
+      display: grid;
+      gap: clamp(16px, 2.6vw, 24px);
+      margin-inline: auto;
+    }
+
+    .wrong-thinking-section h2 {
+      margin: 0;
+      color: var(--forest);
+      font-size: clamp(1.75rem, 4vw, 2.7rem);
+      line-height: 1.08;
+    }
+
+    .scholars-heading {
+      margin: clamp(6px, 1.4vw, 12px) 0 0;
+      color: var(--deep-kraft);
+      font-size: clamp(1.2rem, 2.4vw, 1.7rem);
+      font-weight: 850;
+      text-align: center;
+    }
+
+    .wrong-thinking-images,
+    .wrong-card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(14px, 2.4vw, 22px);
+      width: 100%;
+    }
+
+    .wrong-thinking-image {
+      border: 1px solid rgba(91, 58, 36, 0.18);
+      border-radius: 8px;
+      padding: clamp(10px, 1.8vw, 18px);
+      background: rgba(255, 255, 255, 0.58);
+      box-shadow: 0 18px 36px rgba(91, 58, 36, 0.14);
+    }
+
+    .wrong-thinking-image:nth-child(1) {
+      background:
+        linear-gradient(145deg, rgba(210, 225, 194, 0.96), rgba(124, 143, 90, 0.34)),
+        radial-gradient(circle at 12% 0%, rgba(35, 70, 56, 0.16), transparent 42%);
+    }
+
+    .wrong-thinking-image:nth-child(2) {
+      background:
+        linear-gradient(145deg, rgba(236, 214, 151, 0.96), rgba(217, 154, 61, 0.28)),
+        radial-gradient(circle at 92% 0%, rgba(91, 58, 36, 0.14), transparent 42%);
+    }
+
+    .wrong-thinking-image {
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .wrong-thinking-image img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: clamp(280px, 34vw, 430px);
+      object-fit: contain;
+      border-radius: 6px;
+      background: rgba(247, 243, 232, 0.28);
+    }
+
+    .wrong-flip-card {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      min-height: 0;
+    }
+
+    .wrong-flip-toggle,
+    .wrong-slide-toggle {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .wrong-flip-cover {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      cursor: pointer;
+    }
+
+    .wrong-flip-cover img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      transition: transform 220ms ease;
+    }
+
+    .wrong-flip-cover:hover img {
+      transform: none;
+    }
+
+    .wrong-flip-cta,
+    .wrong-popup-close,
+    .wrong-carousel-controls label {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(35, 70, 56, 0.18);
+      border-radius: 8px;
+      background: var(--forest);
+      color: var(--paper);
+      font-weight: 800;
+      cursor: pointer;
+      transition:
+        background 160ms ease,
+        transform 160ms ease;
+    }
+
+    .wrong-flip-cta {
+      position: absolute;
+      right: clamp(14px, 2vw, 20px);
+      bottom: clamp(14px, 2vw, 20px);
+      padding: 0 18px;
+      background: rgba(35, 70, 56, 0.92);
+      box-shadow: 0 12px 26px rgba(23, 19, 15, 0.2);
+    }
+
+    .wrong-flip-cta:hover,
+    .wrong-popup-close:hover,
+    .wrong-carousel-controls label:hover {
+      background: #1d3a2f;
+      transform: translateY(-1px);
+    }
+
+    .wrong-carousel-popup {
+      position: fixed;
+      inset: 0;
+      z-index: 120;
+      display: none;
+      padding: clamp(12px, 2vw, 24px);
+      background: rgba(23, 19, 15, 0.94);
+    }
+
+    .wrong-flip-toggle:checked ~ .wrong-carousel-popup {
+      display: grid;
+    }
+
+    .wrong-popup-scrim {
+      position: absolute;
+      inset: 0;
+      cursor: pointer;
+    }
+
+    .wrong-popup-panel {
+      position: relative;
+      z-index: 1;
+      min-width: 0;
+      min-height: 0;
+      display: grid;
+      border-radius: 8px;
+      overflow: hidden;
+      background: rgba(247, 243, 232, 0.08);
+    }
+
+    .wrong-carousel {
+      position: relative;
+      min-height: 0;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto;
+      gap: 12px;
+    }
+
+    .wrong-carousel-window {
+      min-height: 0;
+      overflow: hidden;
+      border: 0;
+      border-radius: 8px;
+      background: rgba(247, 243, 232, 0.08);
+    }
+
+    .wrong-carousel-track {
+      display: flex;
+      width: 200%;
+      height: 100%;
+      transition: transform 320ms ease;
+    }
+
+    .wrong-carousel-slide {
+      flex: 0 0 50%;
+      margin: 0;
+    }
+
+    .wrong-carousel-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 0;
+    }
+
+    .wrong-slide-two-toggle:checked ~ .wrong-carousel-window .wrong-carousel-track {
+      transform: translateX(-50%);
+    }
+
+    .wrong-carousel-controls {
+      display: grid;
+      grid-template-columns: minmax(52px, 0.12fr) minmax(52px, 0.12fr) auto;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wrong-carousel-controls label {
+      min-width: 42px;
+      padding: 0 12px;
+      background: rgba(35, 70, 56, 0.82);
+      font-size: 0.92rem;
+    }
+
+    .wrong-slide-one-toggle:checked ~ .wrong-carousel-controls .wrong-dot-one,
+    .wrong-slide-two-toggle:checked ~ .wrong-carousel-controls .wrong-dot-two {
+      background: var(--gold);
+      color: var(--ink);
+    }
+
+    .wrong-popup-close {
+      padding: 0 14px;
+      background: rgba(91, 58, 36, 0.86);
+      color: var(--paper);
+    }
+
+    .market-image-story {
       width: min(100%, 1180px);
       margin-inline: auto;
       border: 1px solid rgba(91, 58, 36, 0.18);
       border-radius: 8px;
-      padding: clamp(10px, 2vw, 16px);
+      padding: clamp(18px, 3vw, 30px);
       background:
-        linear-gradient(145deg, rgba(247, 243, 232, 0.96), rgba(232, 216, 184, 0.64)),
-        radial-gradient(circle at 50% 0%, rgba(185, 146, 69, 0.12), transparent 40%);
+        linear-gradient(145deg, rgba(247, 243, 232, 0.96), rgba(232, 216, 184, 0.68)),
+        radial-gradient(circle at 10% 0%, rgba(185, 146, 69, 0.14), transparent 38%);
       box-shadow: 0 20px 42px rgba(91, 58, 36, 0.14);
     }
 
-    .canva-deck-frame {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      overflow: hidden;
-      border-radius: 8px;
-      background: rgba(23, 19, 15, 0.08);
-    }
-
-    .canva-deck-frame iframe {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-
-    .canva-credit-link {
+    .market-image-story::after {
+      content: "";
       display: block;
-      width: fit-content;
-      margin: 10px auto 0;
-      color: var(--forest);
-      font-size: 0.9rem;
-      font-weight: 750;
-      text-decoration: none;
+      clear: both;
     }
 
-    .canva-credit-link:hover {
-      color: var(--deep-kraft);
-      text-decoration: underline;
+    .market-theology-visual {
+      float: right;
+      width: min(46%, 520px);
+      margin: 0 0 clamp(16px, 2.4vw, 26px) clamp(20px, 3vw, 38px);
+      border: 1px solid rgba(91, 58, 36, 0.18);
+      border-radius: 8px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.62);
+      box-shadow: 0 18px 34px rgba(91, 58, 36, 0.16);
+    }
+
+    .market-theology-visual img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .market-image-story p {
+      margin: 0 0 clamp(12px, 1.8vw, 18px);
+      color: var(--muted);
+      font-size: clamp(1rem, 1.45vw, 1.16rem);
+      line-height: 1.66;
+    }
+
+    .market-image-story p:last-child {
+      margin-bottom: 0;
+    }
+
+    .market-image-story .closing-line {
+      color: var(--forest);
+      font-weight: 750;
     }
 
     .scripture-reflection {
@@ -1206,6 +1629,43 @@ const richLessonStepHtml = (
         line-height: 1.56;
       }
 
+      .market-theology-visual {
+        float: none;
+        width: 100%;
+        margin: 0 0 18px;
+      }
+
+      .audio-discussion-button {
+        width: min(100%, 360px);
+      }
+
+      .audio-popup-panel {
+        min-height: min(72vh, 560px);
+        padding: 18px;
+      }
+
+      .soundwave {
+        min-height: 130px;
+      }
+
+      .wrong-thinking-images,
+      .wrong-card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .wrong-thinking-image img {
+        min-height: 0;
+      }
+
+      .wrong-flip-card {
+        min-height: 0;
+      }
+
+      .market-image-story p {
+        font-size: 1rem;
+        line-height: 1.58;
+      }
+
       .transparent-quote-row {
         grid-template-columns: 1fr;
       }
@@ -1520,19 +1980,181 @@ const createDailyGrindExplorationSteps = (lessonId: string): Lesson["content"] =
     kind: "customHtml",
     title: "Step 5: The Architecture of Choice",
     body: richLessonStepHtml(`
-      <section class="canva-step-page">
-        <div class="canva-deck-shell" aria-label="Canva slide deck">
-          <div class="canva-deck-frame" style="position: relative; width: 100%; height: 0; padding-top: 56.25%; padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin: 0; overflow: hidden; border-radius: 8px; will-change: transform;">
-            <iframe
-              loading="lazy"
-              title="Faithonomics Canva slide deck"
-              style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0;"
-              src="https://www.canva.com/design/DAHN48np3Ro/4PH1SjOLXxIzXdLvpU-0uw/view?embed"
-              allowfullscreen="allowfullscreen"
-              allow="fullscreen"
-            ></iframe>
+      <section class="market-theology-page">
+        <section class="audio-discussion" aria-label="Audio discussion">
+          <p class="audio-discussion-copy">Click the button to listen to the discussion.</p>
+          <input
+            class="audio-discussion-toggle"
+            type="checkbox"
+            id="${lessonId}-wallet-worldview-audio"
+            data-rich-popup-toggle
+            data-audio-toggle
+            data-audio-target="#${lessonId}-wallet-worldview-audio-player"
+          />
+          <label class="audio-discussion-button" for="${lessonId}-wallet-worldview-audio">
+            <img
+              src="https://static.wixstatic.com/media/7638b6_4d265beddab44939b223089de3158338~mv2.png"
+              alt="Open audio discussion"
+            />
+          </label>
+          <div class="audio-popup" role="dialog" aria-label="Audio discussion player">
+            <label class="audio-popup-scrim" for="${lessonId}-wallet-worldview-audio" aria-label="Close audio discussion"></label>
+            <div class="audio-popup-panel">
+              <div class="soundwave" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <audio id="${lessonId}-wallet-worldview-audio-player" controls preload="metadata">
+                <source src="https://static.wixstatic.com/mp3/7638b6_731005efcdc94fc89592073673540bd8.m4a" type="audio/mp4" />
+              </audio>
+              <label class="audio-popup-close" for="${lessonId}-wallet-worldview-audio">Close</label>
+            </div>
           </div>
-        </div>
+        </section>
+
+        <section class="wrong-thinking-section" aria-label="Wrong thinking about economics">
+          <h2>Wrong thinking about economics</h2>
+
+          <div class="wrong-thinking-images" aria-label="Wrong economic thinking visuals">
+            <figure class="wrong-thinking-image">
+              <img
+                src="https://static.wixstatic.com/media/7638b6_a9ec244496864c2aa33dfb8d0104c46f~mv2.png"
+                alt="Wrong thinking about economics visual"
+              />
+            </figure>
+            <figure class="wrong-thinking-image">
+              <img
+                src="https://static.wixstatic.com/media/7638b6_c05404d411b64c23b78e6c2ce1ab3cff~mv2.png"
+                alt="Wrong thinking about economics comparison visual"
+              />
+            </figure>
+          </div>
+
+          <p class="scholars-heading">Find out what scholars says</p>
+
+          <div class="wrong-card-grid" aria-label="Wrong thinking flip cards">
+            <article class="wrong-flip-card">
+              <input class="wrong-flip-toggle" type="checkbox" id="${lessonId}-wrong-card-one" data-rich-popup-toggle />
+              <label class="wrong-flip-cover" for="${lessonId}-wrong-card-one">
+                <img
+                  src="https://static.wixstatic.com/media/7638b6_d6bf992a5e584631869e2b85fb075a6b~mv2.png"
+                  alt="First wrong thinking flip card cover"
+                />
+                <span class="wrong-flip-cta">Find out more</span>
+              </label>
+              <div class="wrong-carousel-popup" role="dialog" aria-label="First wrong thinking carousel">
+                <label class="wrong-popup-scrim" for="${lessonId}-wrong-card-one" aria-label="Close first carousel"></label>
+                <div class="wrong-popup-panel">
+                  <div class="wrong-carousel">
+                    <input class="wrong-slide-toggle wrong-slide-one-toggle" type="radio" name="${lessonId}-wrong-card-one-carousel" id="${lessonId}-wrong-card-one-slide-one" checked />
+                    <input class="wrong-slide-toggle wrong-slide-two-toggle" type="radio" name="${lessonId}-wrong-card-one-carousel" id="${lessonId}-wrong-card-one-slide-two" />
+                    <div class="wrong-carousel-window">
+                      <div class="wrong-carousel-track">
+                        <figure class="wrong-carousel-slide">
+                          <img
+                            src="https://static.wixstatic.com/media/7638b6_f8c5c53c17a9489895b293cb53e9aad1~mv2.png"
+                            alt="First carousel slide for the first wrong thinking card"
+                          />
+                        </figure>
+                        <figure class="wrong-carousel-slide">
+                          <img
+                            src="https://static.wixstatic.com/media/7638b6_2951a0d17d8a4389b4c29a84397af2a1~mv2.png"
+                            alt="Second carousel slide for the first wrong thinking card"
+                          />
+                        </figure>
+                      </div>
+                    </div>
+                    <div class="wrong-carousel-controls">
+                      <label class="wrong-dot-one" for="${lessonId}-wrong-card-one-slide-one">1</label>
+                      <label class="wrong-dot-two" for="${lessonId}-wrong-card-one-slide-two">2</label>
+                      <label class="wrong-popup-close" for="${lessonId}-wrong-card-one">Close</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="wrong-flip-card">
+              <input class="wrong-flip-toggle" type="checkbox" id="${lessonId}-wrong-card-two" data-rich-popup-toggle />
+              <label class="wrong-flip-cover" for="${lessonId}-wrong-card-two">
+                <img
+                  src="https://static.wixstatic.com/media/7638b6_af53a18f98cc4c84ba49e3357ca743f1~mv2.png"
+                  alt="Second wrong thinking flip card cover"
+                />
+                <span class="wrong-flip-cta">Find out more</span>
+              </label>
+              <div class="wrong-carousel-popup" role="dialog" aria-label="Second wrong thinking carousel">
+                <label class="wrong-popup-scrim" for="${lessonId}-wrong-card-two" aria-label="Close second carousel"></label>
+                <div class="wrong-popup-panel">
+                  <div class="wrong-carousel">
+                    <input class="wrong-slide-toggle wrong-slide-one-toggle" type="radio" name="${lessonId}-wrong-card-two-carousel" id="${lessonId}-wrong-card-two-slide-one" checked />
+                    <input class="wrong-slide-toggle wrong-slide-two-toggle" type="radio" name="${lessonId}-wrong-card-two-carousel" id="${lessonId}-wrong-card-two-slide-two" />
+                    <div class="wrong-carousel-window">
+                      <div class="wrong-carousel-track">
+                        <figure class="wrong-carousel-slide">
+                          <img
+                            src="https://static.wixstatic.com/media/7638b6_a894e89316604b2d8d33688b97811959~mv2.png"
+                            alt="First carousel slide for the second wrong thinking card"
+                          />
+                        </figure>
+                        <figure class="wrong-carousel-slide">
+                          <img
+                            src="https://static.wixstatic.com/media/7638b6_16fe653c77904001a72b0786dd8fce2c~mv2.png"
+                            alt="Second carousel slide for the second wrong thinking card"
+                          />
+                        </figure>
+                      </div>
+                    </div>
+                    <div class="wrong-carousel-controls">
+                      <label class="wrong-dot-one" for="${lessonId}-wrong-card-two-slide-one">1</label>
+                      <label class="wrong-dot-two" for="${lessonId}-wrong-card-two-slide-two">2</label>
+                      <label class="wrong-popup-close" for="${lessonId}-wrong-card-two">Close</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <article class="market-image-story">
+          <figure class="market-theology-visual">
+            <img
+              src="https://static.wixstatic.com/media/7638b6_5f69750a6fca42718c433eaf03285fc7~mv2.png"
+              alt="Faithonomics visual exploring economic thinking and theological teaching"
+            />
+          </figure>
+          <p>
+            At times our Christian way of thinking sees economics as being a science based on natural laws, and we
+            should only correct it when it is in clear conflict with Bible morals. For example, liberal economic
+            theories suggest that society works because people focus on their own needs and try to outdo each other.
+          </p>
+          <p>
+            On the other hand, in socialist theories, the key goals are people cooperating and ensuring everyone is
+            treated equally. However, both of these approaches omit God from these important human interactions.
+          </p>
+          <p>
+            Economic thought and theological teaching in the past were deeply connected. God's provision and justice
+            formed the foundation for understanding how society should organise resources and care for people.
+          </p>
+          <p>
+            During the period of the Enlightenment, God's wisdom was replaced by reason and human experience. Divine
+            guidance on economic thought was replaced by thinkers like Adam Smith with the autonomous market system
+            and Karl Marx with the socio-economic "laws" of historical development.
+          </p>
+          <p class="closing-line">
+            Removing God from the choices we make in what we have, how we work and how we use what we have directly
+            affects our relationship with God. Redefining God, humanity and our worship of God.
+          </p>
+        </article>
 
         <section class="callout scripture-reflection">
           <h3>Read Matthew 6:25-34</h3>
