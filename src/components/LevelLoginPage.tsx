@@ -19,6 +19,8 @@ export const LevelLoginPage = ({
   const [username, setUsername] = useState(firstCredential?.username ?? "");
   const [password, setPassword] = useState(firstCredential?.password ?? "");
   const [error, setError] = useState("");
+  const selectedCredential =
+    levelAccessCredentials.find((credential) => credential.moduleId === moduleId) ?? firstCredential;
 
   useEffect(() => {
     const nextCredential =
@@ -51,7 +53,8 @@ export const LevelLoginPage = ({
             />
           </div>
           <h1>Student Portal</h1>
-          <p>Sign in with the login issued for your level.</p>
+          <p>Sign in with the login issued for your selected level.</p>
+          {selectedCredential ? <span className="login-selected-level">{selectedCredential.levelTitle}</span> : null}
           <button className="login-back-button" type="button" onClick={onBack}>
             View all courses
           </button>
@@ -99,7 +102,7 @@ export const LevelLoginPage = ({
           {error ? <p className="status error">{error}</p> : null}
           <button className="primary-button" type="submit">
             <LogIn size={18} />
-            Open student page
+            {selectedCredential ? `Open ${selectedCredential.levelTitle}` : "Open student page"}
           </button>
         </form>
       </section>
