@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Level 1 Economic Alignment papercraft classroom scene</title>
+  <desc id="desc">A warm papercraft desk scene with a laptop, checklist, cross-lit city, growth arrow and open path.</desc>
+  <defs>
+    <linearGradient id="paper" x1="0" x2="1" y1="0" y2="1">
+      <stop stop-color="#f7f3e8"/>
+      <stop offset="1" stop-color="#e8d8b8"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" x2="1">
+      <stop stop-color="#1e2a33"/>
+      <stop offset="1" stop-color="#234638"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" x2="1">
+      <stop stop-color="#b99245"/>
+      <stop offset="1" stop-color="#d99a3d"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#17130f" flood-opacity=".25"/>
+    </filter>
+    <pattern id="fibres" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M4 10h36M10 34h30M20 6h20" stroke="#9a6b3f" stroke-opacity=".08"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="900" fill="url(#paper)"/>
+  <rect width="1600" height="900" fill="url(#fibres)"/>
+  <path d="M0 595c220-104 390-104 580-30s360 78 570-12 333-128 450-82v429H0z" fill="#234638"/>
+  <path d="M0 650c240-82 450-64 650 14s402 34 610-60 260-78 340-50v346H0z" fill="#4f6b3a" opacity=".72"/>
+  <rect y="690" width="1600" height="210" fill="#5b3a24"/>
+  <g filter="url(#shadow)">
+    <rect x="420" y="445" width="470" height="255" rx="16" fill="#9a6b3f"/>
+    <rect x="444" y="469" width="422" height="202" rx="8" fill="#f7f3e8"/>
+    <path d="M456 650c120-82 236-82 396 0v21H456z" fill="#234638"/>
+    <circle cx="648" cy="560" r="55" fill="#d99a3d"/>
+    <path d="M470 642c70-64 126-95 183-95 65 0 130 42 195 106" fill="none" stroke="#b99245" stroke-width="18"/>
+    <rect x="475" y="706" width="420" height="36" rx="6" fill="#e8d8b8"/>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="888" y="344" width="250" height="390" rx="28" fill="#f7f3e8"/>
+    <rect x="892" y="700" width="245" height="35" rx="8" fill="#234638"/>
+    <g fill="#b99245">
+      <circle cx="940" cy="410" r="22"/><circle cx="940" cy="482" r="22"/><circle cx="940" cy="554" r="22"/><circle cx="940" cy="626" r="22"/>
+    </g>
+    <g stroke="#f7f3e8" stroke-width="7" fill="none">
+      <path d="m928 408 10 10 18-24"/><path d="m928 480 10 10 18-24"/><path d="m928 552 10 10 18-24"/><path d="m928 624 10 10 18-24"/>
+    </g>
+    <g stroke="#9a6b3f" stroke-width="8" opacity=".7">
+      <path d="M982 408h110M982 430h80M982 480h112M982 502h72M982 552h118M982 574h86M982 624h120M982 646h70"/>
+    </g>
+  </g>
+  <g filter="url(#shadow)">
+    <path d="M1130 705c70-98 176-164 318-198" fill="none" stroke="#b99245" stroke-width="56" stroke-linecap="round"/>
+    <path d="M1162 690c63-74 158-125 276-154" fill="none" stroke="#f7f3e8" stroke-width="16" stroke-linecap="round"/>
+    <rect x="1175" y="515" width="118" height="185" rx="10" fill="#b99245"/>
+    <rect x="1198" y="540" width="72" height="130" rx="12" fill="#f7f3e8"/>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1138" y="244" width="16" height="246" fill="#d99a3d"/>
+    <rect x="1040" y="342" width="224" height="16" fill="#d99a3d"/>
+    <path d="M1120 230c-60 160-150 254-292 320" fill="none" stroke="#f7f3e8" stroke-width="3" opacity=".8"/>
+    <g fill="#234638">
+      <rect x="1090" y="430" width="55" height="140"/><rect x="1160" y="405" width="50" height="165"/><rect x="1225" y="470" width="50" height="100"/><rect x="1288" y="390" width="60" height="180"/>
+    </g>
+    <path d="M1265 590l150-150 50 50 44-150 34 168-52-52-166 166z" fill="url(#gold)"/>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1180" y="690" width="170" height="116" rx="6" fill="#e8d8b8"/>
+    <rect x="1210" y="660" width="122" height="42" rx="8" fill="#f7f3e8"/>
+    <g stroke="#9a6b3f" stroke-width="4">
+      <path d="M1205 720h112M1205 750h112M1205 780h112"/>
+      <path d="M1230 706v90M1268 706v90M1306 706v90"/>
+    </g>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="278" y="748" width="210" height="56" rx="7" fill="#234638"/>
+    <rect x="290" y="730" width="188" height="42" rx="6" fill="#7c8f5a"/>
+    <path d="M350 738l92 50" stroke="#b99245" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="338" cy="730" r="9" fill="#d99a3d"/>
+    <circle cx="458" cy="786" r="9" fill="#d99a3d"/>
+  </g>
+</svg>
