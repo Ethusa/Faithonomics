@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Header, type PortalView } from "./components/Header";
+import { CourseIntroPage } from "./components/CourseIntroPage";
 import { LearnerDashboard } from "./components/LearnerDashboard";
 import { LevelLoginPage } from "./components/LevelLoginPage";
 import { LessonView } from "./components/LessonView";
@@ -14,6 +15,7 @@ const usePortalState = () => {
   const [activeCourseId, setActiveCourseId] = useState(courses[0]?.id ?? "");
   const [activeLessonId, setActiveLessonId] = useState(lessons[0]?.id ?? "");
   const [activeLevelId, setActiveLevelId] = useState<string | null>(null);
+  const [selectedLoginLevelId, setSelectedLoginLevelId] = useState<string | null>(null);
   const [completedLessonIds, setCompletedLessonIds] = useState<Set<string>>(
     () => new Set(progress.filter((item) => item.status === "completed").map((item) => item.lessonId)),
   );
@@ -30,6 +32,8 @@ const usePortalState = () => {
     setActiveLessonId,
     activeLevelId,
     setActiveLevelId,
+    selectedLoginLevelId,
+    setSelectedLoginLevelId,
     completedLessonIds,
     setCompletedLessonIds,
     drawerOpen,
@@ -56,11 +60,13 @@ export const App = () => {
     state.setActiveCourseId(courses[0]?.id ?? "");
     state.setActiveLessonId(firstLevelLesson?.id ?? lessons[0]?.id ?? "");
     state.setActiveLevelId(access.moduleId);
+    state.setSelectedLoginLevelId(null);
     state.setView("learner");
   };
 
   const logout = () => {
     state.setActiveLevelId(null);
+    state.setSelectedLoginLevelId(null);
     state.setIdentity(identities.learner);
     state.setView("learner");
   };
@@ -76,7 +82,15 @@ export const App = () => {
   if (!state.activeLevelId) {
     return (
       <div className="app-shell">
-        <LevelLoginPage onLogin={loginToLevel} />
+        {state.selectedLoginLevelId ? (
+          <LevelLoginPage
+            initialModuleId={state.selectedLoginLevelId}
+            onBack={() => state.setSelectedLoginLevelId(null)}
+            onLogin={loginToLevel}
+          />
+        ) : (
+          <CourseIntroPage onSelectLevel={state.setSelectedLoginLevelId} />
+        )}
       </div>
     );
   }

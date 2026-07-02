@@ -1,0 +1,142 @@
+import { useEffect, useMemo, useState } from "react";
+import { enrolments, identities, lessons, modules, progress } from "../data/sampleData";
+import { calculateCompletionPercent, sortLessons } from "../domain/progress";
+import type { CourseModule, Enrolment, LessonProgress } from "../domain/types";
+import { repository } from "../services/singleton";
+import { PlayCircle } from "./Icons";
+
+type CourseStatus = "completed" | "current" | "upcoming";
+
+const learner = identities.learner;
+const learnerEnrolment =
+  enrolments.find((enrolment) => enrolment.memberId === learner.memberId) ?? null;
+
+const getLevelNumber = (module: CourseModule): string => module.title.match(/\d+/)?.[0] ?? `${module.sequence}`;
+
+const getCourseStatuses = (
+  courseModules: CourseModule[],
+  progressRecords: LessonProgress[],
+  enrolment: Enrolment | null,
+): Map<string, CourseStatus> => {
+  const statuses = new Map<string, CourseStatus>();
+  if (!enrolment) {
+    courseModules.forEach((module, index) => {
+      statuses.set(module.id, index === 0 ? "current" : "upcoming");
+    });
+    return statuses;
+  }
+
+  const completedModuleIds = new Set(
+    courseModules
+      .filter((module) => {
+        const moduleLessons = lessons.filter((lesson) => lesson.moduleId === module.id);
+        return calculateCompletionPercent(moduleLessons, progressRecords, enrolment.id) === 100;
+      })
+      .map((module) => module.id),
+  );
+  const currentModule = courseModules.find((module) => !completedModuleIds.has(module.id)) ?? courseModules.at(-1);
+
+  courseModules.forEach((module) => {
+    const status: CourseStatus = completedModuleIds.has(module.id)
+      ? "completed"
+      : module.id === currentModule?.id
+        ? "current"
+        : "upcoming";
+    statuses.set(module.id, status);
+  });
+
+  return statuses;
+};
+
+export const CourseIntroPage = ({ onSelectLevel }: { onSelectLevel: (moduleId: string) => void }) => {
+  const [liveProgress, setLiveProgress] = useState<LessonProgress[]>(progress);
+  const sortedModules = useMemo(() => [...modules].sort((a, b) => a.sequence - b.sequence), []);
+  const statuses = useMemo(
+    () => getCourseStatuses(sortedModules, liveProgress, learnerEnrolment),
+    [liveProgress, sortedModules],
+  );
+
+  useEffect(() => {
+    let active = true;
+
+    if (!learnerEnrolment) {
+      return () => {
+        active = false;
+      };
+    }
+
+    repository
+      .listProgress(learnerEnrolment.id)
+      .then((records) => {
+        if (active) {
+          setLiveProgress(records);
+        }
+      })
+      .catch(() => {
+        if (active) {
+          setLiveProgress(progress);
+        }
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  return (
+    <main className="course-intro-page">
+      <section className="course-intro-hero">
+        <div>
+          <p className="eyebrow">Faithonomics courses</p>
+          <h1>Choose Your Level</h1>
+          <p>
+            Start with the current level, review completed learning, or see what is coming next in the
+            Faithonomics pathway.
+          </p>
+        </div>
+      </section>
+
+      <section className="intro-course-grid" aria-label="Faithonomics levels">
+        {sortedModules.map((module) => {
+          const status = statuses.get(module.id) ?? "upcoming";
+          const levelLessons = sortLessons(lessons.filter((lesson) => lesson.moduleId === module.id));
+          const percent = learnerEnrolment
+            ? calculateCompletionPercent(levelLessons, liveProgress, learnerEnrolment.id)
+            : status === "completed"
+              ? 100
+              : 0;
+          const levelNumber = getLevelNumber(module);
+
+          return (
+            <article key={module.id} className={`intro-course-card ${status}`}>
+              <button
+                className="intro-course-image-link"
+                type="button"
+                onClick={() => onSelectLevel(module.id)}
+                aria-label={`Open ${module.title}`}
+              >
+                {module.imageUrl ? <img src={module.imageUrl} alt={module.imageAlt ?? module.title} /> : null}
+                <span>{status}</span>
+              </button>
+              <div className="intro-course-details">
+                <div>
+                  <p className="eyebrow">Level {levelNumber}</p>
+                  <h2>{module.title.replace(/^Level \d+:\s*/, "")}</h2>
+                  <p>{module.description}</p>
+                </div>
+                <div className="intro-course-meta">
+                  <span>{levelLessons.length} sessions</span>
+                  <span>{percent}% complete</span>
+                </div>
+                <button className="course-link-button" type="button" onClick={() => onSelectLevel(module.id)}>
+                  <PlayCircle size={18} />
+                  Open course
+                </button>
+              </div>
+            </article>
+          );
+        })}
+      </section>
+    </main>
+  );
+};

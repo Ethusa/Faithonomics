@@ -1,19 +1,33 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { levelAccessCredentials } from "../data/sampleData";
 import { authenticateLevelAccess } from "../domain/levelAccess";
 import type { LevelAccessCredential } from "../domain/types";
 import { LogIn } from "./Icons";
 
 export const LevelLoginPage = ({
+  initialModuleId,
+  onBack,
   onLogin,
 }: {
+  initialModuleId?: string | null;
+  onBack: () => void;
   onLogin: (access: LevelAccessCredential) => void;
 }) => {
-  const firstCredential = levelAccessCredentials[0];
+  const firstCredential =
+    levelAccessCredentials.find((credential) => credential.moduleId === initialModuleId) ?? levelAccessCredentials[0];
   const [moduleId, setModuleId] = useState(firstCredential?.moduleId ?? "");
   const [username, setUsername] = useState(firstCredential?.username ?? "");
   const [password, setPassword] = useState(firstCredential?.password ?? "");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    const nextCredential =
+      levelAccessCredentials.find((credential) => credential.moduleId === initialModuleId) ?? levelAccessCredentials[0];
+    setModuleId(nextCredential?.moduleId ?? "");
+    setUsername(nextCredential?.username ?? "");
+    setPassword(nextCredential?.password ?? "");
+    setError("");
+  }, [initialModuleId]);
 
   const submitLogin = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -38,6 +52,9 @@ export const LevelLoginPage = ({
           </div>
           <h1>Student Portal</h1>
           <p>Sign in with the login issued for your level.</p>
+          <button className="login-back-button" type="button" onClick={onBack}>
+            View all courses
+          </button>
         </div>
         <form className="login-form" onSubmit={submitLogin}>
           <label>
