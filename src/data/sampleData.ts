@@ -76,7 +76,7 @@ const curriculum = [
     title: "Level 2: God's Economic Framework",
     description: "Understand creation, household, and community as economic foundations.",
     sessions: ["The Household Model of Economics", "The Economy of Creation", "The Economy of Community", "Monday Morning"],
-    imageUrl: "https://static.wixstatic.com/media/7638b6_71676a8bba0c4e7b919f743daae40178~mv2.png",
+    imageUrl: "https://static.wixstatic.com/media/7638b6_c29d7165ba394234ad2f0e43b16ed57b~mv2.png",
     imageAlt: "Faithonomics Level 2 course artwork.",
   },
   {
@@ -97,7 +97,7 @@ const curriculum = [
     title: "Level 5: God the Economist",
     description: "Practise abundance, ownership, and creative stewardship.",
     sessions: ["More Than Enough", "Who Really Owns It?", "Created to Create", "Monday Morning"],
-    imageUrl: "https://static.wixstatic.com/media/7638b6_71676a8bba0c4e7b919f743daae40178~mv2.png",
+    imageUrl: "https://static.wixstatic.com/media/7638b6_1625036257f242189f311908439e6f57~mv2.png",
     imageAlt: "Faithonomics Level 5 course artwork.",
   },
   {

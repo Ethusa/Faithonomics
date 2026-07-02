@@ -56,7 +56,9 @@ const getCourseStatuses = (
 
 export const CourseIntroPage = ({ onSelectLevel }: { onSelectLevel: (moduleId: string) => void }) => {
   const [liveProgress, setLiveProgress] = useState<LessonProgress[]>(progress);
+  const [aboutModuleId, setAboutModuleId] = useState<string | null>(null);
   const sortedModules = useMemo(() => sortModulesNumerically(modules), []);
+  const aboutModule = sortedModules.find((module) => module.id === aboutModuleId) ?? null;
   const statuses = useMemo(
     () => getCourseStatuses(sortedModules, liveProgress, learnerEnrolment),
     [liveProgress, sortedModules],
@@ -125,24 +127,52 @@ export const CourseIntroPage = ({ onSelectLevel }: { onSelectLevel: (moduleId: s
                 <span>{status}</span>
               </button>
               <div className="intro-course-details">
-                <div>
-                  <p className="eyebrow">Level {levelNumber}</p>
-                  <h2>{module.title.replace(/^Level \d+:\s*/, "")}</h2>
-                  <p>{module.description}</p>
-                </div>
                 <div className="intro-course-meta">
+                  <span>Level {levelNumber}</span>
                   <span>{levelLessons.length} sessions</span>
                   <span>{percent}% complete</span>
                 </div>
-                <button className="course-link-button" type="button" onClick={() => onSelectLevel(module.id)}>
-                  <PlayCircle size={18} />
-                  Open course
-                </button>
+                <div className="intro-course-actions">
+                  <button className="course-link-button" type="button" onClick={() => onSelectLevel(module.id)}>
+                    <PlayCircle size={18} />
+                    Open course
+                  </button>
+                  <button className="about-button" type="button" onClick={() => setAboutModuleId(module.id)}>
+                    About
+                  </button>
+                </div>
               </div>
             </article>
           );
         })}
       </section>
+      {aboutModule ? (
+        <div className="course-about-modal" role="dialog" aria-modal="true" aria-labelledby="course-about-title">
+          <button
+            className="course-about-backdrop"
+            type="button"
+            aria-label="Close about"
+            onClick={() => setAboutModuleId(null)}
+          />
+          <article className="course-about-panel">
+            {aboutModule.imageUrl ? <img src={aboutModule.imageUrl} alt="" /> : null}
+            <div>
+              <p className="eyebrow">Level {getLevelNumber(aboutModule)}</p>
+              <h2 id="course-about-title">{aboutModule.title.replace(/^Level \d+:\s*/, "")}</h2>
+              <p>{aboutModule.description}</p>
+              <div className="intro-course-actions">
+                <button className="course-link-button" type="button" onClick={() => onSelectLevel(aboutModule.id)}>
+                  <PlayCircle size={18} />
+                  Open course
+                </button>
+                <button className="about-button" type="button" onClick={() => setAboutModuleId(null)}>
+                  Close
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      ) : null}
     </main>
   );
 };

@@ -358,7 +358,6 @@ p {
   min-width: 0;
   display: grid;
   gap: 14px;
-  align-content: space-between;
   padding: 16px;
 }
 
@@ -392,6 +391,7 @@ p {
 }
 
 .course-link-button,
+.about-button,
 .login-back-button {
   min-height: 40px;
   display: inline-flex;
@@ -403,6 +403,13 @@ p {
   font-weight: 800;
 }
 
+.intro-course-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
 .course-link-button {
   width: fit-content;
   border: 1px solid var(--deep-forest);
@@ -411,10 +418,73 @@ p {
   padding: 0 14px;
 }
 
+.about-button {
+  width: fit-content;
+  border: 1px solid rgba(91, 58, 36, 0.26);
+  background: rgba(247, 243, 232, 0.9);
+  color: var(--deep-forest);
+  padding: 0 14px;
+}
+
 .intro-course-card.upcoming .course-link-button {
   border-color: rgba(91, 58, 36, 0.4);
   background: rgba(247, 243, 232, 0.84);
   color: var(--deep-forest);
+}
+
+.course-about-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: clamp(14px, 3vw, 30px);
+}
+
+.course-about-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(23, 19, 15, 0.66);
+  backdrop-filter: blur(5px);
+  cursor: pointer;
+}
+
+.course-about-panel {
+  position: relative;
+  z-index: 1;
+  width: min(760px, 100%);
+  display: grid;
+  grid-template-columns: minmax(180px, 0.48fr) minmax(0, 1fr);
+  gap: clamp(16px, 3vw, 24px);
+  align-items: center;
+  border: 1px solid rgba(185, 146, 69, 0.46);
+  border-radius: 8px;
+  padding: clamp(16px, 3vw, 24px);
+  background:
+    linear-gradient(145deg, rgba(247, 243, 232, 0.98), rgba(232, 216, 184, 0.92)),
+    radial-gradient(circle at 100% 0%, rgba(79, 107, 58, 0.14), transparent 34%);
+  box-shadow: 0 30px 70px rgba(23, 19, 15, 0.36);
+}
+
+.course-about-panel img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.course-about-panel h2 {
+  margin-bottom: 10px;
+  color: var(--deep-forest);
+  font-size: clamp(1.45rem, 4vw, 2.2rem);
+  line-height: 1.08;
+}
+
+.course-about-panel p:not(.eyebrow) {
+  color: var(--deep-kraft);
+  line-height: 1.58;
 }
 
 .login-page {
@@ -2952,6 +3022,19 @@ fieldset {
 }
 
 @media (max-width: 560px) {
+  .course-about-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .course-about-panel img {
+    max-height: 240px;
+  }
+
+  .course-link-button,
+  .about-button {
+    flex: 1 1 140px;
+  }
+
   .stat-strip {
     grid-template-columns: 1fr;
   }
