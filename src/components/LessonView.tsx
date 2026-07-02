@@ -28,6 +28,8 @@ import type {
   LessonContentBlock,
   LessonProgress,
   Question,
+  QuizAttempt,
+  Submission,
 } from "../domain/types";
 import { repository } from "../services/singleton";
 import {
@@ -241,6 +243,9 @@ const ActivityStatus = ({ completed }: { completed: boolean }) => (
 
 const ActivityPanel = ({
   activity,
+  courseId,
+  lessonId,
+  enrolment,
   identity,
   completed,
   discussionPosts,
@@ -250,6 +255,9 @@ const ActivityPanel = ({
   onAddReply,
 }: {
   activity: Activity;
+  courseId: string;
+  lessonId: string;
+  enrolment: Enrolment | null;
   identity: LearnerIdentity;
   completed: boolean;
   discussionPosts: DiscussionPost[];
@@ -267,6 +275,46 @@ const ActivityPanel = ({
   const [postBody, setPostBody] = useState("");
   const [replyBodyByPost, setReplyBodyByPost] = useState<Record<string, string>>({});
   const h5pFrameRef = useRef<HTMLIFrameElement | null>(null);
+
+  const saveSubmissionRecord = (responseText: string) => {
+    if (!enrolment) {
+      return;
+    }
+
+    const submittedAt = new Date().toISOString();
+    const submission: Submission = {
+      id: `submission-${activity.id}-${identity.memberId}`,
+      activityId: activity.id,
+      lessonId,
+      courseId,
+      enrolmentId: enrolment.id,
+      memberId: identity.memberId,
+      contactId: enrolment.contactId,
+      responseText,
+      status: "submitted",
+      submittedAt,
+    };
+    void repository.saveSubmission(submission).catch(() => undefined);
+  };
+
+  const saveQuizAttemptRecord = (answers: Record<string, string | string[]>, score: number, maxScore: number) => {
+    if (!enrolment) {
+      return;
+    }
+
+    const attempt: QuizAttempt = {
+      id: `quiz-${activity.id}-${identity.memberId}-${Date.now()}`,
+      activityId: activity.id,
+      lessonId,
+      memberId: identity.memberId,
+      enrolmentId: enrolment.id,
+      answers,
+      score,
+      maxScore,
+      submittedAt: new Date().toISOString(),
+    };
+    void repository.saveQuizAttempt(attempt).catch(() => undefined);
+  };
 
   const activityQuestions = questions.filter((question) => question.activityId === activity.id);
   const choices = answerChoices.filter((choice) =>
@@ -312,6 +360,7 @@ const ActivityPanel = ({
           className="secondary-button"
           onClick={() => {
             setFeedback("Answer saved.");
+            saveSubmissionRecord(reflectionText);
             onComplete(activity, activity.maxScore, activity.maxScore);
           }}
         >
@@ -403,7 +452,10 @@ const ActivityPanel = ({
           <button
             className="secondary-button"
             disabled={!meetsThreshold}
-            onClick={() => onComplete(activity, scaledScore, activity.maxScore)}
+            onClick={() => {
+              saveQuizAttemptRecord(videoAnswers, scaledScore, activity.maxScore);
+              onComplete(activity, scaledScore, activity.maxScore);
+            }}
           >
             Save video answers
           </button>
@@ -577,7 +629,12 @@ const ActivityPanel = ({
             className="secondary-button"
             disabled={!shortAnswersComplete}
             onClick={() => {
+              const shortAnswerPayload = activityQuestions.reduce<Record<string, string>>((payload, question) => {
+                payload[question.id] = getStringAnswer(selectedAnswers, question.id);
+                return payload;
+              }, {});
               setFeedback("Short answer saved for review.");
+              saveSubmissionRecord(JSON.stringify(shortAnswerPayload));
               onComplete(activity, activity.maxScore, activity.maxScore);
             }}
           >
@@ -738,7 +795,10 @@ const ActivityPanel = ({
         <button
           className="secondary-button"
           disabled={!canSubmitQuiz}
-          onClick={() => onComplete(activity, result.score, result.maxScore)}
+          onClick={() => {
+            saveQuizAttemptRecord(answerPayload, result.score, result.maxScore);
+            onComplete(activity, result.score, result.maxScore);
+          }}
         >
           Submit answers
         </button>
@@ -2542,6 +2602,9 @@ export const LessonView = ({
                 <img className="discussion-popup-hero" src={fourPillarsForumImage} alt="" />
                 <ActivityPanel
                   activity={linkedActivity}
+                  courseId={course.id}
+                  lessonId={lesson.id}
+                  enrolment={enrolment}
                   identity={identity}
                   completed={linkedActivityCompleted}
                   discussionPosts={discussionPostRecords}
@@ -2678,6 +2741,9 @@ export const LessonView = ({
             <ActivityPanel
               key={activity.id}
               activity={activity}
+              courseId={course.id}
+              lessonId={lesson.id}
+              enrolment={enrolment}
               identity={identity}
               completed={learnerActivityRecords.some(
                 (record) => record.activityId === activity.id && record.completed,
