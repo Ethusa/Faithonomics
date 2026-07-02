@@ -2695,7 +2695,7 @@ export const lessons: Lesson[] = curriculum.flatMap((level, levelIndex) =>
     const isMondayMorning = sessionTitle === "Monday Morning";
     const levelOneSessionArt: Record<number, { imageUrl: string; imageAlt: string }> = {
       1: {
-        imageUrl: "https://static.wixstatic.com/media/7638b6_58ab5c742514421194d57f0decba0044~mv2.png",
+        imageUrl: "https://static.wixstatic.com/media/7638b6_ebb07e58d7b64e3d8a99c272402c6dc9~mv2.png",
         imageAlt: "Papercraft Faithonomics choices scene for the opening session.",
       },
       2: {
