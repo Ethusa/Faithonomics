@@ -2047,10 +2047,12 @@ const LessonContentPanel = ({
   content,
   completed,
   onCompleteContent,
+  onContinueContent,
 }: {
   content: LessonContentBlock;
   completed: boolean;
   onCompleteContent: (contentId: string) => void;
+  onContinueContent?: () => void;
 }) => {
   const required = content.completionRequired !== false;
   const isWixAsset = isWixMediaReference(content.url);
@@ -2150,7 +2152,19 @@ const LessonContentPanel = ({
       {body}
       {required && isCheckpointVideo ? (
         <div className="step-toolbar">
-          <span className="status">This step completes only after the checkpoint quiz and full video.</span>
+          <button
+            className={completed ? "primary-button" : "secondary-button"}
+            disabled={!completed}
+            type="button"
+            onClick={onContinueContent}
+          >
+            {completed ? "Continue" : "Complete video first"}
+          </button>
+          <span className={completed ? "status success" : "status"}>
+            {completed
+              ? "Video, quiz, and final video segment complete. Continue to the next step."
+              : "This button activates after the checkpoint quiz and full video."}
+          </span>
           <ActivityStatus completed={completed} />
         </div>
       ) : required ? (
@@ -2597,6 +2611,9 @@ export const LessonView = ({
   const currentContent = currentContentIndex >= 0 ? visibleContent[currentContentIndex] : undefined;
   const hasPreviousContent = currentContentIndex > 0;
   const hasNextContent = currentContentIndex >= 0 && currentContentIndex < visibleContent.length - 1;
+  const advanceToNextContent = () => {
+    setActiveContentIndex((current) => Math.min(visibleContent.length - 1, current + 1));
+  };
 
   const completeLesson = () => {
     if (!gate.allowed) {
@@ -2725,6 +2742,7 @@ export const LessonView = ({
         content={content}
         completed={completedContentIds.includes(content.id)}
         onCompleteContent={markContentComplete}
+        onContinueContent={advanceToNextContent}
       />
     );
   };
