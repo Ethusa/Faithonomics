@@ -235,6 +235,137 @@ const dailyGrindVideoCheckpoint = {
     "Thabo's coffee choice, Johan's business decision, and the government's farming policy all point to one lesson: economics is not only about money, banks, graphs, or difficult maths. It is about the choices people make with what they have. Because choices are shaped by what people value and believe, our morals and faith must guide our economic life.",
 } satisfies NonNullable<Lesson["content"][number]["videoCheckpoint"]>;
 
+const taleOfTwoCitiesVideoCheckpoint = {
+  id: "tale-of-two-cities-video-checkpoint",
+  timeSeconds: 581,
+  title: "Interactive Quiz: Tale of Two Cities",
+  questions: [
+    {
+      id: "tale-edenic-economy",
+      prompt:
+        "According to the Bible's account of human history, what was the defining characteristic of humanity's role in the Edenic economy?",
+      choices: [
+        "The accumulation of surplus goods for future trade",
+        "Labour as a form of penance for existence",
+        "Stewardship of resources belonging to the Creator",
+        "Final ownership of the land and its resources",
+        "Determining the price of goods through market demand",
+        "Developing technology to master the natural world",
+      ],
+      correctAnswer: "Stewardship of resources belonging to the Creator",
+      feedback:
+        "Correct. Eden begins with stewardship: people receive creation as a trust from the Creator rather than as final owners.",
+    },
+    {
+      id: "tale-first-meltdown",
+      prompt: "What is the first economic meltdown in human history?",
+      choices: [
+        "The depletion of natural resources due to over-farming",
+        "The failure of the irrigation systems in Eden",
+        "A heart that no longer trusts in divine provision",
+        "The introduction of currency and debt cycles",
+        "The sudden inflation of value within the garden",
+        "The collapse of the first market in the wilderness",
+      ],
+      correctAnswer: "A heart that no longer trusts in divine provision",
+      feedback:
+        "Correct. The first collapse begins inside the human heart when trust in God's provision gives way to grasping and suspicion.",
+    },
+    {
+      id: "tale-cain-enoch",
+      prompt: "What motivated Cain to build the city of Enoch after the conflict with Abel?",
+      choices: [
+        "A plan to centralize the worship of the Creator",
+        "An attempt to restore the abundance of the lost Eden",
+        "A divine mandate to expand the borders of the garden",
+        "The need to establish a fair system of trade between tribes",
+        "A desire for self-protection and security in his own strength",
+        "The pursuit of artistic beauty through metalwork and music",
+      ],
+      correctAnswer: "A desire for self-protection and security in his own strength",
+      feedback:
+        "Correct. Cain's city is presented as security built around human strength after broken trust and exile.",
+    },
+    {
+      id: "tale-babel-goal",
+      prompt: "According to the analysis of Babel, what was the primary goal of the tower and city project?",
+      choices: [
+        "To make a name for humanity without a divine centre",
+        "To preserve linguistic diversity through written records",
+        "To create a global distribution network for surplus grain",
+        "To bridge the gap between human labour and divine rest",
+        "To establish a centralised system of debt and credit",
+        "To defend against the rising power of neighbouring empires",
+      ],
+      correctAnswer: "To make a name for humanity without a divine centre",
+      feedback:
+        "Correct. Babel gathers human ambition around self-made greatness rather than worship, trust, and divine centre.",
+    },
+    {
+      id: "tale-babylon-unstable",
+      prompt: "The prophets describe the economy of Babylon as morally unstable because its beauty was dependent on what?",
+      choices: [
+        "The use of unsustainable farming practices in the fertile crescent",
+        "The isolationist trade policies that limited its wealth",
+        "A lack of skilled labour and technological advancement",
+        "Extraction, forced labour, and the exploitation of the weak",
+        "High levels of inflation caused by military overspending",
+        "Frequent natural disasters that interrupted its markets",
+      ],
+      correctAnswer: "Extraction, forced labour, and the exploitation of the weak",
+      feedback:
+        "Correct. Babylon can look impressive, but the prophets expose the injustice and exploitation underneath its wealth.",
+    },
+    {
+      id: "tale-new-jerusalem-economy",
+      prompt: "How is the New Jerusalem's economy fundamentally different from Babylon's?",
+      choices: [
+        "It sends blessing outward and brings healing to the nations",
+        "It returns humanity to a primitive, pre-urban state",
+        "It eliminates the need for human work and creativity",
+        "It relies on a strictly barter-based system without value",
+        "It restricts its resources to a specific chosen population",
+        "It is built on the foundations of human debt and labour",
+      ],
+      correctAnswer: "It sends blessing outward and brings healing to the nations",
+      feedback:
+        "Correct. The New Jerusalem is not built on extraction. Its life flows outward as healing and blessing for the nations.",
+    },
+    {
+      id: "tale-work-restored",
+      prompt: "In the New Jerusalem, what happens to the concept of work?",
+      choices: [
+        "It is restored to its original purpose of joyful cultivation",
+        "It remains a painful toil due to the resistance of the ground",
+        "It is automated through advanced celestial technology",
+        "It is categorised strictly as religious ritual worship",
+        "It becomes a way to earn a higher status within the city",
+        "It is replaced by eternal leisure and rest",
+      ],
+      correctAnswer: "It is restored to its original purpose of joyful cultivation",
+      feedback:
+        "Correct. Work is not erased. It is healed and restored as joyful, fruitful service before God.",
+    },
+    {
+      id: "tale-decisive-question",
+      prompt: "What is identified as the decisive question behind every economy in the Bible?",
+      choices: [
+        "Which ruler possesses the most military power?",
+        "How can it most effectively eliminate the need for labour?",
+        "Who or what stands at its centre?",
+        "How much gross domestic product can it generate?",
+        "What is the most efficient use of available technology?",
+        "How can it achieve a state of permanent human unity?",
+      ],
+      correctAnswer: "Who or what stands at its centre?",
+      feedback:
+        "Correct. Biblical economics keeps asking what occupies the centre: God and neighbour, or human pride, fear, and control.",
+    },
+  ],
+  conclusion:
+    "The story moves from Eden's stewardship, through cities shaped by fear and pride, toward the New Jerusalem where work, resources, and public life are restored around God's presence and blessing.",
+} satisfies NonNullable<Lesson["content"][number]["videoCheckpoint"]>;
+
 const richLessonStepHtml = (
   content: string,
   options: { includeCompleteButton?: boolean; completeButtonLabel?: string } = {},
@@ -2757,6 +2888,15 @@ export const lessons: Lesson[] = curriculum.flatMap((level, levelIndex) =>
     }
 
     if (levelNumber === 1 && sessionNumber === 2) {
+      content[0] = {
+        id: `${id}-tale-of-two-cities-video`,
+        kind: "video",
+        title: "Step 1: Tale of Two Cities",
+        body:
+          "Watch the teaching video. At 9:41 it pauses for a checkpoint quiz. Read the feedback, then continue the video to unlock the next step.",
+        url: "https://youtu.be/th2TF7u2TxQ",
+        videoCheckpoint: taleOfTwoCitiesVideoCheckpoint,
+      };
       content.splice(3, 0, {
         id: `${id}-resource-link`,
         kind: "webLink",
