@@ -493,6 +493,19 @@ const richLessonStepHtml = (
       background: rgba(217, 154, 61, 0.1);
     }
 
+    .lesson-graphic {
+      width: 100%;
+      margin: 18px 0;
+    }
+
+    .lesson-graphic img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 16px 34px rgba(91, 58, 36, 0.14);
+    }
+
     .comparison {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -2832,23 +2845,12 @@ const createCityEconomicEngineStep = (lessonId: string): Lesson["content"][numbe
       economically, culturally and theologically when human life becomes concentrated in a city.
     </p>
 
-    <div class="grid">
-      <section class="card">
-        <strong>Global output</strong>
-        <h3>80% of global GDP</h3>
-        <p>Cities generate about 80% of global economic output, making them major engines of production and exchange.</p>
-      </section>
-      <section class="card">
-        <strong>Job creation</strong>
-        <h3>88% of private-sector jobs</h3>
-        <p>Between 2010 and 2020, cities accounted for about 88% of private-sector job creation.</p>
-      </section>
-      <section class="card">
-        <strong>Urban future</strong>
-        <h3>Nearly seven in ten</h3>
-        <p>By 2050, nearly seven in ten people are expected to live in urban areas.</p>
-      </section>
-    </div>
+    <figure class="lesson-graphic">
+      <img
+        src="https://static.wixstatic.com/media/7638b6_da7050914e224c23ae51c23e720e1766~mv2.png"
+        alt="City economy statistics graphic."
+      />
+    </figure>
 
     <section class="card">
       <strong>The modern city</strong>

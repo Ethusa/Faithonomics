@@ -117,7 +117,13 @@ describe("level access", () => {
     const cityStep = competingParadigms?.content[1];
     expect(cityStep?.kind).toBe("customHtml");
     expect(cityStep?.body).toContain("The City: Economic Engine and Human Vocation");
-    expect(cityStep?.body).toContain("80% of global GDP");
+    expect(cityStep?.body).toContain("7638b6_da7050914e224c23ae51c23e720e1766");
+    expect(cityStep?.body).not.toContain("Global output");
+    expect(cityStep?.body).not.toContain("80% of global GDP");
+    expect(cityStep?.body).not.toContain("Job creation");
+    expect(cityStep?.body).not.toContain("88% of private-sector jobs");
+    expect(cityStep?.body).not.toContain("Urban future");
+    expect(cityStep?.body).not.toContain("Nearly seven in ten");
     expect(cityStep?.body).toContain("Agglomeration economies");
     expect(cityStep?.body).toContain("The city's moral budget");
     expect(cityStep?.body).toContain("Interdisciplinary synthesis matrix");
