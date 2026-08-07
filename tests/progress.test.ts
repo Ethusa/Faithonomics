@@ -26,6 +26,32 @@ describe("lesson progress", () => {
     expect(states[1]?.locked).toBe(true);
   });
 
+  it("unlocks the next session in a level when the previous session is complete", () => {
+    const enrolment = enrolments[0];
+    expect(enrolment).toBeDefined();
+
+    const completedFirstSession: LessonProgress = {
+      id: "test-progress-level-1-session-1",
+      enrolmentId: enrolment!.id,
+      courseId: "course-faithonomics-core",
+      lessonId: "level-1-session-1-the-daily-grind",
+      memberId: identities.learner.memberId,
+      status: "completed",
+      percent: 100,
+      lastActivityAt: "2026-06-25T08:00:00.000Z",
+      completedAt: "2026-06-25T08:00:00.000Z",
+    };
+
+    const states = new Map(
+      getLessonLockStates(lessons, [completedFirstSession], enrolment!).map((state) => [state.lessonId, state.locked]),
+    );
+
+    expect(states.get("level-1-session-1-the-daily-grind")).toBe(false);
+    expect(states.get("level-1-session-2-competing-paradigms")).toBe(false);
+    expect(states.get("level-1-session-3-strategic-alignment")).toBe(true);
+    expect(states.get("level-2-session-1-the-household-model-of-economics")).toBe(false);
+  });
+
   it("locks a level until the previous level's required sessions are complete", () => {
     const enrolment = enrolments[0];
     expect(enrolment).toBeDefined();

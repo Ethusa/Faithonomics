@@ -44,21 +44,30 @@ export const getLessonLockStates = (
       .map((item) => item.lessonId),
   );
 
-  let previousRequiredIncomplete: Lesson | null = null;
-  return sortLessons(lessons).map((lesson) => {
-    const state: LessonLockState =
-      previousRequiredIncomplete === null
-        ? { lessonId: lesson.id, locked: false }
-        : {
-            lessonId: lesson.id,
-            locked: true,
-            reason: `Complete "${previousRequiredIncomplete.title}" first.`,
-          };
+  const lessonsByModule = new Map<string, Lesson[]>();
+  for (const lesson of sortLessons(lessons)) {
+    const moduleLessons = lessonsByModule.get(lesson.moduleId) ?? [];
+    moduleLessons.push(lesson);
+    lessonsByModule.set(lesson.moduleId, moduleLessons);
+  }
 
-    if (lesson.required && !completed.has(lesson.id)) {
-      previousRequiredIncomplete = lesson;
-    }
-    return state;
+  return Array.from(lessonsByModule.values()).flatMap((moduleLessons) => {
+    let previousRequiredIncomplete: Lesson | null = null;
+    return moduleLessons.map((lesson) => {
+      const state: LessonLockState =
+        previousRequiredIncomplete === null
+          ? { lessonId: lesson.id, locked: false }
+          : {
+              lessonId: lesson.id,
+              locked: true,
+              reason: `Complete "${previousRequiredIncomplete.title}" first.`,
+            };
+
+      if (lesson.required && !completed.has(lesson.id)) {
+        previousRequiredIncomplete = lesson;
+      }
+      return state;
+    });
   });
 };
 

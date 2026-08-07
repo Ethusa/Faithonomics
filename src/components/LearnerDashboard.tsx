@@ -4,7 +4,6 @@ import {
   calculateCompletionPercent,
   getContinueLesson,
   getLessonLockStates,
-  getLevelLockStates,
   sortLessons,
 } from "../domain/progress";
 import type { Course, CourseModule, Enrolment, LearnerIdentity, Lesson, LessonProgress } from "../domain/types";
@@ -30,8 +29,6 @@ const CourseCard = ({
   progressRecords: LessonProgress[];
   onOpenLesson: (courseId: string, lessonId: string) => void;
 }) => {
-  const allCourseLessons = sortLessons(lessons.filter((lesson) => lesson.courseId === course.id));
-  const courseModules = modules.filter((module) => module.courseId === course.id);
   const courseLessons = sortLessons(
     lessons.filter(
       (lesson) => lesson.courseId === course.id && (!activeLevel || lesson.moduleId === activeLevel.id),
@@ -42,17 +39,10 @@ const CourseCard = ({
     ? buildLocalProgress(course.id, identity, enrolment, completedLessonIds, progressRecords)
     : [];
   const percent = enrolment ? calculateCompletionPercent(courseLessons, courseProgress, enrolment.id) : 0;
-  const levelLockStates = new Map(
-    enrolment
-      ? getLevelLockStates(courseModules, allCourseLessons, courseProgress, enrolment).map((item) => [item.moduleId, item])
-      : [],
-  );
-  const activeLevelLock = activeLevel ? levelLockStates.get(activeLevel.id) : undefined;
-  const levelLocked = Boolean(activeLevelLock?.locked);
   const continueLesson =
-    enrolment && !levelLocked ? getContinueLesson(courseLessons, courseProgress, enrolment) : courseLessons[0] ?? null;
+    enrolment ? getContinueLesson(courseLessons, courseProgress, enrolment) : courseLessons[0] ?? null;
   const sessionLockStates = new Map(
-    enrolment && !levelLocked
+    enrolment
       ? getLessonLockStates(courseLessons, courseProgress, enrolment).map((item) => [item.lessonId, item.locked])
       : courseLessons.map((lesson) => [lesson.id, true] as const),
   );
@@ -78,9 +68,9 @@ const CourseCard = ({
         </div>
         <button
           className="primary-button"
-          disabled={levelLocked || !continueLesson || (!enrolment && !course.isFree)}
+          disabled={!continueLesson || (!enrolment && !course.isFree)}
           onClick={() => {
-            if (continueLesson && !levelLocked) {
+            if (continueLesson) {
               onOpenLesson(course.id, continueLesson.id);
             }
           }}
@@ -88,12 +78,10 @@ const CourseCard = ({
           <PlayCircle size={18} />
           Continue learning
         </button>
-        {activeLevelLock?.locked ? <p className="status error">{activeLevelLock.reason}</p> : null}
         <SessionList
           courseId={course.id}
           sessions={courseLessons}
           lockStates={sessionLockStates}
-          lockReason={activeLevelLock?.reason}
           onOpenLesson={onOpenLesson}
         />
       </div>
@@ -105,13 +93,11 @@ const SessionList = ({
   courseId,
   sessions,
   lockStates,
-  lockReason,
   onOpenLesson,
 }: {
   courseId: string;
   sessions: Lesson[];
   lockStates: Map<string, boolean>;
-  lockReason: string | undefined;
   onOpenLesson: (courseId: string, lessonId: string) => void;
 }) => (
   <div className="session-list" aria-label="Level sessions">
@@ -121,7 +107,7 @@ const SessionList = ({
         <button
           key={session.id}
           disabled={locked}
-          title={locked ? lockReason ?? "Complete the previous required session first." : session.title}
+          title={locked ? "Complete the previous required session first." : session.title}
           onClick={() => onOpenLesson(courseId, session.id)}
         >
           {locked ? <Lock size={15} /> : <PlayCircle size={15} />}

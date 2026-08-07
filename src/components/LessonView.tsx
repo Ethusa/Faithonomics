@@ -13,7 +13,7 @@ import {
 } from "../data/sampleData";
 import { gradeQuiz } from "../domain/grading";
 import { buildSandboxDocument, parseActivityMessage, parseH5PCompletionMessage } from "../domain/htmlSecurity";
-import { getLessonLockStates, getLevelLockStates, lessonCompletionGate, sortLessons } from "../domain/progress";
+import { getLessonLockStates, lessonCompletionGate, sortLessons } from "../domain/progress";
 import type {
   Activity,
   ActivityCompletion,
@@ -1999,15 +1999,12 @@ export const LessonView = ({
   onCompleteLesson: (lessonId: string) => void;
   onReturnToDashboard: () => void;
 }) => {
-  const allCourseLessons = lessons.filter((lesson) => lesson.courseId === course.id);
-  const allCourseModules = modules.filter((module) => module.courseId === course.id);
   const courseLessons = lessons.filter(
     (lesson) => lesson.courseId === course.id && (!activeLevelId || lesson.moduleId === activeLevelId),
   );
   const courseModules = modules.filter(
     (module) => module.courseId === course.id && (!activeLevelId || module.id === activeLevelId),
   );
-  const activeLevel = activeLevelId ? allCourseModules.find((module) => module.id === activeLevelId) ?? null : null;
   const lesson = courseLessons.find((item) => item.id === lessonId) ?? courseLessons[0];
   const enrolment = getCourseEnrolment(course.id, identity.memberId);
   const [courseProgress, setCourseProgress] = useState<LessonProgress[]>(
@@ -2146,11 +2143,6 @@ export const LessonView = ({
 
   const lockStateList = enrolment ? getLessonLockStates(courseLessons, localProgress, enrolment) : [];
   const lockStates = new Map(lockStateList.map((item) => [item.lessonId, item.locked]));
-  const levelLockState = enrolment && activeLevelId
-    ? getLevelLockStates(allCourseModules, allCourseLessons, localProgress, enrolment).find(
-        (state) => state.moduleId === activeLevelId,
-      )
-    : undefined;
   const lessonActivities = lesson ? activities.filter((activity) => activity.lessonId === lesson.id) : [];
   const standaloneLessonActivities = lessonActivities.filter((activity) => !activity.contentStepId);
   const learnerActivityRecords = activityRecords.filter((record) => record.memberId === identity.memberId);
@@ -2288,21 +2280,6 @@ export const LessonView = ({
 
   if (!lesson) {
     return <main className="empty-state">No session is available.</main>;
-  }
-
-  if (levelLockState?.locked) {
-    return (
-      <main className="content-shell">
-        <section className="dashboard-intro">
-          <div>
-            <p className="eyebrow">Level locked</p>
-            <h2>{activeLevel?.title ?? "This level"}</h2>
-            <p className="intro-copy">{levelLockState.reason}</p>
-          </div>
-          <span className="pill locked">Complete previous level</span>
-        </section>
-      </main>
-    );
   }
 
   const firstIncompleteRequiredContentIndex = lesson.content.findIndex(
