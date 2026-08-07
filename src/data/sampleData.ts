@@ -506,6 +506,210 @@ const richLessonStepHtml = (
       box-shadow: 0 16px 34px rgba(91, 58, 36, 0.14);
     }
 
+    .engine-lesson {
+      margin: 18px 0;
+      padding: clamp(20px, 3vw, 34px);
+      border: 1px solid rgba(91, 58, 36, 0.18);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.62);
+      box-shadow: 0 16px 34px rgba(91, 58, 36, 0.12);
+    }
+
+    .engine-lesson h3 {
+      margin-bottom: 14px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.7rem, 3vw, 2.55rem);
+      font-weight: 600;
+    }
+
+    .engine-intro {
+      max-width: none;
+      margin-bottom: 18px;
+      font-size: 1.02rem;
+    }
+
+    .engine-vocab {
+      margin-bottom: 24px;
+      padding: 14px 16px;
+      border-left: 4px solid var(--gold);
+      background: rgba(217, 154, 61, 0.12);
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .engine-vocab strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--deep-kraft);
+    }
+
+    .engine-layout {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.8fr) minmax(420px, 1.2fr);
+      gap: clamp(18px, 3vw, 30px);
+      align-items: start;
+    }
+
+    .engine-framework-title {
+      margin: 0 0 12px;
+      color: var(--forest);
+      font-size: 1.02rem;
+    }
+
+    .engine-mech {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 10px;
+      padding: 10px 0;
+      color: var(--ink);
+      line-height: 1.48;
+    }
+
+    .engine-num {
+      width: 25px;
+      height: 25px;
+      display: grid;
+      place-items: center;
+      background: rgba(217, 154, 61, 0.2);
+      color: var(--deep-kraft);
+      font-weight: 800;
+    }
+
+    .engine-copy {
+      border-left: 3px solid rgba(185, 146, 69, 0.45);
+      padding-left: 10px;
+    }
+
+    .engine-chart-card {
+      border: 1px solid rgba(91, 58, 36, 0.18);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.72);
+      padding: 16px;
+    }
+
+    .engine-chart-title {
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .engine-stage-radio {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .engine-chart {
+      position: relative;
+      min-height: 330px;
+      border: 1px dashed rgba(154, 107, 63, 0.62);
+      background: rgba(255, 253, 249, 0.92);
+    }
+
+    .engine-chart svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .engine-stage-marker {
+      opacity: 0;
+      transition: opacity 160ms ease;
+    }
+
+    .engine-stage-labels {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+      margin-top: 8px;
+      font-size: 0.73rem;
+      text-align: center;
+    }
+
+    .engine-stage-labels label {
+      min-height: 30px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(91, 58, 36, 0.16);
+      border-radius: 999px;
+      background: rgba(247, 243, 232, 0.8);
+      color: var(--deep-kraft);
+      font-weight: 750;
+      cursor: pointer;
+    }
+
+    .engine-legend {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .engine-legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .engine-legend i {
+      width: 12px;
+      height: 12px;
+      display: inline-block;
+    }
+
+    .engine-legend .productivity i {
+      border: 3px solid var(--ubuntu);
+      background: rgba(124, 143, 90, 0.18);
+    }
+
+    .engine-legend .cost i {
+      border: 3px dashed var(--kraft);
+      background: rgba(154, 107, 63, 0.12);
+    }
+
+    .engine-insight {
+      display: none;
+      margin-top: 12px;
+      border-left: 4px solid var(--gold);
+      background: rgba(217, 154, 61, 0.12);
+      padding: 11px 13px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .engine-stage-radio[value="village"]:checked ~ .engine-chart .stage-village,
+    .engine-stage-radio[value="town"]:checked ~ .engine-chart .stage-town,
+    .engine-stage-radio[value="small-city"]:checked ~ .engine-chart .stage-small-city,
+    .engine-stage-radio[value="large-city"]:checked ~ .engine-chart .stage-large-city,
+    .engine-stage-radio[value="megacity"]:checked ~ .engine-chart .stage-megacity {
+      opacity: 1;
+    }
+
+    .engine-stage-radio[value="village"]:checked ~ .engine-stage-labels label[data-stage="village"],
+    .engine-stage-radio[value="town"]:checked ~ .engine-stage-labels label[data-stage="town"],
+    .engine-stage-radio[value="small-city"]:checked ~ .engine-stage-labels label[data-stage="small-city"],
+    .engine-stage-radio[value="large-city"]:checked ~ .engine-stage-labels label[data-stage="large-city"],
+    .engine-stage-radio[value="megacity"]:checked ~ .engine-stage-labels label[data-stage="megacity"] {
+      background: var(--forest);
+      color: #fff7df;
+    }
+
+    .engine-stage-radio[value="village"]:checked ~ .engine-insights .stage-village,
+    .engine-stage-radio[value="town"]:checked ~ .engine-insights .stage-town,
+    .engine-stage-radio[value="small-city"]:checked ~ .engine-insights .stage-small-city,
+    .engine-stage-radio[value="large-city"]:checked ~ .engine-insights .stage-large-city,
+    .engine-stage-radio[value="megacity"]:checked ~ .engine-insights .stage-megacity {
+      display: block;
+    }
+
     .comparison {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -1777,6 +1981,18 @@ const richLessonStepHtml = (
         gap: 6px;
       }
 
+      .engine-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .engine-chart {
+        min-height: 285px;
+      }
+
+      .engine-stage-labels {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
       .ordinary-hero {
         float: none;
         width: 100%;
@@ -2886,34 +3102,108 @@ const createCityEconomicEngineStep = (lessonId: string): Lesson["content"][numbe
       </div>
     </section>
 
-    <section class="card">
-      <strong>Module 1</strong>
-      <h3>Agglomeration Economies</h3>
-      <p>
-        Agglomeration economies are the economic benefits that arise when people, businesses and institutions
-        are close enough to share, match and learn from one another.
+    <section class="engine-lesson">
+      <h3>The Economic Engine</h3>
+      <p class="engine-intro">
+        Cities become powerful when people and businesses are close together. Economists call these benefits
+        <strong>agglomeration economies</strong>. Proximity can help an economy through
+        <strong>sharing, matching and learning</strong>.
       </p>
-      <div class="value-bars" aria-label="Illustrative density and productivity pattern">
-        <div class="value-row"><span>Density 1x</span><div class="value-track"><div class="value-fill" style="width: 30%;">100</div></div></div>
-        <div class="value-row"><span>Density 4x</span><div class="value-track"><div class="value-fill" style="width: 48%;">135</div></div></div>
-        <div class="value-row"><span>Density 16x</span><div class="value-track"><div class="value-fill" style="width: 72%;">205</div></div></div>
-        <div class="value-row"><span>Density 64x</span><div class="value-track"><div class="value-fill" style="width: 100%;">330</div></div></div>
+
+      <div class="engine-vocab">
+        <strong>Vocabulary Check: Agglomeration Economics</strong>
+        The study of how being close together can help people and businesses share resources, find better matches,
+        and learn from one another.
       </div>
-      <div class="grid">
-        <section class="card">
-          <strong>1. Sharing</strong>
-          <h3>Shared inputs</h3>
-          <p>Many firms can use the same roads, suppliers, power networks, universities and specialist services.</p>
+
+      <div class="engine-layout">
+        <section>
+          <h4 class="engine-framework-title">The Sharing-Matching-Learning Framework</h4>
+
+          <div class="engine-mech">
+            <span class="engine-num">1</span>
+            <span class="engine-copy"><strong>Sharing:</strong> Firms can share expensive resources such as ports, railways and power networks.</span>
+          </div>
+
+          <div class="engine-mech">
+            <span class="engine-num">2</span>
+            <span class="engine-copy"><strong>Matching:</strong> Workers, employers, suppliers and customers have more chances to find the right fit.</span>
+          </div>
+
+          <div class="engine-mech">
+            <span class="engine-num">3</span>
+            <span class="engine-copy"><strong>Learning:</strong> Ideas move faster when people work and interact near one another.</span>
+          </div>
         </section>
-        <section class="card">
-          <strong>2. Matching</strong>
-          <h3>Better fit</h3>
-          <p>Workers can find more employers; firms can find more workers, suppliers, customers and investors.</p>
-        </section>
-        <section class="card">
-          <strong>3. Learning</strong>
-          <h3>Knowledge flows</h3>
-          <p>Ideas move through observation, education, conversations, job changes and collaboration.</p>
+
+        <section class="engine-chart-card">
+          <input class="engine-stage-radio" type="radio" name="${lessonId}-engine-stage" id="${lessonId}-stage-village" value="village" checked>
+          <input class="engine-stage-radio" type="radio" name="${lessonId}-engine-stage" id="${lessonId}-stage-town" value="town">
+          <input class="engine-stage-radio" type="radio" name="${lessonId}-engine-stage" id="${lessonId}-stage-small-city" value="small-city">
+          <input class="engine-stage-radio" type="radio" name="${lessonId}-engine-stage" id="${lessonId}-stage-large-city" value="large-city">
+          <input class="engine-stage-radio" type="radio" name="${lessonId}-engine-stage" id="${lessonId}-stage-megacity" value="megacity">
+
+          <div class="engine-chart-title">THE URBAN TRADE-OFF - SIMPLE TEACHING GRAPHIC</div>
+
+          <div class="engine-chart">
+            <svg viewBox="0 0 700 340" role="img" aria-label="Conceptual graph showing productivity gains and urban costs as settlement size increases">
+              <line x1="60" y1="285" x2="650" y2="285" stroke="#d8d2c8"/>
+              <line x1="60" y1="45" x2="60" y2="285" stroke="#e1dcd4"/>
+
+              <path d="M60 270 C150 245 220 215 290 170 C365 120 445 80 530 72 C585 68 620 69 650 67"
+                    fill="none" stroke="#4f6b3a" stroke-width="5" stroke-linecap="round"/>
+
+              <path d="M60 280 C170 268 250 248 330 215 C430 174 535 112 650 35"
+                    fill="none" stroke="#9a6b3f" stroke-width="4" stroke-dasharray="9 8" stroke-linecap="round"/>
+
+              <g class="engine-stage-marker stage-village">
+                <line x1="60" y1="38" x2="60" y2="285" stroke="#b99245" stroke-width="2" stroke-dasharray="5 6"/>
+                <circle cx="60" cy="270" r="8" fill="#4f6b3a" stroke="#fff" stroke-width="3"/>
+                <circle cx="60" cy="280" r="7" fill="#9a6b3f" stroke="#fff" stroke-width="3"/>
+              </g>
+              <g class="engine-stage-marker stage-town">
+                <line x1="205" y1="38" x2="205" y2="285" stroke="#b99245" stroke-width="2" stroke-dasharray="5 6"/>
+                <circle cx="205" cy="220" r="8" fill="#4f6b3a" stroke="#fff" stroke-width="3"/>
+                <circle cx="205" cy="255" r="7" fill="#9a6b3f" stroke="#fff" stroke-width="3"/>
+              </g>
+              <g class="engine-stage-marker stage-small-city">
+                <line x1="355" y1="38" x2="355" y2="285" stroke="#b99245" stroke-width="2" stroke-dasharray="5 6"/>
+                <circle cx="355" cy="128" r="8" fill="#4f6b3a" stroke="#fff" stroke-width="3"/>
+                <circle cx="355" cy="205" r="7" fill="#9a6b3f" stroke="#fff" stroke-width="3"/>
+              </g>
+              <g class="engine-stage-marker stage-large-city">
+                <line x1="515" y1="38" x2="515" y2="285" stroke="#b99245" stroke-width="2" stroke-dasharray="5 6"/>
+                <circle cx="515" cy="76" r="8" fill="#4f6b3a" stroke="#fff" stroke-width="3"/>
+                <circle cx="515" cy="122" r="7" fill="#9a6b3f" stroke="#fff" stroke-width="3"/>
+              </g>
+              <g class="engine-stage-marker stage-megacity">
+                <line x1="650" y1="38" x2="650" y2="285" stroke="#b99245" stroke-width="2" stroke-dasharray="5 6"/>
+                <circle cx="650" cy="67" r="8" fill="#4f6b3a" stroke="#fff" stroke-width="3"/>
+                <circle cx="650" cy="35" r="7" fill="#9a6b3f" stroke="#fff" stroke-width="3"/>
+              </g>
+            </svg>
+          </div>
+
+          <div class="engine-stage-labels">
+            <label for="${lessonId}-stage-village" data-stage="village">Village</label>
+            <label for="${lessonId}-stage-town" data-stage="town">Town</label>
+            <label for="${lessonId}-stage-small-city" data-stage="small-city">Small City</label>
+            <label for="${lessonId}-stage-large-city" data-stage="large-city">Large City</label>
+            <label for="${lessonId}-stage-megacity" data-stage="megacity">Megacity</label>
+          </div>
+
+          <div class="engine-legend">
+            <span class="productivity"><i></i>Productivity gains</span>
+            <span class="cost"><i></i>Urban costs</span>
+          </div>
+
+          <div class="engine-insights">
+            <p class="engine-insight stage-village"><strong>Village:</strong> Fewer firms and specialists means fewer opportunities for sharing, matching and learning.</p>
+            <p class="engine-insight stage-town"><strong>Town:</strong> More workers and firms create more opportunities to share resources and find better matches.</p>
+            <p class="engine-insight stage-small-city"><strong>Small City:</strong> Specialisation and knowledge-sharing become much easier.</p>
+            <p class="engine-insight stage-large-city"><strong>Large City:</strong> Productivity benefits can be strong, but congestion and housing pressure become more important.</p>
+            <p class="engine-insight stage-megacity"><strong>Megacity:</strong> Scale remains powerful, but urban costs can rise sharply if infrastructure and institutions do not keep up.</p>
+          </div>
         </section>
       </div>
     </section>

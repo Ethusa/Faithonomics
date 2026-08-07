@@ -126,7 +126,14 @@ describe("level access", () => {
     expect(cityStep?.body).not.toContain("88% of private-sector jobs");
     expect(cityStep?.body).not.toContain("Urban future");
     expect(cityStep?.body).not.toContain("Nearly seven in ten");
-    expect(cityStep?.body).toContain("Agglomeration economies");
+    expect(cityStep?.body).toContain("The Economic Engine");
+    expect(cityStep?.body).toContain("Vocabulary Check: Agglomeration Economics");
+    expect(cityStep?.body).toContain("The Sharing-Matching-Learning Framework");
+    expect(cityStep?.body).toContain("THE URBAN TRADE-OFF - SIMPLE TEACHING GRAPHIC");
+    expect(cityStep?.body).toContain("Megacity");
+    expect(cityStep?.body).not.toContain("Module 1");
+    expect(cityStep?.body).not.toContain("<h3>Agglomeration Economies</h3>");
+    expect(cityStep?.body).not.toContain("Density 1x");
     expect(cityStep?.body).toContain("The city's moral budget");
     expect(cityStep?.body).toContain("Interdisciplinary synthesis matrix");
     expect(cityStep?.body).toContain("Lesson takeaway");
