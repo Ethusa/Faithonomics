@@ -30,10 +30,10 @@ describe("level access", () => {
   });
 
   it("maps the supplied papercraft artwork to Level 1 and its sessions", () => {
-    const updatedArtworkUrl = "https://static.wixstatic.com/media/7638b6_c719b145dedf4638a21fa62bb71046bc~mv2.png";
+    const updatedArtworkUrl = "https://static.wixstatic.com/media/7638b6_bf680d1d5dfc468fbd5db89ae370217b~mv2.png";
     const sessionArtworkUrls = [
-      "https://static.wixstatic.com/media/7638b6_58ab5c742514421194d57f0decba0044~mv2.png",
-      "https://static.wixstatic.com/media/7638b6_ee2d807107c24a2db2c5787e73578b85~mv2.png",
+      "https://static.wixstatic.com/media/7638b6_ebb07e58d7b64e3d8a99c272402c6dc9~mv2.png",
+      "https://static.wixstatic.com/media/7638b6_0b086c8a75d9429c956c72a796be1f79~mv2.png",
       "https://static.wixstatic.com/media/7638b6_fb2b739765044e78b2dcbd33e7a43038~mv2.png",
       "https://static.wixstatic.com/media/7638b6_898e0407677c4585b6abb5e02e286355~mv2.png",
     ];
@@ -93,7 +93,7 @@ describe("level access", () => {
     expect(importedSteps.map((block) => block.body).join(" ")).toContain("Relationships");
     expect(importedSteps.map((block) => block.body).join(" ")).toContain("Consumption");
     expect(dailyGrind?.content.map((block) => block.title).join(" ")).toContain("The Architecture of Choice");
-    expect(importedSteps.map((block) => block.body).join(" ")).toContain("https://www.canva.com/design/DAHN48np3Ro/4PH1SjOLXxIzXdLvpU-0uw/view?embed");
+    expect(importedSteps.map((block) => block.body).join(" ")).not.toContain("https://www.canva.com/design/DAHN48np3Ro/4PH1SjOLXxIzXdLvpU-0uw/view?embed");
     expect(importedSteps.map((block) => block.body).join(" ")).toContain("Matthew 6:25-34");
     expect(importedSteps.map((block) => block.body).join(" ")).toContain("daily life, my work/business, or who I");
     expect(importedSteps.map((block) => block.body).join(" ")).not.toContain("Voting and public life");

@@ -2831,7 +2831,7 @@ export const lessons: Lesson[] = curriculum.flatMap((level, levelIndex) =>
         imageAlt: "Papercraft Faithonomics choices scene for the opening session.",
       },
       2: {
-        imageUrl: "https://static.wixstatic.com/media/7638b6_ee2d807107c24a2db2c5787e73578b85~mv2.png",
+        imageUrl: "https://static.wixstatic.com/media/7638b6_0b086c8a75d9429c956c72a796be1f79~mv2.png",
         imageAlt: "Split papercraft road showing a grey decline path and green-gold renewal path through an open door.",
       },
       3: {
