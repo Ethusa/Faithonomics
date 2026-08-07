@@ -6,6 +6,7 @@ import {
   getLessonLockStates,
   sortLessons,
 } from "../domain/progress";
+import { isStaff } from "../domain/permissions";
 import type { Course, CourseModule, Enrolment, LearnerIdentity, Lesson, LessonProgress } from "../domain/types";
 import { repository } from "../services/singleton";
 import { Lock, PlayCircle } from "./Icons";
@@ -29,9 +30,12 @@ const CourseCard = ({
   progressRecords: LessonProgress[];
   onOpenLesson: (courseId: string, lessonId: string) => void;
 }) => {
+  const staffPreview = isStaff(identity);
   const courseLessons = sortLessons(
     lessons.filter(
-      (lesson) => lesson.courseId === course.id && (!activeLevel || lesson.moduleId === activeLevel.id),
+      (lesson) =>
+        lesson.courseId === course.id &&
+        (staffPreview || !activeLevel || lesson.moduleId === activeLevel.id),
     ),
   );
   const enrolment = getCourseEnrolment(course.id, identity.memberId);
@@ -40,15 +44,18 @@ const CourseCard = ({
     : [];
   const percent = enrolment ? calculateCompletionPercent(courseLessons, courseProgress, enrolment.id) : 0;
   const continueLesson =
-    enrolment ? getContinueLesson(courseLessons, courseProgress, enrolment) : courseLessons[0] ?? null;
+    enrolment && !staffPreview ? getContinueLesson(courseLessons, courseProgress, enrolment) : courseLessons[0] ?? null;
   const sessionLockStates = new Map(
-    enrolment
+    staffPreview
+      ? courseLessons.map((lesson) => [lesson.id, false] as const)
+      : enrolment
       ? getLessonLockStates(courseLessons, courseProgress, enrolment).map((item) => [item.lessonId, item.locked])
       : courseLessons.map((lesson) => [lesson.id, true] as const),
   );
-  const title = activeLevel?.title ?? course.title;
-  const artworkUrl = activeLevel?.imageUrl ?? course.imageUrl;
-  const artworkAlt = activeLevel?.imageAlt ?? "";
+  const title = staffPreview ? course.title : activeLevel?.title ?? course.title;
+  const artworkUrl = staffPreview ? course.imageUrl : activeLevel?.imageUrl ?? course.imageUrl;
+  const artworkAlt = staffPreview ? "" : activeLevel?.imageAlt ?? "";
+  const canOpenCourse = staffPreview || Boolean(enrolment) || course.isFree;
 
   return (
     <article className="course-card">
@@ -56,9 +63,15 @@ const CourseCard = ({
       <div className="course-card-body">
         <div className="course-title-row">
           <h2>{title}</h2>
-          {!enrolment && !course.isFree ? <span className="pill locked">Paid</span> : <span className="pill">Open</span>}
+          {staffPreview ? (
+            <span className="pill">Staff preview</span>
+          ) : !enrolment && !course.isFree ? (
+            <span className="pill locked">Paid</span>
+          ) : (
+            <span className="pill">Open</span>
+          )}
         </div>
-        <p>{activeLevel?.description ?? course.summary}</p>
+        <p>{staffPreview ? course.summary : activeLevel?.description ?? course.summary}</p>
         <div className="progress-line" aria-label={`${percent}% complete`}>
           <span style={{ width: `${percent}%` }} />
         </div>
@@ -68,7 +81,7 @@ const CourseCard = ({
         </div>
         <button
           className="primary-button"
-          disabled={!continueLesson || (!enrolment && !course.isFree)}
+          disabled={!continueLesson || !canOpenCourse}
           onClick={() => {
             if (continueLesson) {
               onOpenLesson(course.id, continueLesson.id);
@@ -161,7 +174,8 @@ export const LearnerDashboard = ({
   onIntroSlideshowHandled: () => void;
   onOpenLesson: (courseId: string, lessonId: string) => void;
 }) => {
-  const activeLevel = modules.find((module) => module.id === activeLevelId) ?? null;
+  const staffPreview = isStaff(identity);
+  const activeLevel = staffPreview ? null : modules.find((module) => module.id === activeLevelId) ?? null;
   const activeLevelSessions = lessons.filter((lesson) => !activeLevel || lesson.moduleId === activeLevel.id);
   const [liveProgress, setLiveProgress] = useState<LessonProgress[]>(progress);
   const [progressLoaded, setProgressLoaded] = useState(false);
@@ -197,6 +211,11 @@ export const LearnerDashboard = ({
       return;
     }
 
+    if (staffPreview) {
+      onIntroSlideshowHandled();
+      return;
+    }
+
     if (pendingIntroSlideshowLevelId !== "level-1" || activeLevelId !== "level-1") {
       onIntroSlideshowHandled();
       return;
@@ -228,6 +247,7 @@ export const LearnerDashboard = ({
     activeLevelId,
     completedLessonIds,
     identity,
+    staffPreview,
     liveProgress,
     onIntroSlideshowHandled,
     pendingIntroSlideshowLevelId,

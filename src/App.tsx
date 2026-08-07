@@ -6,6 +6,7 @@ import { LevelLoginPage } from "./components/LevelLoginPage";
 import { LessonView } from "./components/LessonView";
 import { AdminDashboard, LecturerDashboard, Reports } from "./components/StaffDashboards";
 import { courses, identities, lessons, modules, progress } from "./data/sampleData";
+import { isStaff } from "./domain/permissions";
 import type { LearnerIdentity, LevelAccessCredential } from "./domain/types";
 import { Award } from "./components/Icons";
 
@@ -48,6 +49,7 @@ export const App = () => {
   const state = usePortalState();
   const activeCourse = courses.find((course) => course.id === state.activeCourseId) ?? courses[0];
   const activeLevel = modules.find((module) => module.id === state.activeLevelId) ?? null;
+  const staffPreview = isStaff(state.identity);
 
   const openLesson = (courseId: string, lessonId: string) => {
     state.setActiveCourseId(courseId);
@@ -107,7 +109,7 @@ export const App = () => {
         view={state.view}
         setView={state.setView}
         onIdentityChange={state.setIdentity}
-        activeLevelTitle={activeLevel?.title ?? null}
+        activeLevelTitle={staffPreview ? "Staff preview: all levels" : activeLevel?.title ?? null}
         onLogout={logout}
       />
       {state.view === "learner" ? (

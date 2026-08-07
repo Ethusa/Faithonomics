@@ -1,6 +1,6 @@
 import type { ClassroomRepository } from "../adapters/classroomRepository";
 import { createEnrolmentFromPayment, type PaymentConfirmation } from "../domain/paymentEnrollment";
-import { assertCourseAccess, assertOwnLearnerRecord, assertRole } from "../domain/permissions";
+import { assertCourseAccess, assertOwnLearnerRecord, assertRole, isStaff } from "../domain/permissions";
 import { calculateCompletionPercent, getContinueLesson, getLessonLockStates, lessonCompletionGate } from "../domain/progress";
 import type {
   Activity,
@@ -67,8 +67,9 @@ export class ClassroomService {
     const enrolments = await this.repository.listEnrolmentsByMember(identity.memberId);
     assertCourseAccess(identity, courseId, enrolments);
     const course = await this.repository.getCourse(courseId);
+    const staffPreview = isStaff(identity);
     const enrolment = enrolments.find((item) => item.courseId === courseId && item.status === "active");
-    if (!course || !enrolment) {
+    if (!course || (!enrolment && !staffPreview)) {
       throw new Error("Course enrolment was not found.");
     }
     const lessons = await this.repository.listLessons(courseId);
@@ -76,10 +77,12 @@ export class ClassroomService {
     if (!lesson) {
       throw new Error("Lesson was not found.");
     }
-    const progress = await this.repository.listProgress(enrolment.id);
-    const lockStates = getLessonLockStates(lessons, progress, enrolment);
+    const progress = enrolment ? await this.repository.listProgress(enrolment.id) : [];
+    const lockStates: ReturnType<typeof getLessonLockStates> = staffPreview
+      ? lessons.map((item) => ({ lessonId: item.id, locked: false }))
+      : getLessonLockStates(lessons, progress, enrolment!);
     const lockState = lockStates.find((item) => item.lessonId === lessonId);
-    if (lockState?.locked) {
+    if (!staffPreview && lockState?.locked) {
       throw new Error(lockState.reason ?? "This lesson is locked.");
     }
     return {

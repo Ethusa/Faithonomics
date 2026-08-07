@@ -13,6 +13,7 @@ import {
 } from "../data/sampleData";
 import { gradeQuiz } from "../domain/grading";
 import { buildSandboxDocument, parseActivityMessage, parseH5PCompletionMessage } from "../domain/htmlSecurity";
+import { isStaff } from "../domain/permissions";
 import { getLessonLockStates, lessonCompletionGate, sortLessons } from "../domain/progress";
 import type {
   Activity,
@@ -1999,11 +2000,12 @@ export const LessonView = ({
   onCompleteLesson: (lessonId: string) => void;
   onReturnToDashboard: () => void;
 }) => {
+  const staffPreview = isStaff(identity);
   const courseLessons = lessons.filter(
-    (lesson) => lesson.courseId === course.id && (!activeLevelId || lesson.moduleId === activeLevelId),
+    (lesson) => lesson.courseId === course.id && (staffPreview || !activeLevelId || lesson.moduleId === activeLevelId),
   );
   const courseModules = modules.filter(
-    (module) => module.courseId === course.id && (!activeLevelId || module.id === activeLevelId),
+    (module) => module.courseId === course.id && (staffPreview || !activeLevelId || module.id === activeLevelId),
   );
   const lesson = courseLessons.find((item) => item.id === lessonId) ?? courseLessons[0];
   const enrolment = getCourseEnrolment(course.id, identity.memberId);
@@ -2141,7 +2143,12 @@ export const LessonView = ({
     }
   }
 
-  const lockStateList = enrolment ? getLessonLockStates(courseLessons, localProgress, enrolment) : [];
+  const lockStateList =
+    staffPreview
+      ? courseLessons.map((courseLesson) => ({ lessonId: courseLesson.id, locked: false }))
+      : enrolment
+        ? getLessonLockStates(courseLessons, localProgress, enrolment)
+        : [];
   const lockStates = new Map(lockStateList.map((item) => [item.lessonId, item.locked]));
   const lessonActivities = lesson ? activities.filter((activity) => activity.lessonId === lesson.id) : [];
   const standaloneLessonActivities = lessonActivities.filter((activity) => !activity.contentStepId);
@@ -2282,15 +2289,17 @@ export const LessonView = ({
     return <main className="empty-state">No session is available.</main>;
   }
 
-  const firstIncompleteRequiredContentIndex = lesson.content.findIndex(
-    (content) => content.completionRequired !== false && !completedContentIds.includes(content.id),
-  );
+  const firstIncompleteRequiredContentIndex = staffPreview
+    ? -1
+    : lesson.content.findIndex(
+        (content) => content.completionRequired !== false && !completedContentIds.includes(content.id),
+      );
   const visibleContent =
     firstIncompleteRequiredContentIndex === -1
       ? lesson.content
       : lesson.content.slice(0, firstIncompleteRequiredContentIndex + 1);
   const lockedContentCount = lesson.content.length - visibleContent.length;
-  const activitiesUnlocked = firstIncompleteRequiredContentIndex === -1;
+  const activitiesUnlocked = staffPreview || firstIncompleteRequiredContentIndex === -1;
   const currentContentIndex = visibleContent.length === 0 ? -1 : Math.min(activeContentIndex, visibleContent.length - 1);
   const currentContent = currentContentIndex >= 0 ? visibleContent[currentContentIndex] : undefined;
   const hasPreviousContent = currentContentIndex > 0;

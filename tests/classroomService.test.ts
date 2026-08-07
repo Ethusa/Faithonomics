@@ -4,6 +4,31 @@ import { enrolments, identities, lessons } from "../src/data/sampleData";
 import { ClassroomService } from "../src/services/classroomService";
 
 describe("ClassroomService completion gates", () => {
+  it("keeps learner session access gated by previous completion", async () => {
+    const service = new ClassroomService(createMockRepository());
+
+    await expect(
+      service.getLesson(
+        identities.learner,
+        "course-faithonomics-core",
+        "level-1-session-2-competing-paradigms",
+      ),
+    ).rejects.toThrow(/Complete "Session 1: The Daily Grind" first/i);
+  });
+
+  it("allows staff to open any session without learner sequence locks", async () => {
+    const service = new ClassroomService(createMockRepository());
+
+    const lesson = await service.getLesson(
+      identities.lecturer,
+      "course-faithonomics-core",
+      "level-4-session-3-societal-change",
+    );
+
+    expect(lesson.lesson.id).toBe("level-4-session-3-societal-change");
+    expect(lesson.lockStates.every((state) => !state.locked)).toBe(true);
+  });
+
   it("rejects completed lesson progress until required step and activity records exist", async () => {
     const service = new ClassroomService(createMockRepository());
     const lesson = lessons.find((item) => item.id === "level-1-session-2-competing-paradigms");
