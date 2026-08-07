@@ -2847,7 +2847,7 @@ const createCityEconomicEngineStep = (lessonId: string): Lesson["content"][numbe
 
     <figure class="lesson-graphic">
       <img
-        src="https://static.wixstatic.com/media/7638b6_ea33a285c5714d86947cb87bcde3fb50~mv2.png"
+        src="https://static.wixstatic.com/media/7638b6_ebdf2c0114524151aeccb50803b561b4~mv2.png"
         alt="City economy statistics graphic."
       />
     </figure>
