@@ -49,58 +49,6 @@ import {
   X,
 } from "./Icons";
 
-type YouTubePlayerEvent = {
-  data: number;
-  target?: YouTubePlayer;
-};
-
-type YouTubePlayerReadyEvent = {
-  target: YouTubePlayer;
-};
-
-type YouTubePlayer = {
-  destroy: () => void;
-  getCurrentTime: () => number;
-  getDuration: () => number;
-  getIframe: () => HTMLIFrameElement;
-  getPlayerState: () => number;
-  mute: () => void;
-  pauseVideo: () => void;
-  playVideo: () => void;
-  seekTo: (seconds: number, allowSeekAhead: boolean) => void;
-};
-
-type YouTubeNamespace = {
-  Player: new (
-    element: HTMLElement,
-    options: {
-      height?: number | string;
-      host?: string;
-      videoId: string;
-      width?: number | string;
-      playerVars: Record<string, number | string>;
-      events: {
-        onReady: (event: YouTubePlayerReadyEvent) => void;
-        onStateChange: (event: YouTubePlayerEvent) => void;
-        onError?: () => void;
-      };
-    },
-  ) => YouTubePlayer;
-  PlayerState: {
-    ENDED: number;
-    PLAYING: number;
-  };
-};
-
-declare global {
-  interface Window {
-    YT?: YouTubeNamespace;
-    onYouTubeIframeAPIReady?: () => void;
-  }
-}
-
-let youtubeApiPromise: Promise<YouTubeNamespace> | null = null;
-
 const getCourseEnrolment = (courseId: string, memberId: string): Enrolment | null =>
   enrolments.find((enrolment) => enrolment.courseId === courseId && enrolment.memberId === memberId) ?? null;
 
@@ -141,43 +89,6 @@ const getYouTubeVideoId = (url: string | undefined): string | null => {
   }
 
   return null;
-};
-
-const loadYouTubeIframeApi = (): Promise<YouTubeNamespace> => {
-  if (window.YT?.Player) {
-    return Promise.resolve(window.YT);
-  }
-
-  if (youtubeApiPromise) {
-    return youtubeApiPromise;
-  }
-
-  youtubeApiPromise = new Promise((resolve, reject) => {
-    const existingScript = document.querySelector<HTMLScriptElement>('script[src="https://www.youtube.com/iframe_api"]');
-    const previousCallback = window.onYouTubeIframeAPIReady;
-
-    window.onYouTubeIframeAPIReady = () => {
-      previousCallback?.();
-      if (window.YT?.Player) {
-        resolve(window.YT);
-        return;
-      }
-      reject(new Error("YouTube iframe API loaded without a player constructor."));
-    };
-
-    if (!existingScript) {
-      const script = document.createElement("script");
-      script.src = "https://www.youtube.com/iframe_api";
-      script.async = true;
-      script.onerror = () => {
-        youtubeApiPromise = null;
-        reject(new Error("Unable to load the YouTube iframe API."));
-      };
-      document.head.appendChild(script);
-    }
-  });
-
-  return youtubeApiPromise;
 };
 
 const isOrderingQuestion = (question: Question, activity: Activity): boolean =>
@@ -827,315 +738,89 @@ const YouTubeCheckpointVideo = ({
 }) => {
   const checkpoint = content.videoCheckpoint;
   const videoId = getYouTubeVideoId(content.url);
-  const iframeRef = useRef<HTMLIFrameElement | null>(null);
-  const playerRef = useRef<YouTubePlayer | null>(null);
-  const pollRef = useRef<number | null>(null);
-  const autoplayRetryTimerRefs = useRef<number[]>([]);
-  const checkpointFallbackTimerRef = useRef<number | null>(null);
-  const completionFallbackTimerRef = useRef<number | null>(null);
-  const currentTimeRef = useRef(0);
-  const durationRef = useRef(0);
-  const quizPassedRef = useRef(false);
-  const completedRef = useRef(completed);
-  const checkpointOpenRef = useRef(false);
-  const [playerStatus, setPlayerStatus] = useState<"loading" | "ready" | "error">("loading");
+  const checkpointTimerRef = useRef<number | null>(null);
+  const completionTimerRef = useRef<number | null>(null);
+  const [playerStatus, setPlayerStatus] = useState<"loading" | "ready">("loading");
   const [checkpointOpen, setCheckpointOpen] = useState(false);
   const [quizPassed, setQuizPassed] = useState(false);
-  const [checkpointFallbackReady, setCheckpointFallbackReady] = useState(false);
-  const [autoplayBlocked, setAutoplayBlocked] = useState(false);
+  const [videoSegment, setVideoSegment] = useState<"intro" | "resume">("intro");
+  const [frameKey, setFrameKey] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
-
-  const configureYouTubeIframe = useCallback((player: YouTubePlayer) => {
-    const iframe = player.getIframe();
-    iframe.setAttribute(
-      "allow",
-      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen",
-    );
-    iframe.setAttribute("allowfullscreen", "true");
-  }, []);
+  const checkpointId = checkpoint?.id ?? "";
+  const checkpointTime = checkpoint?.timeSeconds ?? 0;
+  const checkpointDuration = checkpoint?.durationSeconds ?? 0;
 
   const requestMutedPlayback = useCallback(() => {
-    const player = playerRef.current;
-    if (!player || checkpointOpenRef.current) {
-      return;
-    }
-
-    player.mute();
-    player.playVideo();
-    setAutoplayBlocked(false);
+    setPlayerStatus("loading");
+    setFrameKey((current) => current + 1);
   }, []);
 
-  const lockVideoAtCheckpoint = useCallback(() => {
-    const player = playerRef.current;
-    const checkpointTime = checkpoint?.timeSeconds;
-    if (!player || typeof checkpointTime !== "number") {
-      return;
+  const clearCheckpointTimer = useCallback(() => {
+    if (checkpointTimerRef.current !== null) {
+      window.clearTimeout(checkpointTimerRef.current);
+      checkpointTimerRef.current = null;
     }
+  }, []);
 
-    player.pauseVideo();
-    const currentTime = player.getCurrentTime();
-    if (Number.isFinite(currentTime) && currentTime > checkpointTime + 0.25) {
-      player.seekTo(checkpointTime, true);
+  const clearCompletionTimer = useCallback(() => {
+    if (completionTimerRef.current !== null) {
+      window.clearTimeout(completionTimerRef.current);
+      completionTimerRef.current = null;
     }
-  }, [checkpoint?.timeSeconds]);
+  }, []);
 
   const openCheckpointQuiz = useCallback(() => {
-    checkpointOpenRef.current = true;
-    setAutoplayBlocked(false);
-    lockVideoAtCheckpoint();
+    clearCheckpointTimer();
+    clearCompletionTimer();
     setSubmitted(false);
+    setPlayerStatus("ready");
     setCheckpointOpen(true);
-  }, [lockVideoAtCheckpoint]);
+  }, [clearCheckpointTimer, clearCompletionTimer]);
 
-  useEffect(() => {
-    quizPassedRef.current = quizPassed;
-  }, [quizPassed]);
-
-  useEffect(() => {
-    checkpointOpenRef.current = checkpointOpen;
-  }, [checkpointOpen]);
-
-  useEffect(() => {
-    completedRef.current = completed;
-  }, [completed]);
+  const completeVideoStep = useCallback(() => {
+    clearCompletionTimer();
+    onCompleteContent(content.id);
+  }, [clearCompletionTimer, content.id, onCompleteContent]);
 
   useEffect(() => {
     if (!checkpoint || !videoId) {
       return undefined;
     }
 
-    let active = true;
-
-    const clearPoll = () => {
-      if (pollRef.current !== null) {
-        window.clearInterval(pollRef.current);
-        pollRef.current = null;
-      }
-    };
-
-    const clearAutoplayRetries = () => {
-      autoplayRetryTimerRefs.current.forEach((timerId) => window.clearTimeout(timerId));
-      autoplayRetryTimerRefs.current = [];
-    };
-
-    const clearCheckpointFallbackTimer = () => {
-      if (checkpointFallbackTimerRef.current !== null) {
-        window.clearTimeout(checkpointFallbackTimerRef.current);
-        checkpointFallbackTimerRef.current = null;
-      }
-    };
-
-    const clearCompletionFallbackTimer = () => {
-      if (completionFallbackTimerRef.current !== null) {
-        window.clearTimeout(completionFallbackTimerRef.current);
-        completionFallbackTimerRef.current = null;
-      }
-    };
-
-    const startCheckpointFallbackTimer = () => {
-      clearCheckpointFallbackTimer();
-      if (quizPassedRef.current || checkpointOpenRef.current || completedRef.current) {
-        return;
-      }
-      checkpointFallbackTimerRef.current = window.setTimeout(() => {
-        if (!quizPassedRef.current && !checkpointOpenRef.current && !completedRef.current) {
-          setCheckpointFallbackReady(true);
-        }
-      }, 3000);
-    };
-
-    const checkProgress = () => {
-      const player = playerRef.current;
-      if (!player) {
-        return;
-      }
-
-      const measuredCurrentTime = player.getCurrentTime();
-      const measuredDuration = player.getDuration();
-      currentTimeRef.current = Number.isFinite(measuredCurrentTime) ? measuredCurrentTime : currentTimeRef.current;
-      durationRef.current = Number.isFinite(measuredDuration) ? measuredDuration : durationRef.current;
-
-      const currentTime = currentTimeRef.current;
-      const duration = durationRef.current;
-      if (checkpointOpenRef.current && !quizPassedRef.current) {
-        lockVideoAtCheckpoint();
-        return;
-      }
-
-      if (!quizPassedRef.current && currentTime >= checkpoint.timeSeconds) {
-        clearCheckpointFallbackTimer();
-        openCheckpointQuiz();
-        return;
-      }
-
-      if (
-        quizPassedRef.current &&
-        !completedRef.current &&
-        Number.isFinite(duration) &&
-        duration > 0 &&
-        currentTime >= duration - 1
-      ) {
-        onCompleteContent(content.id);
-      }
-    };
-
-    const startPoll = () => {
-      clearPoll();
-      pollRef.current = window.setInterval(checkProgress, 350);
-    };
-
-    const scheduleAutoplay = (YT: YouTubeNamespace) => {
-      clearAutoplayRetries();
-      [0, 250, 900, 1800, 3000].forEach((delay, index, delays) => {
-        const timerId = window.setTimeout(() => {
-          const player = playerRef.current;
-          if (!active || !player || checkpointOpenRef.current) {
-            return;
-          }
-
-          requestMutedPlayback();
-          checkProgress();
-          const isFinalAttempt = index === delays.length - 1;
-          if (
-            isFinalAttempt &&
-            player.getPlayerState() !== YT.PlayerState.PLAYING &&
-            currentTimeRef.current < 0.5 &&
-            !checkpointOpenRef.current
-          ) {
-            setAutoplayBlocked(true);
-          }
-        }, delay);
-        autoplayRetryTimerRefs.current.push(timerId);
-      });
-    };
-
-    currentTimeRef.current = 0;
-    durationRef.current = 0;
-    quizPassedRef.current = false;
-    checkpointOpenRef.current = false;
+    clearCheckpointTimer();
+    clearCompletionTimer();
     setQuizPassed(false);
     setCheckpointOpen(false);
+    setVideoSegment("intro");
+    setFrameKey((current) => current + 1);
     setSelectedAnswers({});
     setSubmitted(false);
-    setCheckpointFallbackReady(false);
-    setAutoplayBlocked(false);
     setPlayerStatus("loading");
-    loadYouTubeIframeApi()
-      .then((YT) => {
-        if (!active || !iframeRef.current) {
-          return;
-        }
-
-        const playerVars: Record<string, number | string> = {
-          autoplay: 1,
-          enablejsapi: 1,
-          modestbranding: 1,
-          mute: 1,
-          origin: window.location.origin,
-          playsinline: 1,
-          rel: 0,
-          start: quizPassedRef.current ? checkpoint.timeSeconds : 0,
-        };
-        playerRef.current = new YT.Player(iframeRef.current, {
-          height: "100%",
-          host: youTubeEmbedOrigin,
-          videoId,
-          width: "100%",
-          playerVars,
-          events: {
-            onReady: (event) => {
-              playerRef.current = event.target;
-              configureYouTubeIframe(event.target);
-              setPlayerStatus("ready");
-              startPoll();
-              scheduleAutoplay(YT);
-            },
-            onStateChange: (event) => {
-              if (event.data === YT.PlayerState.PLAYING) {
-                setAutoplayBlocked(false);
-                checkProgress();
-                startPoll();
-                return;
-              }
-
-              if (event.data === YT.PlayerState.ENDED && !quizPassedRef.current) {
-                clearPoll();
-                clearCheckpointFallbackTimer();
-                openCheckpointQuiz();
-                return;
-              }
-
-              if (event.data === YT.PlayerState.ENDED && quizPassedRef.current && !completedRef.current) {
-                clearPoll();
-                clearCheckpointFallbackTimer();
-                clearCompletionFallbackTimer();
-                onCompleteContent(content.id);
-              }
-            },
-            onError: () => {
-              setPlayerStatus("error");
-              clearPoll();
-              setAutoplayBlocked(true);
-              startCheckpointFallbackTimer();
-            },
-          },
-        });
-      })
-      .catch(() => {
-        if (!active) {
-          return;
-        }
-        setPlayerStatus("error");
-        clearPoll();
-        setAutoplayBlocked(true);
-        startCheckpointFallbackTimer();
-      });
+    checkpointTimerRef.current = window.setTimeout(openCheckpointQuiz, checkpointTime * 1000);
 
     return () => {
-      active = false;
-      clearPoll();
-      clearAutoplayRetries();
-      clearCheckpointFallbackTimer();
-      clearCompletionFallbackTimer();
-      playerRef.current?.destroy();
-      playerRef.current = null;
+      clearCheckpointTimer();
+      clearCompletionTimer();
     };
-  }, [
-    checkpoint,
-    configureYouTubeIframe,
-    content.id,
-    lockVideoAtCheckpoint,
-    onCompleteContent,
-    openCheckpointQuiz,
-    requestMutedPlayback,
-    videoId,
-  ]);
+  }, [checkpoint, checkpointId, checkpointTime, clearCheckpointTimer, clearCompletionTimer, openCheckpointQuiz, videoId]);
 
   useEffect(() => {
     if (!checkpoint || !quizPassed || completed) {
       return undefined;
     }
 
-    const durationSeconds = checkpoint.durationSeconds ?? 0;
-    const remainingSeconds = durationSeconds - checkpoint.timeSeconds;
+    const remainingSeconds = checkpointDuration - checkpointTime;
     if (remainingSeconds <= 0) {
       return undefined;
     }
 
-    completionFallbackTimerRef.current = window.setTimeout(() => {
-      if (quizPassedRef.current && !completedRef.current) {
-        onCompleteContent(content.id);
-      }
-    }, remainingSeconds * 1000 + 1500);
+    completionTimerRef.current = window.setTimeout(completeVideoStep, remainingSeconds * 1000 + 1500);
 
     return () => {
-      if (completionFallbackTimerRef.current !== null) {
-        window.clearTimeout(completionFallbackTimerRef.current);
-        completionFallbackTimerRef.current = null;
-      }
+      clearCompletionTimer();
     };
-  }, [checkpoint, completed, content.id, onCompleteContent, quizPassed]);
+  }, [checkpoint, checkpointDuration, checkpointTime, clearCompletionTimer, completeVideoStep, completed, quizPassed]);
 
   if (!checkpoint || !videoId) {
     return (
@@ -1147,15 +832,14 @@ const YouTubeCheckpointVideo = ({
   }
 
   const allAnswered = checkpoint.questions.every((question) => Boolean(selectedAnswers[question.id]));
+  const embedStart = videoSegment === "resume" ? Math.ceil(checkpointTime + 1) : 0;
   const embedParams = new URLSearchParams({
     autoplay: "1",
-    enablejsapi: "1",
     modestbranding: "1",
     mute: "1",
-    origin: window.location.origin,
     playsinline: "1",
     rel: "0",
-    start: "0",
+    start: String(embedStart),
   });
   const embedSrc = `${youTubeEmbedOrigin}/embed/${videoId}?${embedParams.toString()}`;
 
@@ -1165,16 +849,10 @@ const YouTubeCheckpointVideo = ({
       return;
     }
     setQuizPassed(true);
-    quizPassedRef.current = true;
-    checkpointOpenRef.current = false;
-    setCheckpointFallbackReady(false);
     setCheckpointOpen(false);
-    const player = playerRef.current;
-    if (player) {
-      const resumeAt = checkpoint.timeSeconds + 0.25;
-      player.seekTo(resumeAt, true);
-      requestMutedPlayback();
-    }
+    setVideoSegment("resume");
+    setPlayerStatus("loading");
+    setFrameKey((current) => current + 1);
   };
 
   return (
@@ -1182,15 +860,23 @@ const YouTubeCheckpointVideo = ({
       {content.body ? <p>{content.body}</p> : null}
       <div className="youtube-frame-wrap">
         <div className="youtube-frame-slot" aria-label={content.title}>
-          <iframe
-            ref={iframeRef}
-            title={content.title}
-            src={embedSrc}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
-            allowFullScreen
-            loading="eager"
-            referrerPolicy="strict-origin-when-cross-origin"
-          />
+          {checkpointOpen && !quizPassed ? (
+            <div className="video-placeholder">
+              <PauseCircle size={42} />
+              <span>Video paused for checkpoint quiz.</span>
+            </div>
+          ) : (
+            <iframe
+              key={`${videoId}-${videoSegment}-${frameKey}`}
+              title={content.title}
+              src={embedSrc}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+              allowFullScreen
+              loading="eager"
+              referrerPolicy="strict-origin-when-cross-origin"
+              onLoad={() => setPlayerStatus("ready")}
+            />
+          )}
         </div>
         {checkpointOpen && !quizPassed ? (
           <div className="video-blocker" role="status" aria-live="polite">
@@ -1203,17 +889,19 @@ const YouTubeCheckpointVideo = ({
         <span className={completed ? "status success" : "status"}>
           {completed
             ? "Video step complete."
-            : `Checkpoint quiz opens at ${formatCheckpointTime(checkpoint.timeSeconds)}.`}
+            : quizPassed
+              ? "Finish the remaining video segment to complete this step."
+              : `Checkpoint quiz opens at ${formatCheckpointTime(checkpoint.timeSeconds)}.`}
         </span>
         {playerStatus === "loading" ? <span className="status">Loading YouTube player...</span> : null}
-        {autoplayBlocked && !checkpointOpen && !quizPassed ? (
+        {!checkpointOpen && !completed ? (
           <button className="secondary-button" type="button" onClick={requestMutedPlayback}>
-            Start video
+            {quizPassed ? "Start remaining video" : "Start video"}
           </button>
         ) : null}
-        {checkpointFallbackReady && !checkpointOpen && !quizPassed ? (
-          <button className="secondary-button" type="button" onClick={openCheckpointQuiz}>
-            Open checkpoint quiz
+        {quizPassed && !completed ? (
+          <button className="secondary-button" type="button" onClick={completeVideoStep}>
+            I finished the video
           </button>
         ) : null}
       </div>

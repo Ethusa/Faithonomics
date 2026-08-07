@@ -238,6 +238,7 @@ const dailyGrindVideoCheckpoint = {
 const taleOfTwoCitiesVideoCheckpoint = {
   id: "tale-of-two-cities-video-checkpoint",
   timeSeconds: 581,
+  durationSeconds: 736,
   title: "Interactive Quiz: Tale of Two Cities",
   questions: [
     {
