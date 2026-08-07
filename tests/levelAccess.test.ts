@@ -103,6 +103,29 @@ describe("level access", () => {
     expect(importedSteps.map((block) => block.body).join(" ")).not.toContain("Practical questions for everyday life");
   });
 
+  it("adds the city economic engine lesson as Level 1 Session 2 Step 2", () => {
+    const competingParadigms = lessons.find((lesson) => lesson.id === "level-1-session-2-competing-paradigms");
+    expect(competingParadigms).toBeDefined();
+    expect(competingParadigms?.content.map((block) => block.title)).toEqual([
+      "Step 1: Tale of Two Cities",
+      "Step 2: The City: Economic Engine",
+      "Step 3: Business Application",
+      "Step 4: Wix Resource Link",
+      "Step 5: Reflection Checkpoint",
+    ]);
+
+    const cityStep = competingParadigms?.content[1];
+    expect(cityStep?.kind).toBe("customHtml");
+    expect(cityStep?.body).toContain("The City: Economic Engine and Human Vocation");
+    expect(cityStep?.body).toContain("80% of global GDP");
+    expect(cityStep?.body).toContain("Agglomeration economies");
+    expect(cityStep?.body).toContain("The city's moral budget");
+    expect(cityStep?.body).toContain("Interdisciplinary synthesis matrix");
+    expect(cityStep?.body).toContain("Complete city lesson");
+    expect(cityStep?.body).not.toContain("cdn.tailwindcss.com");
+    expect(cityStep?.body).not.toContain("chart.js");
+  });
+
   it("adds a Step 4 forum requiring a post and replies to two course participants", () => {
     const forum = activities.find((activity) => activity.id === "activity-four-pillars-discussion");
     expect(forum).toMatchObject({

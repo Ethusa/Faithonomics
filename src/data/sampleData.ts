@@ -2819,6 +2819,207 @@ const createPracticalEconomicsSteps = (lessonId: string): Lesson["content"] => [
   },
 ];
 
+const createCityEconomicEngineStep = (lessonId: string): Lesson["content"][number] => ({
+  id: `${lessonId}-city-economic-engine`,
+  kind: "customHtml",
+  title: "Step 2: The City: Economic Engine",
+  body: richLessonStepHtml(`
+    <p class="eyebrow">Urban theology and agglomeration economics</p>
+    <h2>The City: Economic Engine and Human Vocation</h2>
+    <p class="intro">
+      Cities gather people, work, money, land, skills and ideas. When people live and work close together,
+      they can share resources, find better matches and learn from one another. This step asks what happens
+      economically, culturally and theologically when human life becomes concentrated in a city.
+    </p>
+
+    <div class="grid">
+      <section class="card">
+        <strong>Global output</strong>
+        <h3>80% of global GDP</h3>
+        <p>Cities generate about 80% of global economic output, making them major engines of production and exchange.</p>
+      </section>
+      <section class="card">
+        <strong>Job creation</strong>
+        <h3>88% of private-sector jobs</h3>
+        <p>Between 2010 and 2020, cities accounted for about 88% of private-sector job creation.</p>
+      </section>
+      <section class="card">
+        <strong>Urban future</strong>
+        <h3>Nearly seven in ten</h3>
+        <p>By 2050, nearly seven in ten people are expected to live in urban areas.</p>
+      </section>
+    </div>
+
+    <section class="card">
+      <strong>The modern city</strong>
+      <h3>A city is more than a place</h3>
+      <p>
+        The modern city is not merely a geographic backdrop for trade. It is a sophisticated economic actor
+        that organises land, labour, capital and human desire into one interacting system.
+      </p>
+      <div class="grid">
+        <section class="card">
+          <strong>Land</strong>
+          <p>Where homes, firms, roads and services are placed.</p>
+        </section>
+        <section class="card">
+          <strong>Labour</strong>
+          <p>How different human skills and vocations connect.</p>
+        </section>
+        <section class="card">
+          <strong>Capital</strong>
+          <p>How money, buildings, tools and investment are mobilised.</p>
+        </section>
+        <section class="card">
+          <strong>Desire</strong>
+          <p>How status, advertising and urban habits shape what people want.</p>
+        </section>
+      </div>
+    </section>
+
+    <div class="comparison">
+      <div>
+        <h3>Ancient biblical city</h3>
+        <p>
+          In the ancient biblical world, a city could be a small walled settlement. A wall protected homes,
+          families, stored food, animals and tools. Genesis places Cain's fear of violent retaliation close
+          to the account of his city-building, so fear is a careful inference rather than a stated fact.
+        </p>
+      </div>
+      <div>
+        <h3>Economic reframing</h3>
+        <p>
+          The wall does more than protect houses. It brings households, labour, resources and skills into
+          proximity. The settlement begins to act as an economic entity: homes, wall, gate, protection and
+          shared life.
+        </p>
+      </div>
+    </div>
+
+    <section class="card">
+      <strong>Module 1</strong>
+      <h3>Agglomeration Economies</h3>
+      <p>
+        Agglomeration economies are the economic benefits that arise when people, businesses and institutions
+        are close enough to share, match and learn from one another.
+      </p>
+      <div class="value-bars" aria-label="Illustrative density and productivity pattern">
+        <div class="value-row"><span>Density 1x</span><div class="value-track"><div class="value-fill" style="width: 30%;">100</div></div></div>
+        <div class="value-row"><span>Density 4x</span><div class="value-track"><div class="value-fill" style="width: 48%;">135</div></div></div>
+        <div class="value-row"><span>Density 16x</span><div class="value-track"><div class="value-fill" style="width: 72%;">205</div></div></div>
+        <div class="value-row"><span>Density 64x</span><div class="value-track"><div class="value-fill" style="width: 100%;">330</div></div></div>
+      </div>
+      <div class="grid">
+        <section class="card">
+          <strong>1. Sharing</strong>
+          <h3>Shared inputs</h3>
+          <p>Many firms can use the same roads, suppliers, power networks, universities and specialist services.</p>
+        </section>
+        <section class="card">
+          <strong>2. Matching</strong>
+          <h3>Better fit</h3>
+          <p>Workers can find more employers; firms can find more workers, suppliers, customers and investors.</p>
+        </section>
+        <section class="card">
+          <strong>3. Learning</strong>
+          <h3>Knowledge flows</h3>
+          <p>Ideas move through observation, education, conversations, job changes and collaboration.</p>
+        </section>
+      </div>
+    </section>
+
+    <div class="comparison">
+      <div>
+        <h3>Agglomeration and the creation mandate</h3>
+        <ul>
+          <li><strong>Imago Dei:</strong> every person has God-given dignity and represents God's rule within creation.</li>
+          <li><strong>Creation mandate:</strong> Genesis 1:28 and 2:15 connect fruitfulness, responsible dominion, work and keeping.</li>
+          <li><strong>Careful claim:</strong> the Bible does not teach modern agglomeration theory, but agglomeration can describe what becomes possible when many human vocations operate together.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>The city as a liturgical centre</h3>
+        <p>
+          Liturgy normally refers to repeated acts of worship that shape what people love. Here it is used as a
+          teaching metaphor. City life forms us through repeated patterns of work, buying, travel and status.
+        </p>
+        <span class="pill">Work</span><span class="pill">Buying</span><span class="pill">Travel</span><span class="pill">Status</span>
+      </div>
+    </div>
+
+    <section class="callout">
+      <h3>The city's moral budget</h3>
+      <p>
+        A normal budget shows where money goes. A city also reveals priorities through the way it distributes
+        scarce resources. "Moral budget" is a teaching metaphor, not a standard economics term.
+      </p>
+      <div class="grid">
+        <section class="card"><strong>Land</strong><p>What receives valuable space, and who lives near transport, schools, parks and jobs?</p></section>
+        <section class="card"><strong>Time</strong><p>How much of people's lives are consumed by travel, queues and inefficient systems?</p></section>
+        <section class="card"><strong>Capital</strong><p>Which communities, businesses and activities attract investment?</p></section>
+        <section class="card"><strong>Attention</strong><p>What captures citizens' eyes and imagination through screens, adverts and public space?</p></section>
+        <section class="card"><strong>Honour</strong><p>Which careers, neighbourhoods and lifestyles are treated as symbols of success?</p></section>
+      </div>
+    </section>
+
+    <section class="card">
+      <strong>Interdisciplinary synthesis matrix</strong>
+      <h3>Economic mechanisms, theological truths and learning practices</h3>
+      <div class="grid">
+        <section class="card">
+          <strong>Input sharing</strong>
+          <p>Interdependence of the body. Shared makerspaces and co-located labs can train efficient resource stewardship.</p>
+        </section>
+        <section class="card">
+          <strong>Labour pooling</strong>
+          <p>A polycentric picture of the imago Dei. Communities of practice and mentorship can build economic and professional resilience.</p>
+        </section>
+        <section class="card">
+          <strong>Knowledge spillovers</strong>
+          <p>Divine wisdom and common grace. Spatial learning and immersive analytics can accelerate civic innovation.</p>
+        </section>
+        <section class="card">
+          <strong>Density premium</strong>
+          <p>Fruitfulness and multiplication. Competency mastery can expand the capacity of the whole community.</p>
+        </section>
+      </div>
+    </section>
+
+    <div class="comparison">
+      <div>
+        <h3>The Babel paradigm</h3>
+        <ul>
+          <li>Self-preservation and imperial pride become the centre.</li>
+          <li>Technology is used for manipulation and autonomous control.</li>
+          <li>Human beings are reduced to labour units.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>The New Jerusalem paradigm</h3>
+        <ul>
+          <li>Covenantal communion and public flourishing become the centre.</li>
+          <li>Technology and culture are redirected toward stewardship and restoration.</li>
+          <li>Human vocation is healed and offered back to God.</li>
+        </ul>
+      </div>
+    </div>
+
+    <section class="callout">
+      <h3>Lesson summary</h3>
+      <p>
+        A city is concentrated human vocation. Economically, proximity enables sharing, matching and learning.
+        Biblically, the city concentrates image-bearers and their vocations. Culturally, its repeated systems
+        form habits and desires. Its use of land, time, capital, attention and honour gives us a window into
+        its moral budget.
+      </p>
+      <p>
+        Research notes: World Bank Group on urban development; Gilles Duranton and Diego Puga on the
+        micro-foundations of urban agglomeration economies; Genesis 1:26-28, 2:15 and 4:14-17.
+      </p>
+    </section>
+  `, { completeButtonLabel: "Complete city lesson" }),
+});
+
 export const lessons: Lesson[] = curriculum.flatMap((level, levelIndex) =>
   level.sessions.map((sessionTitle, sessionIndex) => {
     const levelNumber = levelIndex + 1;
@@ -2898,6 +3099,7 @@ export const lessons: Lesson[] = curriculum.flatMap((level, levelIndex) =>
         url: "https://youtu.be/th2TF7u2TxQ",
         videoCheckpoint: taleOfTwoCitiesVideoCheckpoint,
       };
+      content[1] = createCityEconomicEngineStep(id);
       content.splice(3, 0, {
         id: `${id}-resource-link`,
         kind: "webLink",
