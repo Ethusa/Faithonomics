@@ -111,7 +111,7 @@ const isWixMediaReference = (url: string | undefined): boolean => url?.startsWit
 
 const isHttpUrl = (url: string | undefined): url is string => /^https?:\/\//i.test(url ?? "");
 
-const youTubeEmbedOrigin = "https://www.youtube.com";
+const youTubeEmbedOrigin = "https://www.youtube-nocookie.com";
 const fourPillarsForumButtonImage = `${import.meta.env.BASE_URL}assets/discussion-forum-button-clean.png`;
 const fourPillarsForumImage = `${import.meta.env.BASE_URL}assets/discussion-forum-header-clean.png`;
 
