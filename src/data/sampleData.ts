@@ -2985,36 +2985,13 @@ const createCityEconomicEngineStep = (lessonId: string): Lesson["content"][numbe
       </div>
     </section>
 
-    <div class="comparison">
-      <div>
-        <h3>The Babel paradigm</h3>
-        <ul>
-          <li>Self-preservation and imperial pride become the centre.</li>
-          <li>Technology is used for manipulation and autonomous control.</li>
-          <li>Human beings are reduced to labour units.</li>
-        </ul>
-      </div>
-      <div>
-        <h3>The New Jerusalem paradigm</h3>
-        <ul>
-          <li>Covenantal communion and public flourishing become the centre.</li>
-          <li>Technology and culture are redirected toward stewardship and restoration.</li>
-          <li>Human vocation is healed and offered back to God.</li>
-        </ul>
-      </div>
-    </div>
-
     <section class="callout">
-      <h3>Lesson summary</h3>
+      <h3>Lesson takeaway</h3>
       <p>
         A city is concentrated human vocation. Economically, proximity enables sharing, matching and learning.
         Biblically, the city concentrates image-bearers and their vocations. Culturally, its repeated systems
         form habits and desires. Its use of land, time, capital, attention and honour gives us a window into
         its moral budget.
-      </p>
-      <p>
-        Research notes: World Bank Group on urban development; Gilles Duranton and Diego Puga on the
-        micro-foundations of urban agglomeration economies; Genesis 1:26-28, 2:15 and 4:14-17.
       </p>
     </section>
   `, { completeButtonLabel: "Complete city lesson" }),
@@ -3157,47 +3134,6 @@ export const activities: Activity[] = [
     replyRequirement: 2,
   },
   {
-    id: "activity-economic-alignment-reflection",
-    lessonId: "level-1-session-2-competing-paradigms",
-    kind: "reflection",
-    title: "Competing paradigms reflection",
-    instructions: "Write a short reflection on the economic paradigm you most often inherit at work and how God's economy reframes it.",
-    required: true,
-    maxScore: 10,
-    modelAnswer:
-      "A strong answer names a current economic assumption, compares it with God's ownership and stewardship, and describes a concrete business practice that should change.",
-    rubric: [
-      {
-        id: "rubric-paradigm",
-        label: "Paradigm clarity",
-        description: "Clearly identifies the economic assumption being challenged.",
-        maxPoints: 4,
-      },
-      {
-        id: "rubric-theology",
-        label: "Theological connection",
-        description: "Connects the response to God's ownership, stewardship, justice, generosity or love.",
-        maxPoints: 3,
-      },
-      {
-        id: "rubric-practice",
-        label: "Practical change",
-        description: "Names a specific Monday-ready business or work practice.",
-        maxPoints: 3,
-      },
-    ],
-  },
-  {
-    id: "activity-paradigm-matching",
-    lessonId: "level-1-session-2-competing-paradigms",
-    kind: "matching",
-    title: "Match the paradigm",
-    instructions: "Match each workplace statement with the economic paradigm it reveals.",
-    required: true,
-    maxScore: 6,
-    minimumScore: 6,
-  },
-  {
     id: "activity-strategic-video",
     lessonId: "level-1-session-3-strategic-alignment",
     kind: "interactiveVideo",
@@ -3269,30 +3205,6 @@ export const questions: Question[] = [
     points: 5,
   },
   {
-    id: "question-match-scarcity",
-    activityId: "activity-paradigm-matching",
-    prompt: "Protect advantage by keeping opportunity narrow",
-    kind: "matching",
-    points: 2,
-    correctAnswer: "scarcity",
-  },
-  {
-    id: "question-match-stewardship",
-    activityId: "activity-paradigm-matching",
-    prompt: "Treat resources as entrusted by God for faithful use",
-    kind: "matching",
-    points: 2,
-    correctAnswer: "stewardship",
-  },
-  {
-    id: "question-match-community",
-    activityId: "activity-paradigm-matching",
-    prompt: "Make room for others to participate and flourish",
-    kind: "matching",
-    points: 2,
-    correctAnswer: "community",
-  },
-  {
     id: "question-alignment-timeline",
     activityId: "activity-alignment-timeline",
     prompt: "Arrange the practices from diagnosis to Monday action.",
@@ -3322,69 +3234,6 @@ export const answerChoices: AnswerChoice[] = [
     questionId: "question-access",
     label: "Verify the completed Wix order in backend code",
     value: "backend",
-    isCorrect: true,
-  },
-  {
-    id: "choice-match-scarcity-a",
-    questionId: "question-match-scarcity",
-    label: "Scarcity paradigm",
-    value: "scarcity",
-    isCorrect: true,
-  },
-  {
-    id: "choice-match-scarcity-b",
-    questionId: "question-match-scarcity",
-    label: "Stewardship paradigm",
-    value: "stewardship",
-    isCorrect: false,
-  },
-  {
-    id: "choice-match-scarcity-c",
-    questionId: "question-match-scarcity",
-    label: "Community paradigm",
-    value: "community",
-    isCorrect: false,
-  },
-  {
-    id: "choice-match-stewardship-a",
-    questionId: "question-match-stewardship",
-    label: "Scarcity paradigm",
-    value: "scarcity",
-    isCorrect: false,
-  },
-  {
-    id: "choice-match-stewardship-b",
-    questionId: "question-match-stewardship",
-    label: "Stewardship paradigm",
-    value: "stewardship",
-    isCorrect: true,
-  },
-  {
-    id: "choice-match-stewardship-c",
-    questionId: "question-match-stewardship",
-    label: "Community paradigm",
-    value: "community",
-    isCorrect: false,
-  },
-  {
-    id: "choice-match-community-a",
-    questionId: "question-match-community",
-    label: "Scarcity paradigm",
-    value: "scarcity",
-    isCorrect: false,
-  },
-  {
-    id: "choice-match-community-b",
-    questionId: "question-match-community",
-    label: "Stewardship paradigm",
-    value: "stewardship",
-    isCorrect: false,
-  },
-  {
-    id: "choice-match-community-c",
-    questionId: "question-match-community",
-    label: "Community paradigm",
-    value: "community",
     isCorrect: true,
   },
   {
@@ -3437,21 +3286,7 @@ export const progress: LessonProgress[] = [];
 
 export const activityCompletions: ActivityCompletion[] = [];
 
-export const submissions: Submission[] = [
-  {
-    id: "submission-paradigms-amina",
-    activityId: "activity-economic-alignment-reflection",
-    lessonId: "level-1-session-2-competing-paradigms",
-    courseId: "course-faithonomics-core",
-    enrolmentId: "enrol-faithonomics-amina",
-    memberId: identities.learner.memberId,
-    contactId: identities.learner.contactId,
-    responseText:
-      "I often inherit a scarcity mindset at work. God's economy reframes my role as stewardship, so I need to make decisions that build trust and room for others.",
-    status: "submitted",
-    submittedAt: "2026-06-21T12:30:00.000Z",
-  },
-];
+export const submissions: Submission[] = [];
 
 export const discussionPosts: DiscussionPost[] = [
   {

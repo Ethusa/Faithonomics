@@ -121,9 +121,15 @@ describe("level access", () => {
     expect(cityStep?.body).toContain("Agglomeration economies");
     expect(cityStep?.body).toContain("The city's moral budget");
     expect(cityStep?.body).toContain("Interdisciplinary synthesis matrix");
+    expect(cityStep?.body).toContain("Lesson takeaway");
+    expect(cityStep?.body).not.toContain("Lesson summary");
+    expect(cityStep?.body).not.toContain("The Babel paradigm");
+    expect(cityStep?.body).not.toContain("The New Jerusalem paradigm");
+    expect(cityStep?.body).not.toContain("Research notes:");
     expect(cityStep?.body).toContain("Complete city lesson");
     expect(cityStep?.body).not.toContain("cdn.tailwindcss.com");
     expect(cityStep?.body).not.toContain("chart.js");
+    expect(activities.filter((activity) => activity.lessonId === competingParadigms?.id)).toHaveLength(0);
   });
 
   it("adds a Step 4 forum requiring a post and replies to two course participants", () => {

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { createMockRepository } from "../src/adapters/mockRepository";
-import { enrolments, identities, lessons } from "../src/data/sampleData";
+import { activities, enrolments, identities, lessons } from "../src/data/sampleData";
 import { ClassroomService } from "../src/services/classroomService";
 
 describe("ClassroomService completion gates", () => {
@@ -29,10 +29,11 @@ describe("ClassroomService completion gates", () => {
     expect(lesson.lockStates.every((state) => !state.locked)).toBe(true);
   });
 
-  it("rejects completed lesson progress until required step and activity records exist", async () => {
+  it("rejects completed lesson progress until required steps are complete", async () => {
     const service = new ClassroomService(createMockRepository());
     const lesson = lessons.find((item) => item.id === "level-1-session-2-competing-paradigms");
     expect(lesson).toBeDefined();
+    expect(activities.filter((activity) => activity.lessonId === lesson!.id)).toHaveLength(0);
 
     const progressInput = {
       id: "progress-service-gate",
@@ -57,18 +58,6 @@ describe("ClassroomService completion gates", () => {
         maxScore: 1,
       });
     }
-    await Promise.all(
-      ["activity-economic-alignment-reflection", "activity-paradigm-matching"].map((activityId) =>
-        service.saveActivityCompletion(identities.learner, {
-          activityId,
-          lessonId: lesson!.id,
-          completed: true,
-          score: 10,
-          maxScore: 10,
-        }),
-      ),
-    );
-
     await expect(service.saveLessonProgress(identities.learner, progressInput)).resolves.toMatchObject({
       lessonId: lesson!.id,
       status: "completed",

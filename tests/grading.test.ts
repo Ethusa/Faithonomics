@@ -3,19 +3,17 @@ import { answerChoices, questions } from "../src/data/sampleData";
 import { gradeQuiz } from "../src/domain/grading";
 
 describe("quiz grading", () => {
-  it("grades matching answers against stored answer keys", () => {
-    const activityQuestions = questions.filter((question) => question.activityId === "activity-paradigm-matching");
+  it("grades multiple choice answers against stored answer keys", () => {
+    const activityQuestions = questions.filter((question) => question.activityId === "activity-economic-alignment-quiz");
     const choices = answerChoices.filter((choice) =>
       activityQuestions.some((question) => question.id === choice.questionId),
     );
 
     const result = gradeQuiz(activityQuestions, choices, {
-      "question-match-scarcity": "scarcity",
-      "question-match-stewardship": "stewardship",
-      "question-match-community": "community",
+      "question-access": "backend",
     });
 
-    expect(result).toMatchObject({ score: 6, maxScore: 6 });
+    expect(result).toMatchObject({ score: 5, maxScore: 5 });
     expect(result.answers.every((answer) => answer.correct)).toBe(true);
   });
 
