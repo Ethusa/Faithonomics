@@ -118,7 +118,9 @@ describe("level access", () => {
     expect(cityStep?.kind).toBe("customHtml");
     expect(cityStep?.body).toContain("The City: Economic Engine and Human Vocation");
     expect(cityStep?.body).toContain("7638b6_ebdf2c0114524151aeccb50803b561b4");
-    expect(cityStep?.body).toContain("7638b6_d7a0dc463a204d64b414683471d44cb7");
+    expect(cityStep?.body).toContain("7638b6_87333f384bcd49f0b4b6d8e2f3ac8ece");
+    expect(cityStep?.body).toContain("7638b6_e18b819642c34d3596200a0c1f0eda34");
+    expect(cityStep?.body).not.toContain("7638b6_d7a0dc463a204d64b414683471d44cb7");
     expect(cityStep?.body).not.toContain("7638b6_da7050914e224c23ae51c23e720e1766");
     expect(cityStep?.body).not.toContain("Global output");
     expect(cityStep?.body).not.toContain("80% of global GDP");
@@ -131,6 +133,9 @@ describe("level access", () => {
     expect(cityStep?.body).toContain("The Sharing-Matching-Learning Framework");
     expect(cityStep?.body).toContain("THE URBAN TRADE-OFF - SIMPLE TEACHING GRAPHIC");
     expect(cityStep?.body).toContain("Megacity");
+    expect(cityStep?.body).toContain("A city is more than a place");
+    expect(cityStep?.body).toContain("A city is not merely a geographic backdrop for trade");
+    expect(cityStep?.body).not.toContain("The modern city");
     expect(cityStep?.body).not.toContain("Module 1");
     expect(cityStep?.body).not.toContain("<h3>Agglomeration Economies</h3>");
     expect(cityStep?.body).not.toContain("Density 1x");

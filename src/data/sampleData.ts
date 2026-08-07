@@ -3070,16 +3070,15 @@ const createCityEconomicEngineStep = (lessonId: string): Lesson["content"][numbe
 
     <figure class="lesson-graphic">
       <img
-        src="https://static.wixstatic.com/media/7638b6_d7a0dc463a204d64b414683471d44cb7~mv2.png"
+        src="https://static.wixstatic.com/media/7638b6_87333f384bcd49f0b4b6d8e2f3ac8ece~mv2.png"
         alt="Biblical city economy graphic."
       />
     </figure>
 
     <section class="card">
-      <strong>The modern city</strong>
       <h3>A city is more than a place</h3>
       <p>
-        The modern city is not merely a geographic backdrop for trade. It is a sophisticated economic actor
+        A city is not merely a geographic backdrop for trade. It is a sophisticated economic actor
         that organises land, labour, capital and human desire into one interacting system.
       </p>
       <div class="grid">
@@ -3207,6 +3206,13 @@ const createCityEconomicEngineStep = (lessonId: string): Lesson["content"][numbe
         </section>
       </div>
     </section>
+
+    <figure class="lesson-graphic">
+      <img
+        src="https://static.wixstatic.com/media/7638b6_e18b819642c34d3596200a0c1f0eda34~mv2.png"
+        alt="Economic engine learning graphic."
+      />
+    </figure>
 
     <section class="callout">
       <h3>Lesson takeaway</h3>
