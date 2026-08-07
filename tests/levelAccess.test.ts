@@ -134,8 +134,11 @@ describe("level access", () => {
     expect(cityStep?.body).not.toContain("Module 1");
     expect(cityStep?.body).not.toContain("<h3>Agglomeration Economies</h3>");
     expect(cityStep?.body).not.toContain("Density 1x");
-    expect(cityStep?.body).toContain("The city's moral budget");
-    expect(cityStep?.body).toContain("Interdisciplinary synthesis matrix");
+    expect(cityStep?.body).not.toContain("Agglomeration and the creation mandate");
+    expect(cityStep?.body).not.toContain("The city as a liturgical centre");
+    expect(cityStep?.body).not.toContain("The city's moral budget");
+    expect(cityStep?.body).not.toContain("Interdisciplinary synthesis matrix");
+    expect(cityStep?.body).not.toContain("Economic mechanisms, theological truths and learning practices");
     expect(cityStep?.body).toContain("Lesson takeaway");
     expect(cityStep?.body).not.toContain("Lesson summary");
     expect(cityStep?.body).not.toContain("The Babel paradigm");

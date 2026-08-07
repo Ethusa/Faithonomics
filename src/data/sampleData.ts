@@ -3208,63 +3208,6 @@ const createCityEconomicEngineStep = (lessonId: string): Lesson["content"][numbe
       </div>
     </section>
 
-    <div class="comparison">
-      <div>
-        <h3>Agglomeration and the creation mandate</h3>
-        <ul>
-          <li><strong>Imago Dei:</strong> every person has God-given dignity and represents God's rule within creation.</li>
-          <li><strong>Creation mandate:</strong> Genesis 1:28 and 2:15 connect fruitfulness, responsible dominion, work and keeping.</li>
-          <li><strong>Careful claim:</strong> the Bible does not teach modern agglomeration theory, but agglomeration can describe what becomes possible when many human vocations operate together.</li>
-        </ul>
-      </div>
-      <div>
-        <h3>The city as a liturgical centre</h3>
-        <p>
-          Liturgy normally refers to repeated acts of worship that shape what people love. Here it is used as a
-          teaching metaphor. City life forms us through repeated patterns of work, buying, travel and status.
-        </p>
-        <span class="pill">Work</span><span class="pill">Buying</span><span class="pill">Travel</span><span class="pill">Status</span>
-      </div>
-    </div>
-
-    <section class="callout">
-      <h3>The city's moral budget</h3>
-      <p>
-        A normal budget shows where money goes. A city also reveals priorities through the way it distributes
-        scarce resources. "Moral budget" is a teaching metaphor, not a standard economics term.
-      </p>
-      <div class="grid">
-        <section class="card"><strong>Land</strong><p>What receives valuable space, and who lives near transport, schools, parks and jobs?</p></section>
-        <section class="card"><strong>Time</strong><p>How much of people's lives are consumed by travel, queues and inefficient systems?</p></section>
-        <section class="card"><strong>Capital</strong><p>Which communities, businesses and activities attract investment?</p></section>
-        <section class="card"><strong>Attention</strong><p>What captures citizens' eyes and imagination through screens, adverts and public space?</p></section>
-        <section class="card"><strong>Honour</strong><p>Which careers, neighbourhoods and lifestyles are treated as symbols of success?</p></section>
-      </div>
-    </section>
-
-    <section class="card">
-      <strong>Interdisciplinary synthesis matrix</strong>
-      <h3>Economic mechanisms, theological truths and learning practices</h3>
-      <div class="grid">
-        <section class="card">
-          <strong>Input sharing</strong>
-          <p>Interdependence of the body. Shared makerspaces and co-located labs can train efficient resource stewardship.</p>
-        </section>
-        <section class="card">
-          <strong>Labour pooling</strong>
-          <p>A polycentric picture of the imago Dei. Communities of practice and mentorship can build economic and professional resilience.</p>
-        </section>
-        <section class="card">
-          <strong>Knowledge spillovers</strong>
-          <p>Divine wisdom and common grace. Spatial learning and immersive analytics can accelerate civic innovation.</p>
-        </section>
-        <section class="card">
-          <strong>Density premium</strong>
-          <p>Fruitfulness and multiplication. Competency mastery can expand the capacity of the whole community.</p>
-        </section>
-      </div>
-    </section>
-
     <section class="callout">
       <h3>Lesson takeaway</h3>
       <p>
