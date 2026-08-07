@@ -34,8 +34,8 @@ describe("level access", () => {
     const sessionArtworkUrls = [
       "https://static.wixstatic.com/media/7638b6_ebb07e58d7b64e3d8a99c272402c6dc9~mv2.png",
       "https://static.wixstatic.com/media/7638b6_0b086c8a75d9429c956c72a796be1f79~mv2.png",
-      "https://static.wixstatic.com/media/7638b6_fb2b739765044e78b2dcbd33e7a43038~mv2.png",
-      "https://static.wixstatic.com/media/7638b6_898e0407677c4585b6abb5e02e286355~mv2.png",
+      "https://static.wixstatic.com/media/7638b6_b3c35b4d4ed84d3aa0e50cd23c543fc3~mv2.png",
+      "https://static.wixstatic.com/media/7638b6_d23d57dc349c4025aadcd93121e2db05~mv2.png",
     ];
     expect(modules.find((module) => module.id === "level-1")?.imageUrl).toBe(updatedArtworkUrl);
     const levelOneArt = lessons

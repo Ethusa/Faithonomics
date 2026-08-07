@@ -3036,12 +3036,12 @@ export const lessons: Lesson[] = curriculum.flatMap((level, levelIndex) =>
         imageAlt: "Split papercraft road showing a grey decline path and green-gold renewal path through an open door.",
       },
       3: {
-        imageUrl: "https://static.wixstatic.com/media/7638b6_fb2b739765044e78b2dcbd33e7a43038~mv2.png",
-        imageAlt: "Papercraft strategy map with compass, cross marker, route, growth chart and scales.",
+        imageUrl: "https://static.wixstatic.com/media/7638b6_b3c35b4d4ed84d3aa0e50cd23c543fc3~mv2.png",
+        imageAlt: "Faithonomics Session 3 illustrated header.",
       },
       4: {
-        imageUrl: "https://static.wixstatic.com/media/7638b6_898e0407677c4585b6abb5e02e286355~mv2.png",
-        imageAlt: "Papercraft Monday morning workspace with calendar, laptop, checklist, open path and cross-lit doorway.",
+        imageUrl: "https://static.wixstatic.com/media/7638b6_d23d57dc349c4025aadcd93121e2db05~mv2.png",
+        imageAlt: "Faithonomics Session 4 illustrated header.",
       },
     };
     const sessionArt = levelNumber === 1 ? levelOneSessionArt[sessionNumber] : undefined;
