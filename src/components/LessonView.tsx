@@ -827,7 +827,7 @@ const YouTubeCheckpointVideo = ({
 }) => {
   const checkpoint = content.videoCheckpoint;
   const videoId = getYouTubeVideoId(content.url);
-  const playerHostRef = useRef<HTMLDivElement | null>(null);
+  const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const playerRef = useRef<YouTubePlayer | null>(null);
   const pollRef = useRef<number | null>(null);
   const autoplayRetryTimerRefs = useRef<number[]>([]);
@@ -1023,7 +1023,7 @@ const YouTubeCheckpointVideo = ({
     setPlayerStatus("loading");
     loadYouTubeIframeApi()
       .then((YT) => {
-        if (!active || !playerHostRef.current) {
+        if (!active || !iframeRef.current) {
           return;
         }
 
@@ -1037,7 +1037,7 @@ const YouTubeCheckpointVideo = ({
           rel: 0,
           start: quizPassedRef.current ? checkpoint.timeSeconds : 0,
         };
-        playerRef.current = new YT.Player(playerHostRef.current, {
+        playerRef.current = new YT.Player(iframeRef.current, {
           height: "100%",
           host: youTubeEmbedOrigin,
           videoId,
@@ -1147,6 +1147,17 @@ const YouTubeCheckpointVideo = ({
   }
 
   const allAnswered = checkpoint.questions.every((question) => Boolean(selectedAnswers[question.id]));
+  const embedParams = new URLSearchParams({
+    autoplay: "1",
+    enablejsapi: "1",
+    modestbranding: "1",
+    mute: "1",
+    origin: window.location.origin,
+    playsinline: "1",
+    rel: "0",
+    start: "0",
+  });
+  const embedSrc = `${youTubeEmbedOrigin}/embed/${videoId}?${embedParams.toString()}`;
 
   const finishQuizAndContinueVideo = () => {
     setSubmitted(true);
@@ -1171,7 +1182,15 @@ const YouTubeCheckpointVideo = ({
       {content.body ? <p>{content.body}</p> : null}
       <div className="youtube-frame-wrap">
         <div className="youtube-frame-slot" aria-label={content.title}>
-          <div className="youtube-player-host" ref={playerHostRef} />
+          <iframe
+            ref={iframeRef}
+            title={content.title}
+            src={embedSrc}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+            allowFullScreen
+            loading="eager"
+            referrerPolicy="strict-origin-when-cross-origin"
+          />
         </div>
         {checkpointOpen && !quizPassed ? (
           <div className="video-blocker" role="status" aria-live="polite">
