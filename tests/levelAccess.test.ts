@@ -117,7 +117,9 @@ describe("level access", () => {
     const cityStep = competingParadigms?.content[1];
     expect(cityStep?.kind).toBe("customHtml");
     expect(cityStep?.body).toContain("The City: Economic Engine and Human Vocation");
-    expect(cityStep?.body).toContain("7638b6_da7050914e224c23ae51c23e720e1766");
+    expect(cityStep?.body).toContain("7638b6_ea33a285c5714d86947cb87bcde3fb50");
+    expect(cityStep?.body).toContain("7638b6_ef5f400047cb4a4aa30a26e9779aab7d");
+    expect(cityStep?.body).not.toContain("7638b6_da7050914e224c23ae51c23e720e1766");
     expect(cityStep?.body).not.toContain("Global output");
     expect(cityStep?.body).not.toContain("80% of global GDP");
     expect(cityStep?.body).not.toContain("Job creation");
@@ -131,6 +133,8 @@ describe("level access", () => {
     expect(cityStep?.body).not.toContain("Lesson summary");
     expect(cityStep?.body).not.toContain("The Babel paradigm");
     expect(cityStep?.body).not.toContain("The New Jerusalem paradigm");
+    expect(cityStep?.body).not.toContain("Ancient biblical city");
+    expect(cityStep?.body).not.toContain("Economic reframing");
     expect(cityStep?.body).not.toContain("Research notes:");
     expect(cityStep?.body).toContain("Complete city lesson");
     expect(cityStep?.body).not.toContain("cdn.tailwindcss.com");

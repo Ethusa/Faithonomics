@@ -2847,8 +2847,15 @@ const createCityEconomicEngineStep = (lessonId: string): Lesson["content"][numbe
 
     <figure class="lesson-graphic">
       <img
-        src="https://static.wixstatic.com/media/7638b6_da7050914e224c23ae51c23e720e1766~mv2.png"
+        src="https://static.wixstatic.com/media/7638b6_ea33a285c5714d86947cb87bcde3fb50~mv2.png"
         alt="City economy statistics graphic."
+      />
+    </figure>
+
+    <figure class="lesson-graphic">
+      <img
+        src="https://static.wixstatic.com/media/7638b6_ef5f400047cb4a4aa30a26e9779aab7d~mv2.png"
+        alt="Biblical city economy graphic."
       />
     </figure>
 
@@ -2878,25 +2885,6 @@ const createCityEconomicEngineStep = (lessonId: string): Lesson["content"][numbe
         </section>
       </div>
     </section>
-
-    <div class="comparison">
-      <div>
-        <h3>Ancient biblical city</h3>
-        <p>
-          In the ancient biblical world, a city could be a small walled settlement. A wall protected homes,
-          families, stored food, animals and tools. Genesis places Cain's fear of violent retaliation close
-          to the account of his city-building, so fear is a careful inference rather than a stated fact.
-        </p>
-      </div>
-      <div>
-        <h3>Economic reframing</h3>
-        <p>
-          The wall does more than protect houses. It brings households, labour, resources and skills into
-          proximity. The settlement begins to act as an economic entity: homes, wall, gate, protection and
-          shared life.
-        </p>
-      </div>
-    </div>
 
     <section class="card">
       <strong>Module 1</strong>
