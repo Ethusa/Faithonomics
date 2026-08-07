@@ -118,7 +118,7 @@ describe("level access", () => {
     expect(cityStep?.kind).toBe("customHtml");
     expect(cityStep?.body).toContain("The City: Economic Engine and Human Vocation");
     expect(cityStep?.body).toContain("7638b6_ebdf2c0114524151aeccb50803b561b4");
-    expect(cityStep?.body).toContain("7638b6_ef5f400047cb4a4aa30a26e9779aab7d");
+    expect(cityStep?.body).toContain("7638b6_d7a0dc463a204d64b414683471d44cb7");
     expect(cityStep?.body).not.toContain("7638b6_da7050914e224c23ae51c23e720e1766");
     expect(cityStep?.body).not.toContain("Global output");
     expect(cityStep?.body).not.toContain("80% of global GDP");
