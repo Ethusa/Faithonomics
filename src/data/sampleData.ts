@@ -921,6 +921,11 @@ const richLessonStepHtml = (
       transform: translateY(-1px);
     }
 
+    .city-visual-button {
+      display: flex;
+      margin: 4px auto 0;
+    }
+
     .city-visual-popup {
       position: fixed;
       inset: 0;
@@ -4070,16 +4075,27 @@ function escapeHtml(s) {
                 <svg viewBox="0 0 920 520" role="img" aria-label="Diagram connecting urban systems, daily practices and formed desires">
                   <defs>
                     <filter id="${lessonId}-gold-line-shadow" x="-10%" y="-10%" width="120%" height="120%">
-                      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#234638" flood-opacity="0.68"/>
+                      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#234638" flood-opacity="0.50"/>
                     </filter>
+                    <marker id="${lessonId}-arrow-gold" markerWidth="7" markerHeight="7" refX="6.2" refY="3.5" orient="auto" markerUnits="strokeWidth">
+                      <path d="M0,0 L7,3.5 L0,7 z" fill="#234638" stroke="#B99245" stroke-width="0.7"></path>
+                    </marker>
                   </defs>
-                  <g fill="none" stroke="#b99245" stroke-width="3.45" stroke-linecap="round" filter="url(#${lessonId}-gold-line-shadow)">
+                  <g fill="none" stroke="#b99245" stroke-width="1.15" stroke-linecap="round" marker-end="url(#${lessonId}-arrow-gold)" filter="url(#${lessonId}-gold-line-shadow)">
                     <path d="M460 255 C390 185 332 132 234 98"/>
                     <path d="M460 255 C520 170 604 120 712 102"/>
                     <path d="M460 255 C330 255 245 254 142 255"/>
                     <path d="M460 255 C585 255 680 255 785 255"/>
                     <path d="M460 255 C383 342 311 398 212 423"/>
                     <path d="M460 255 C542 346 626 405 724 424"/>
+                  </g>
+                  <g fill="#234638" stroke="#B99245" stroke-width="0.8" filter="url(#${lessonId}-gold-line-shadow)">
+                    <circle cx="234" cy="98" r="6"/>
+                    <circle cx="712" cy="102" r="6"/>
+                    <circle cx="142" cy="255" r="6"/>
+                    <circle cx="785" cy="255" r="6"/>
+                    <circle cx="212" cy="423" r="6"/>
+                    <circle cx="724" cy="424" r="6"/>
                   </g>
                   <g font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">
                     <rect x="330" y="198" width="260" height="114" rx="8" fill="#234638"/>

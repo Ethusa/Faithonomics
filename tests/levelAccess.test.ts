@@ -179,7 +179,11 @@ describe("level access", () => {
     expect(flipCardMarkupIndex).toBeLessThan(neutralBody.indexOf('class="liturgy-panel"'));
     expect(neutralStep?.body).toContain("The City as a Liturgical Centre");
     expect(neutralStep?.body).toContain("Open visual representation");
-    expect(neutralStep?.body).toContain('stroke-width="3.45"');
+    expect(neutralStep?.body).toContain("margin: 4px auto 0");
+    expect(neutralStep?.body).toContain('markerWidth="7"');
+    expect(neutralStep?.body).toContain('fill="#234638" stroke="#B99245" stroke-width="0.7"');
+    expect(neutralStep?.body).toContain('stroke-width="1.15"');
+    expect(neutralStep?.body).toContain('stroke-width="0.8"');
     expect(neutralStep?.body).toContain("A City's Moral Budget");
     expect(neutralStep?.body).toContain("Your City's Moral Budget");
     expect(neutralStep?.body).toContain("/.netlify/functions/city-audit");
