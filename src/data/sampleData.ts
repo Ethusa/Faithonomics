@@ -830,6 +830,7 @@ const richLessonStepHtml = (
 
     .city-love-card {
       display: block;
+      min-height: inherit;
       height: 100%;
       cursor: pointer;
     }

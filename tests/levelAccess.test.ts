@@ -173,6 +173,7 @@ describe("level access", () => {
     expect(neutralStep?.body).toContain("The City of Man - Civitas Terrena");
     expect(neutralStep?.body).toContain("The City of God - Civitas Dei");
     expect(neutralStep?.body).toContain("ordinatio amoris");
+    expect(neutralStep?.body).toMatch(/\.city-love-card\s*\{[\s\S]*?min-height: inherit/);
     const neutralBody = neutralStep?.body ?? "";
     const flipCardMarkupIndex = neutralBody.indexOf('class="city-love-grid"');
     expect(flipCardMarkupIndex).toBeGreaterThan(neutralBody.indexOf("ordinatio amoris"));
