@@ -169,9 +169,14 @@ describe("level access", () => {
     expect(neutralStep?.body).toContain("7638b6_26eb262c28cc445ea8f138382b07a2b9");
     expect(neutralStep?.body).toContain("7638b6_b36e305ca27a450fa4a58d4dc09af06e");
     expect(neutralStep?.body).toContain("7638b6_a5926de0f5dd4633a4066902b05a1db5");
+    expect(neutralStep?.body).toContain("augustine-copy");
     expect(neutralStep?.body).toContain("The City of Man - Civitas Terrena");
     expect(neutralStep?.body).toContain("The City of God - Civitas Dei");
     expect(neutralStep?.body).toContain("ordinatio amoris");
+    const neutralBody = neutralStep?.body ?? "";
+    const flipCardMarkupIndex = neutralBody.indexOf('class="city-love-grid"');
+    expect(flipCardMarkupIndex).toBeGreaterThan(neutralBody.indexOf("ordinatio amoris"));
+    expect(flipCardMarkupIndex).toBeLessThan(neutralBody.indexOf('class="liturgy-panel"'));
     expect(neutralStep?.body).toContain("The City as a Liturgical Centre");
     expect(neutralStep?.body).toContain("Open visual representation");
     expect(neutralStep?.body).toContain('stroke-width="3.45"');

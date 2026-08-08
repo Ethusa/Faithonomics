@@ -794,9 +794,23 @@ const richLessonStepHtml = (
       align-items: start;
     }
 
+    .augustine-copy {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
     .city-love-grid {
       grid-template-columns: repeat(2, minmax(250px, 1fr));
       margin-top: 18px;
+    }
+
+    .augustine-copy .city-love-grid {
+      margin-top: 8px;
+    }
+
+    .augustine-copy .city-love-shell {
+      min-height: clamp(250px, 22vw, 340px);
     }
 
     .city-love-shell {
@@ -3953,7 +3967,7 @@ function escapeHtml(s) {
                 alt="Saint Augustine."
               />
             </figure>
-            <div>
+            <div class="augustine-copy">
               <p class="eyebrow">Augustine's view</p>
               <h3>Two Cities Formed by Two Different Loves</h3>
               <p>
@@ -3969,51 +3983,51 @@ function escapeHtml(s) {
                 of love, which Augustine calls ordinatio amoris. This means that people must learn to love the
                 right things in the right way.
               </p>
-            </div>
-          </div>
 
-          <div class="city-love-grid" aria-label="Augustine two cities flip cards">
-            <div class="city-love-shell">
-              <input class="city-love-toggle" type="checkbox" id="${lessonId}-city-of-man-card" />
-              <label class="city-love-card" for="${lessonId}-city-of-man-card">
-                <span class="city-love-inner">
-                  <figure class="city-love-face city-love-front">
-                    <img
-                      src="https://static.wixstatic.com/media/7638b6_b36e305ca27a450fa4a58d4dc09af06e~mv2.png"
-                      alt="The City of Man flip card front."
-                    />
-                  </figure>
-                  <span class="city-love-face city-love-back">
-                    <strong>The City of Man - Civitas Terrena</strong>
-                    <p>
-                      The City of Man is built on disordered self-love. This is a love of self that becomes so
-                      strong that it pushes God and neighbour aside. In this kind of city, people seek power,
-                      status, security and success mainly for themselves.
-                    </p>
-                  </span>
-                </span>
-              </label>
-            </div>
+              <div class="city-love-grid" aria-label="Augustine two cities flip cards">
+                <div class="city-love-shell">
+                  <input class="city-love-toggle" type="checkbox" id="${lessonId}-city-of-man-card" />
+                  <label class="city-love-card" for="${lessonId}-city-of-man-card">
+                    <span class="city-love-inner">
+                      <figure class="city-love-face city-love-front">
+                        <img
+                          src="https://static.wixstatic.com/media/7638b6_b36e305ca27a450fa4a58d4dc09af06e~mv2.png"
+                          alt="The City of Man flip card front."
+                        />
+                      </figure>
+                      <span class="city-love-face city-love-back">
+                        <strong>The City of Man - Civitas Terrena</strong>
+                        <p>
+                          The City of Man is built on disordered self-love. This is a love of self that becomes so
+                          strong that it pushes God and neighbour aside. In this kind of city, people seek power,
+                          status, security and success mainly for themselves.
+                        </p>
+                      </span>
+                    </span>
+                  </label>
+                </div>
 
-            <div class="city-love-shell">
-              <input class="city-love-toggle" type="checkbox" id="${lessonId}-city-of-god-card" />
-              <label class="city-love-card" for="${lessonId}-city-of-god-card">
-                <span class="city-love-inner">
-                  <figure class="city-love-face city-love-front">
-                    <img
-                      src="https://static.wixstatic.com/media/7638b6_a5926de0f5dd4633a4066902b05a1db5~mv2.png"
-                      alt="The City of God flip card front."
-                    />
-                  </figure>
-                  <span class="city-love-face city-love-back">
-                    <strong>The City of God - Civitas Dei</strong>
-                    <p>
-                      The City of God is built on rightly ordered love. This is love for God and neighbour that
-                      leads people towards service, justice, community and shared flourishing.
-                    </p>
-                  </span>
-                </span>
-              </label>
+                <div class="city-love-shell">
+                  <input class="city-love-toggle" type="checkbox" id="${lessonId}-city-of-god-card" />
+                  <label class="city-love-card" for="${lessonId}-city-of-god-card">
+                    <span class="city-love-inner">
+                      <figure class="city-love-face city-love-front">
+                        <img
+                          src="https://static.wixstatic.com/media/7638b6_a5926de0f5dd4633a4066902b05a1db5~mv2.png"
+                          alt="The City of God flip card front."
+                        />
+                      </figure>
+                      <span class="city-love-face city-love-back">
+                        <strong>The City of God - Civitas Dei</strong>
+                        <p>
+                          The City of God is built on rightly ordered love. This is love for God and neighbour that
+                          leads people towards service, justice, community and shared flourishing.
+                        </p>
+                      </span>
+                    </span>
+                  </label>
+                </div>
+              </div>
             </div>
           </div>
         </section>
