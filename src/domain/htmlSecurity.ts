@@ -41,6 +41,74 @@ export const buildSandboxDocument = (trustedHtml: string, activityId: string): s
           target.getAttribute("data-max-score") || 0
         );
       });
+      var lastRichDialogTrigger = null;
+      function getOpenRichDialog() {
+        return document.querySelector("[data-rich-dialog].is-open:not([hidden])");
+      }
+      function openRichDialog(trigger) {
+        var selector = trigger.getAttribute("data-rich-dialog-open");
+        var dialog = selector ? document.querySelector(selector) : null;
+        if (!dialog) {
+          return;
+        }
+        lastRichDialogTrigger = trigger;
+        dialog.hidden = false;
+        dialog.classList.add("is-open");
+        document.body.style.overflow = "hidden";
+        parent.postMessage({
+          type: "classroom.richPopup.opened",
+          activityId: ${JSON.stringify(activityId)}
+        }, "*");
+        var focusTarget = dialog.querySelector("[data-rich-dialog-close], iframe, button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])");
+        if (focusTarget && typeof focusTarget.focus === "function") {
+          focusTarget.focus();
+        }
+      }
+      function closeRichDialog(dialog) {
+        if (!dialog) {
+          return;
+        }
+        dialog.classList.remove("is-open");
+        dialog.hidden = true;
+        document.body.style.overflow = "";
+        if (lastRichDialogTrigger && typeof lastRichDialogTrigger.focus === "function") {
+          lastRichDialogTrigger.focus();
+        }
+      }
+      document.addEventListener("click", function(event) {
+        var openTarget = event.target && event.target.closest
+          ? event.target.closest("[data-rich-dialog-open]")
+          : null;
+        if (openTarget) {
+          event.preventDefault();
+          openRichDialog(openTarget);
+          return;
+        }
+        var closeTarget = event.target && event.target.closest
+          ? event.target.closest("[data-rich-dialog-close]")
+          : null;
+        if (closeTarget) {
+          event.preventDefault();
+          closeRichDialog(closeTarget.closest("[data-rich-dialog]") || getOpenRichDialog());
+        }
+      });
+      window.addEventListener("message", function(event) {
+        var message = event.data;
+        if (!message || typeof message !== "object" || message.type !== "urban-liturgy.close-outer") {
+          return;
+        }
+        closeRichDialog(getOpenRichDialog());
+      });
+      document.addEventListener("keydown", function(event) {
+        if (event.key !== "Escape") {
+          return;
+        }
+        var openDialog = getOpenRichDialog();
+        if (openDialog) {
+          event.preventDefault();
+          closeRichDialog(openDialog);
+        }
+      });
       document.addEventListener("change", function(event) {
         var target = event.target && event.target.closest
           ? event.target.closest("[data-rich-popup-toggle], [data-audio-toggle]")

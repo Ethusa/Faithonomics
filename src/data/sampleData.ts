@@ -936,19 +936,16 @@ const richLessonStepHtml = (
       z-index: 9999;
       display: grid;
       place-items: center;
-      padding: clamp(16px, 4vw, 38px);
+      padding: clamp(12px, 2.8vw, 32px);
       background: rgba(23, 19, 15, 0.72);
       backdrop-filter: blur(5px);
-      opacity: 0;
-      pointer-events: none;
-      visibility: hidden;
-      transition:
-        opacity 180ms ease,
-        visibility 180ms ease;
     }
 
-    .city-visual-toggle:checked ~ .city-visual-popup {
-      opacity: 1;
+    .city-visual-popup[hidden] {
+      display: none;
+    }
+
+    .city-visual-popup.is-open {
       pointer-events: auto;
       visibility: visible;
     }
@@ -956,52 +953,46 @@ const richLessonStepHtml = (
     .city-visual-backdrop {
       position: absolute;
       inset: 0;
+      border: 0;
+      padding: 0;
+      background: transparent;
       cursor: pointer;
     }
 
     .city-visual-panel {
       position: relative;
       z-index: 1;
-      width: min(1040px, calc(100vw - 28px));
-      max-height: min(88vh, 760px);
-      overflow: auto;
-      border: 2px solid rgba(185, 146, 69, 0.58);
+      width: min(1380px, calc(100vw - 24px));
+      max-height: calc(100vh - 32px);
+      aspect-ratio: 16 / 9;
+      overflow: visible;
+      border: 1px solid rgba(185, 146, 69, 0.48);
       border-radius: 8px;
-      padding: clamp(18px, 3vw, 32px);
-      background:
-        linear-gradient(145deg, #f7f3e8, #efe2c9),
-        radial-gradient(circle at 50% 0%, rgba(185, 146, 69, 0.18), transparent 42%);
+      padding: 0;
+      background: transparent;
       box-shadow: 0 34px 90px rgba(23, 19, 15, 0.52);
+      transition:
+        opacity 180ms ease,
+        visibility 180ms ease;
     }
 
-    .city-visual-panel header {
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-      justify-content: space-between;
-      margin-bottom: 16px;
-    }
-
-    .city-visual-panel h3,
-    .city-visual-panel p {
-      margin: 0;
-    }
-
-    .liturgy-diagram {
-      display: grid;
-      min-height: clamp(380px, 50vw, 540px);
-      place-items: center;
-      border: 1px solid rgba(91, 58, 36, 0.16);
-      border-radius: 8px;
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.56), rgba(247, 243, 232, 0.64)),
-        radial-gradient(circle at 50% 50%, rgba(79, 107, 58, 0.1), transparent 40%);
-    }
-
-    .liturgy-diagram svg {
+    .urban-liturgy-frame {
+      display: block;
       width: 100%;
       height: 100%;
-      min-height: inherit;
+      border: 0;
+      border-radius: 8px;
+      background: #f7f3e8;
+    }
+
+    .city-visual-close {
+      position: absolute;
+      top: max(-18px, -1.4vw);
+      right: max(-18px, -1.4vw);
+      z-index: 2;
+      min-height: 38px;
+      border-color: rgba(185, 146, 69, 0.72);
+      box-shadow: 0 12px 28px rgba(23, 19, 15, 0.34);
     }
 
     .moral-budget-grid {
@@ -2339,12 +2330,14 @@ const richLessonStepHtml = (
         min-height: 330px;
       }
 
-      .city-visual-panel header {
-        display: grid;
+      .city-visual-panel {
+        width: min(calc((100vh - 36px) * 1.777), calc(100vw - 18px));
+        max-width: calc(100vw - 18px);
       }
 
-      .liturgy-diagram {
-        min-height: 430px;
+      .city-visual-close {
+        top: 8px;
+        right: 8px;
       }
 
       .moral-budget-embed {
@@ -3660,11 +3653,11 @@ const createCityNotNeutralEconomicUnitStep = (lessonId: string): Lesson["content
                         />
                       </figure>
                       <span class="city-love-face city-love-back">
-                        <strong>The City of Man - Civitas Terrena</strong>
+                        <strong>The City of Man (Civitas Terrena)</strong>
                         <p>
-                          The City of Man is built on disordered self-love. This is a love of self that becomes so
-                          strong that it pushes God and neighbour aside. In this kind of city, people seek power,
-                          status, security and success mainly for themselves.
+                          The City of Man (Civitas Terrena) is built on disordered self-love. This is a love of self
+                          that becomes so strong that it pushes God and neighbour aside. In this kind of city, people
+                          seek power, status, security and success mainly for themselves.
                         </p>
                       </span>
                     </span>
@@ -3682,10 +3675,10 @@ const createCityNotNeutralEconomicUnitStep = (lessonId: string): Lesson["content
                         />
                       </figure>
                       <span class="city-love-face city-love-back">
-                        <strong>The City of God - Civitas Dei</strong>
+                        <strong>The City of God (Civitas Dei)</strong>
                         <p>
-                          The City of God is built on rightly ordered love. This is love for God and neighbour that
-                          leads people towards service, justice, community and shared flourishing.
+                          The City of God (Civitas Dei) is built on rightly ordered love. This is love for God and
+                          neighbour that leads people towards service, justice, community and shared flourishing.
                         </p>
                       </span>
                     </span>
@@ -3713,68 +3706,36 @@ const createCityNotNeutralEconomicUnitStep = (lessonId: string): Lesson["content
             spaces form people's desires and expectations, making the city a kind of everyday liturgy.
           </p>
 
-          <input class="city-visual-toggle" type="checkbox" id="${lessonId}-urban-liturgy-popup" data-rich-popup-toggle />
-          <label class="city-visual-button" for="${lessonId}-urban-liturgy-popup">Open visual representation</label>
-          <div class="city-visual-popup" role="dialog" aria-label="Urban liturgy visual representation">
-            <label class="city-visual-backdrop" for="${lessonId}-urban-liturgy-popup" aria-label="Close visual representation"></label>
+          <button
+            class="city-visual-button"
+            type="button"
+            data-rich-dialog-open="#${lessonId}-urban-liturgy-popup"
+          >
+            Open visual representation
+          </button>
+          <div
+            class="city-visual-popup"
+            id="${lessonId}-urban-liturgy-popup"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Urban liturgy visual representation"
+            data-rich-dialog
+            hidden
+          >
+            <button
+              class="city-visual-backdrop"
+              type="button"
+              data-rich-dialog-close
+              aria-label="Close visual representation"
+            ></button>
             <section class="city-visual-panel">
-              <header>
-                <div>
-                  <p class="eyebrow">Connected practices</p>
-                  <h3>How Urban Life Forms Desire</h3>
-                </div>
-                <label class="city-visual-close" for="${lessonId}-urban-liturgy-popup">Close</label>
-              </header>
-              <div class="liturgy-diagram">
-                <svg viewBox="0 0 920 520" role="img" aria-label="Diagram connecting urban systems, daily practices and formed desires">
-                  <defs>
-                    <filter id="${lessonId}-gold-line-shadow" x="-10%" y="-10%" width="120%" height="120%">
-                      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#234638" flood-opacity="0.50"/>
-                    </filter>
-                    <marker id="${lessonId}-arrow-gold" markerWidth="7" markerHeight="7" refX="6.2" refY="3.5" orient="auto" markerUnits="strokeWidth">
-                      <path d="M0,0 L7,3.5 L0,7 z" fill="#234638" stroke="#B99245" stroke-width="0.7"></path>
-                    </marker>
-                  </defs>
-                  <g fill="none" stroke="#b99245" stroke-width="1.15" stroke-linecap="round" marker-end="url(#${lessonId}-arrow-gold)" filter="url(#${lessonId}-gold-line-shadow)">
-                    <path d="M460 255 C390 185 332 132 234 98"/>
-                    <path d="M460 255 C520 170 604 120 712 102"/>
-                    <path d="M460 255 C330 255 245 254 142 255"/>
-                    <path d="M460 255 C585 255 680 255 785 255"/>
-                    <path d="M460 255 C383 342 311 398 212 423"/>
-                    <path d="M460 255 C542 346 626 405 724 424"/>
-                  </g>
-                  <g fill="#234638" stroke="#B99245" stroke-width="0.8" filter="url(#${lessonId}-gold-line-shadow)">
-                    <circle cx="234" cy="98" r="6"/>
-                    <circle cx="712" cy="102" r="6"/>
-                    <circle cx="142" cy="255" r="6"/>
-                    <circle cx="785" cy="255" r="6"/>
-                    <circle cx="212" cy="423" r="6"/>
-                    <circle cx="724" cy="424" r="6"/>
-                  </g>
-                  <g font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">
-                    <rect x="330" y="198" width="260" height="114" rx="8" fill="#234638"/>
-                    <text x="460" y="244" fill="#f7f3e8" font-size="23" font-weight="800">City as</text>
-                    <text x="460" y="274" fill="#f3d99a" font-size="24" font-weight="800">Everyday Liturgy</text>
-
-                    <g fill="#fffdf8" stroke="#d8c8a8" stroke-width="1.4">
-                      <rect x="104" y="48" width="260" height="70" rx="8"/>
-                      <rect x="582" y="52" width="260" height="70" rx="8"/>
-                      <rect x="40" y="220" width="205" height="70" rx="8"/>
-                      <rect x="676" y="220" width="205" height="70" rx="8"/>
-                      <rect x="86" y="388" width="250" height="70" rx="8"/>
-                      <rect x="604" y="388" width="242" height="70" rx="8"/>
-                    </g>
-                    <g fill="#234638" font-size="18" font-weight="800">
-                      <text x="234" y="91">Physical Spaces</text>
-                      <text x="712" y="95">Daily Routines</text>
-                      <text x="142" y="263">Symbols</text>
-                      <text x="778" y="263">Rewards</text>
-                      <text x="211" y="431">Habits</text>
-                      <text x="725" y="431">Formed Desires</text>
-                    </g>
-                  </g>
-                </svg>
-              </div>
+              <button class="city-visual-close" type="button" data-rich-dialog-close>Close</button>
+              <iframe
+                class="urban-liturgy-frame"
+                title="Interactive Urban Liturgy visual"
+                src="urban-liturgy.html"
+                loading="lazy"
+              ></iframe>
             </section>
           </div>
         </section>

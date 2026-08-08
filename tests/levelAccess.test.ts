@@ -7,6 +7,7 @@ import {
   modules,
 } from "../src/data/sampleData";
 import { authenticateLevelAccess } from "../src/domain/levelAccess";
+import urbanLiturgyHtml from "../public/urban-liturgy.html?raw";
 
 describe("level access", () => {
   it("provides one login and password for every level", () => {
@@ -158,6 +159,8 @@ describe("level access", () => {
 
     const neutralStep = competingParadigms?.content[2];
     expect(neutralStep?.kind).toBe("customHtml");
+    const neutralBody = neutralStep?.body ?? "";
+    const neutralText = neutralBody.replace(/\s+/g, " ");
     expect(neutralStep?.body).toContain("No neutral economic units");
     expect(neutralStep?.body).toContain("The City Is Not a Neutral Economic Unit");
     expect(neutralStep?.body).toContain(".city-neutral-visuals figure");
@@ -170,21 +173,24 @@ describe("level access", () => {
     expect(neutralStep?.body).toContain("7638b6_b36e305ca27a450fa4a58d4dc09af06e");
     expect(neutralStep?.body).toContain("7638b6_a5926de0f5dd4633a4066902b05a1db5");
     expect(neutralStep?.body).toContain("augustine-copy");
-    expect(neutralStep?.body).toContain("The City of Man - Civitas Terrena");
-    expect(neutralStep?.body).toContain("The City of God - Civitas Dei");
+    expect(neutralStep?.body).toContain("The City of Man (Civitas Terrena)");
+    expect(neutralText).toContain("people seek power, status, security and success mainly for themselves");
+    expect(neutralStep?.body).toContain("The City of God (Civitas Dei)");
+    expect(neutralText).toContain("service, justice, community and shared flourishing");
     expect(neutralStep?.body).toContain("ordinatio amoris");
     expect(neutralStep?.body).toMatch(/\.city-love-card\s*\{[\s\S]*?min-height: inherit/);
-    const neutralBody = neutralStep?.body ?? "";
     const flipCardMarkupIndex = neutralBody.indexOf('class="city-love-grid"');
     expect(flipCardMarkupIndex).toBeGreaterThan(neutralBody.indexOf("ordinatio amoris"));
     expect(flipCardMarkupIndex).toBeLessThan(neutralBody.indexOf('class="liturgy-panel"'));
     expect(neutralStep?.body).toContain("The City as a Liturgical Centre");
     expect(neutralStep?.body).toContain("Open visual representation");
     expect(neutralStep?.body).toContain("margin: 4px auto 0");
-    expect(neutralStep?.body).toContain('markerWidth="7"');
-    expect(neutralStep?.body).toContain('fill="#234638" stroke="#B99245" stroke-width="0.7"');
-    expect(neutralStep?.body).toContain('stroke-width="1.15"');
-    expect(neutralStep?.body).toContain('stroke-width="0.8"');
+    expect(neutralStep?.body).toContain(`data-rich-dialog-open="#${competingParadigms?.id}-urban-liturgy-popup"`);
+    expect(neutralText).toContain("data-rich-dialog hidden");
+    expect(neutralStep?.body).toContain('class="urban-liturgy-frame"');
+    expect(neutralStep?.body).toContain('src="urban-liturgy.html"');
+    expect(neutralStep?.body).not.toContain("How Urban Life Forms Desire");
+    expect(neutralStep?.body).not.toContain('class="liturgy-diagram"');
     expect(neutralStep?.body).toContain("A City's Moral Budget");
     expect(neutralStep?.body).toContain("Global Moral Budget Observatory");
     expect(neutralStep?.body).toContain("GHS-UCDB R2024A");
@@ -195,6 +201,22 @@ describe("level access", () => {
     expect(neutralStep?.body).toContain("Complete moral budget step");
     expect(neutralStep?.body).not.toContain("<script>");
     expect(activities.filter((activity) => activity.lessonId === competingParadigms?.id)).toHaveLength(0);
+  });
+
+  it("keeps the Urban Liturgy popup source visual connected and intact", () => {
+    expect(urbanLiturgyHtml).toContain("data:image/png;base64");
+    expect(urbanLiturgyHtml).toContain('id="workBox"');
+    expect(urbanLiturgyHtml).toContain('id="travelBox"');
+    expect(urbanLiturgyHtml).toContain('id="buyingBox"');
+    expect(urbanLiturgyHtml).toContain('id="statusBox"');
+    expect(urbanLiturgyHtml).toContain('id="spaceBox"');
+    expect(urbanLiturgyHtml).toContain('aria-label="Open Work teaching popup"');
+    expect(urbanLiturgyHtml).toContain('aria-label="Open The Production of Space teaching popup"');
+    expect(urbanLiturgyHtml).toContain("stroke-width:3.45");
+    expect(urbanLiturgyHtml).toContain("stroke-width:1.2");
+    expect(urbanLiturgyHtml).toContain('r="0.85"');
+    expect(urbanLiturgyHtml).toContain("Henri Lefebvre was a French thinker");
+    expect(urbanLiturgyHtml).toContain("urban-liturgy.close-outer");
   });
 
   it("adds a Step 4 forum requiring a post and replies to two course participants", () => {

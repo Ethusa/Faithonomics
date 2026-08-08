@@ -19,6 +19,9 @@ describe("custom HTML activity security", () => {
     expect(doc).toContain("window.classroomComplete");
     expect(doc).toContain("classroom.activity.completed");
     expect(doc).toContain("data-classroom-complete");
+    expect(doc).toContain("data-rich-dialog-open");
+    expect(doc).toContain("data-rich-dialog-close");
+    expect(doc).toContain("urban-liturgy.close-outer");
   });
 
   it("rejects postMessage payloads for unknown activities", () => {
