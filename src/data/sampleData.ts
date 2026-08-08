@@ -771,19 +771,21 @@ const richLessonStepHtml = (
     .city-neutral-visuals figure,
     .augustine-portrait {
       margin: 0;
-      overflow: hidden;
-      border: 1px solid rgba(91, 58, 36, 0.18);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.58);
-      box-shadow: 0 16px 32px rgba(91, 58, 36, 0.12);
+      display: grid;
+      place-items: center;
+      overflow: visible;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
     }
 
     .city-neutral-visuals img,
     .augustine-portrait img {
       display: block;
       width: 100%;
-      height: 100%;
-      min-height: clamp(260px, 34vw, 420px);
+      height: auto;
+      min-height: 0;
       object-fit: contain;
     }
 

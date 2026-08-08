@@ -160,6 +160,10 @@ describe("level access", () => {
     expect(neutralStep?.kind).toBe("customHtml");
     expect(neutralStep?.body).toContain("No neutral economic units");
     expect(neutralStep?.body).toContain("The City Is Not a Neutral Economic Unit");
+    expect(neutralStep?.body).toContain(".city-neutral-visuals figure");
+    expect(neutralStep?.body).toContain(".augustine-portrait");
+    expect(neutralStep?.body).toContain("background: transparent");
+    expect(neutralStep?.body).toContain("box-shadow: none");
     expect(neutralStep?.body).toContain("7638b6_765686efba994ddd9c2cb90bb7c674ea");
     expect(neutralStep?.body).toContain("7638b6_378e35b9ed7d4aa391c68c68354fe5e8");
     expect(neutralStep?.body).toContain("7638b6_26eb262c28cc445ea8f138382b07a2b9");
