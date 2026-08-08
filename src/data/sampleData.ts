@@ -4038,26 +4038,17 @@ function escapeHtml(s) {
           <p class="eyebrow">The city as a liturgical centre</p>
           <h3>The City as a Liturgical Centre</h3>
           <p>
-            The word liturgy usually refers to repeated practices of worship. Christian philosopher James K. A.
-            Smith uses the term more broadly to describe cultural liturgies. These are repeated social practices
-            that shape what people imagine, love and desire.
+            The word liturgy usually refers to repeated practices of worship, but Christian philosopher James K. A.
+            Smith uses it more broadly for cultural liturgies: repeated social practices that shape what people
+            imagine, love and desire. He argues that people are formed not only by ideas in their minds, but also by
+            habits, physical spaces, symbols, routines and rewards that train the heart over time.
           </p>
           <p>
-            Smith argues that human beings are not shaped only by ideas in their minds. They are also shaped by
-            repeated habits, physical spaces, symbols, routines and rewards. In this way, everyday places can train
-            the heart over time.
-          </p>
-          <p>
-            Shopping malls, sports stadiums, corporate office parks and commercial districts do more than provide
-            goods, entertainment or work. They guide people through planned spaces, repeated actions and powerful
-            images. Without saying it directly, they teach people what to want, what to fear, what to admire and
-            what kind of life to see as successful.
-          </p>
-          <p>
-            When this idea is applied to the city, it shows that urban life is an immersive teaching environment.
-            The city does not merely organise economic activity. Its daily rhythms, transport routes, work patterns,
-            shops, advertisements and public spaces form people's desires and expectations. In this sense, the city
-            becomes a kind of everyday liturgy.
+            Shopping malls, sports stadiums, corporate office parks and commercial districts therefore do more than
+            provide goods, entertainment or work. Through planned spaces, repeated actions and powerful images, they
+            quietly teach people what to want, fear and admire. Applied to the city, this means urban life is an
+            immersive teaching environment: its rhythms, routes, work patterns, shops, advertisements and public
+            spaces form people's desires and expectations, making the city a kind of everyday liturgy.
           </p>
 
           <input class="city-visual-toggle" type="checkbox" id="${lessonId}-urban-liturgy-popup" data-rich-popup-toggle />
