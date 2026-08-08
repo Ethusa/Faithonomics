@@ -41,6 +41,13 @@ export const identities: Record<"learner" | "lecturer" | "administrator", Learne
 
 const publicAssetUrl = (assetPath: string): string => `${import.meta.env.BASE_URL}${assetPath.replace(/^\/+/, "")}`;
 
+const htmlAttributeEscape = (value: string): string =>
+  value
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
 export const courses: Course[] = [
   {
     id: "course-faithonomics-core",
@@ -708,6 +715,304 @@ const richLessonStepHtml = (
     .engine-stage-radio[value="large-city"]:checked ~ .engine-insights .stage-large-city,
     .engine-stage-radio[value="megacity"]:checked ~ .engine-insights .stage-megacity {
       display: block;
+    }
+
+    .city-neutral-page {
+      display: grid;
+      gap: clamp(18px, 3vw, 28px);
+    }
+
+    .city-neutral-hero,
+    .augustine-panel,
+    .liturgy-panel,
+    .moral-budget-panel {
+      border: 1px solid rgba(91, 58, 36, 0.18);
+      border-radius: 8px;
+      padding: clamp(18px, 3vw, 30px);
+      background:
+        linear-gradient(145deg, rgba(247, 243, 232, 0.96), rgba(232, 216, 184, 0.68)),
+        radial-gradient(circle at 94% 0%, rgba(79, 107, 58, 0.12), transparent 36%);
+      box-shadow: 0 18px 40px rgba(91, 58, 36, 0.13);
+    }
+
+    .city-neutral-hero h2,
+    .augustine-panel h3,
+    .liturgy-panel h3,
+    .moral-budget-panel h3 {
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--forest);
+      line-height: 1.08;
+    }
+
+    .city-neutral-hero h2 {
+      max-width: 980px;
+      font-size: clamp(2rem, 5vw, 4rem);
+    }
+
+    .city-neutral-hero p:last-child,
+    .augustine-panel p:last-child,
+    .liturgy-panel p:last-child,
+    .moral-budget-panel p:last-child {
+      margin-bottom: 0;
+    }
+
+    .city-neutral-visuals,
+    .augustine-layout,
+    .city-love-grid,
+    .moral-budget-grid {
+      display: grid;
+      gap: clamp(14px, 2.4vw, 22px);
+    }
+
+    .city-neutral-visuals {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .city-neutral-visuals figure,
+    .augustine-portrait {
+      margin: 0;
+      overflow: hidden;
+      border: 1px solid rgba(91, 58, 36, 0.18);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.58);
+      box-shadow: 0 16px 32px rgba(91, 58, 36, 0.12);
+    }
+
+    .city-neutral-visuals img,
+    .augustine-portrait img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: clamp(260px, 34vw, 420px);
+      object-fit: contain;
+    }
+
+    .augustine-layout {
+      grid-template-columns: minmax(220px, 0.45fr) minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .city-love-grid {
+      grid-template-columns: repeat(2, minmax(250px, 1fr));
+      margin-top: 18px;
+    }
+
+    .city-love-shell {
+      position: relative;
+      min-height: clamp(320px, 38vw, 460px);
+      perspective: 1200px;
+    }
+
+    .city-love-toggle,
+    .city-visual-toggle {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .city-love-card {
+      display: block;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .city-love-inner {
+      position: relative;
+      min-height: inherit;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 420ms ease;
+    }
+
+    .city-love-toggle:checked + .city-love-card .city-love-inner {
+      transform: rotateY(180deg);
+    }
+
+    .city-love-face {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      overflow: hidden;
+      border: 2px solid rgba(185, 146, 69, 0.52);
+      border-radius: 8px;
+      backface-visibility: hidden;
+      box-shadow: 0 18px 34px rgba(91, 58, 36, 0.14);
+    }
+
+    .city-love-front {
+      place-items: center;
+      margin: 0;
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .city-love-front img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: clamp(8px, 1.5vw, 14px);
+    }
+
+    .city-love-back {
+      align-content: center;
+      gap: 10px;
+      padding: clamp(18px, 3vw, 30px);
+      background:
+        linear-gradient(145deg, rgba(35, 70, 56, 0.97), rgba(79, 107, 58, 0.92)),
+        radial-gradient(circle at 0% 0%, rgba(185, 146, 69, 0.26), transparent 38%);
+      color: #fff7df;
+      transform: rotateY(180deg);
+    }
+
+    .city-love-back strong {
+      color: #f3d99a;
+      font-size: 0.82rem;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .city-love-back p {
+      margin: 0;
+      color: #fff7df;
+      font-size: clamp(1rem, 1.6vw, 1.18rem);
+      line-height: 1.62;
+    }
+
+    .city-visual-button,
+    .city-visual-close {
+      min-height: 42px;
+      width: fit-content;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(35, 70, 56, 0.18);
+      border-radius: 8px;
+      padding: 0 16px;
+      background: var(--forest);
+      color: var(--paper);
+      font-weight: 800;
+      cursor: pointer;
+      transition:
+        background 160ms ease,
+        transform 160ms ease;
+    }
+
+    .city-visual-button:hover,
+    .city-visual-close:hover {
+      background: #1d3a2f;
+      transform: translateY(-1px);
+    }
+
+    .city-visual-popup {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: grid;
+      place-items: center;
+      padding: clamp(16px, 4vw, 38px);
+      background: rgba(23, 19, 15, 0.72);
+      backdrop-filter: blur(5px);
+      opacity: 0;
+      pointer-events: none;
+      visibility: hidden;
+      transition:
+        opacity 180ms ease,
+        visibility 180ms ease;
+    }
+
+    .city-visual-toggle:checked ~ .city-visual-popup {
+      opacity: 1;
+      pointer-events: auto;
+      visibility: visible;
+    }
+
+    .city-visual-backdrop {
+      position: absolute;
+      inset: 0;
+      cursor: pointer;
+    }
+
+    .city-visual-panel {
+      position: relative;
+      z-index: 1;
+      width: min(1040px, calc(100vw - 28px));
+      max-height: min(88vh, 760px);
+      overflow: auto;
+      border: 2px solid rgba(185, 146, 69, 0.58);
+      border-radius: 8px;
+      padding: clamp(18px, 3vw, 32px);
+      background:
+        linear-gradient(145deg, #f7f3e8, #efe2c9),
+        radial-gradient(circle at 50% 0%, rgba(185, 146, 69, 0.18), transparent 42%);
+      box-shadow: 0 34px 90px rgba(23, 19, 15, 0.52);
+    }
+
+    .city-visual-panel header {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .city-visual-panel h3,
+    .city-visual-panel p {
+      margin: 0;
+    }
+
+    .liturgy-diagram {
+      display: grid;
+      min-height: clamp(380px, 50vw, 540px);
+      place-items: center;
+      border: 1px solid rgba(91, 58, 36, 0.16);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.56), rgba(247, 243, 232, 0.64)),
+        radial-gradient(circle at 50% 50%, rgba(79, 107, 58, 0.1), transparent 40%);
+    }
+
+    .liturgy-diagram svg {
+      width: 100%;
+      height: 100%;
+      min-height: inherit;
+    }
+
+    .moral-budget-grid {
+      grid-template-columns: repeat(5, minmax(130px, 1fr));
+      margin: 18px 0;
+    }
+
+    .budget-resource {
+      border: 1px solid rgba(91, 58, 36, 0.16);
+      border-radius: 8px;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.58);
+    }
+
+    .budget-resource strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--forest);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+    }
+
+    .budget-resource p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .moral-budget-embed {
+      width: 100%;
+      min-height: 860px;
+      border: 1px solid rgba(91, 58, 36, 0.22);
+      border-radius: 8px;
+      background: #f7f3e8;
+      box-shadow: 0 16px 34px rgba(91, 58, 36, 0.12);
     }
 
     .comparison {
@@ -1993,6 +2298,34 @@ const richLessonStepHtml = (
         grid-template-columns: repeat(2, 1fr);
       }
 
+      .city-neutral-visuals,
+      .augustine-layout,
+      .city-love-grid,
+      .moral-budget-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .city-neutral-visuals img,
+      .augustine-portrait img {
+        min-height: 0;
+      }
+
+      .city-love-shell {
+        min-height: 330px;
+      }
+
+      .city-visual-panel header {
+        display: grid;
+      }
+
+      .liturgy-diagram {
+        min-height: 430px;
+      }
+
+      .moral-budget-embed {
+        min-height: 960px;
+      }
+
       .ordinary-hero {
         float: none;
         width: 100%;
@@ -3226,6 +3559,591 @@ const createCityEconomicEngineStep = (lessonId: string): Lesson["content"][numbe
   `, { completeButtonLabel: "Complete city lesson" }),
 });
 
+const createCityNotNeutralEconomicUnitStep = (lessonId: string): Lesson["content"][number] => {
+  const moralBudgetToolSrcDoc = `<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your City's Moral Budget</title>
+<style>
+:root {
+  --paper:#f7f3e8;
+  --cream:#e8d8b8;
+  --kraft:#9a6b3f;
+  --green:#4f6b3a;
+  --deep:#234638;
+  --navy:#1e2a33;
+  --gold:#b99245;
+  --amber:#d99a3d;
+  --black:#17130f;
+  --muted:#64685e;
+  --line:#d8c8a8;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  padding:18px;
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--black);
+  background:
+    radial-gradient(circle at 12% 8%,rgba(185,146,69,.13),transparent 24%),
+    linear-gradient(180deg,#e9ddc7,#d8c4a3);
+}
+.app {
+  width:min(1240px,100%);
+  margin:auto;
+  overflow:hidden;
+  border:1px solid rgba(91,58,36,.25);
+  border-radius:8px;
+  background:var(--paper);
+  box-shadow:0 22px 58px rgba(45,31,17,.18);
+}
+.bar { height:5px; background:linear-gradient(90deg,var(--deep),var(--gold),var(--deep)); }
+.hero,.section { padding:26px 34px; }
+.section { border-top:1px solid var(--line); }
+.alt { background:linear-gradient(180deg,#fbf8f1,#f0e8d8); }
+h1,h2,h3 { font-family:Georgia,"Times New Roman",serif; }
+h1 { margin:0; color:var(--deep); font-size:clamp(2.2rem,4vw,3.9rem); line-height:1; }
+h2 { margin:.1em 0 .45em; color:var(--deep); }
+h3 { margin:.1em 0 .45em; color:var(--kraft); }
+.lead { max-width:1000px; color:var(--muted); line-height:1.6; }
+.small { color:var(--muted); font-size:.86rem; line-height:1.45; }
+.searchrow { display:grid; grid-template-columns:1fr auto; gap:10px; margin-top:16px; }
+input[type=text] {
+  width:100%;
+  padding:12px 13px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:#fffdf8;
+  font-size:1rem;
+}
+button { font:inherit; }
+.primary,.secondary {
+  min-height:42px;
+  border-radius:8px;
+  padding:0 14px;
+  cursor:pointer;
+  font-weight:800;
+}
+.primary { border:1px solid var(--gold); background:var(--deep); color:#f4dfad; }
+.secondary { border:1px solid var(--line); background:#fffdf8; color:var(--deep); }
+.status {
+  display:none;
+  margin-top:12px;
+  padding:11px 13px;
+  border-left:4px solid var(--gold);
+  background:#faf4e8;
+  color:#555d54;
+}
+.carousel { position:relative; overflow:hidden; margin-top:14px; }
+.track { display:flex; transition:transform .35s ease; }
+.slide { min-width:100%; padding:2px; }
+.result {
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:20px;
+  background:linear-gradient(145deg,#fffdf8,#efe5d5);
+  box-shadow:0 8px 16px rgba(70,50,25,.08);
+}
+.result-top { display:grid; grid-template-columns:54px 1fr auto; gap:12px; align-items:center; }
+.icon {
+  width:44px;
+  height:44px;
+  display:grid;
+  place-items:center;
+  border:2px solid var(--gold);
+  border-radius:50%;
+  background:var(--deep);
+  color:#f3d99a;
+  font-weight:800;
+}
+.score { color:var(--deep); font-family:Georgia,"Times New Roman",serif; font-size:2rem; font-weight:700; }
+.evidence { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:14px; }
+.box { border:1px solid var(--line); border-radius:8px; padding:12px; background:#fffdf8; }
+.sources a { display:block; margin:5px 0; color:var(--deep); word-break:break-word; }
+.nav { display:flex; justify-content:center; align-items:center; gap:9px; margin-top:12px; }
+.nav button {
+  width:38px;
+  height:38px;
+  border:1px solid var(--line);
+  border-radius:50%;
+  background:#fffdf8;
+  color:var(--deep);
+  cursor:pointer;
+  font-weight:800;
+}
+.dots { display:flex; gap:6px; }
+.dot { width:9px; height:9px; border-radius:50%; background:#cfc4ae; }
+.dot.on { background:var(--gold); }
+.manual-head { display:flex; justify-content:space-between; gap:12px; align-items:center; }
+.manual { display:none; margin-top:15px; }
+.manual.open { display:block; }
+.audit-card {
+  overflow:hidden;
+  margin:10px 0;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:#fffdf8;
+}
+.audit-title { padding:12px 14px; background:#f2e6d0; color:var(--deep); font-weight:800; }
+.q { display:grid; grid-template-columns:1fr 170px; gap:12px; align-items:center; padding:10px 14px; border-top:1px solid #e6dac2; }
+select { padding:8px; border:1px solid var(--line); border-radius:8px; background:white; }
+.summary { display:none; margin-top:14px; border:2px solid var(--gold); border-radius:8px; background:#fff5df; padding:15px; }
+@media(max-width:760px) {
+  body { padding:0; }
+  .app { border-radius:0; }
+  .hero,.section { padding:22px 17px; }
+  .searchrow,.evidence,.q { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+<main class="app">
+<div class="bar"></div>
+<section class="hero">
+<h1>Your City's Moral Budget</h1>
+<p class="lead">Choose a city. You can answer the questions yourself, or use the hosted version to research current evidence and compare <strong>Land, Time, Capital, Attention and Honour</strong>.</p>
+<div class="searchrow">
+  <input id="city" type="text" placeholder="Enter a city, e.g. Johannesburg">
+  <button class="primary" id="research" type="button">Research this city</button>
+</div>
+<div class="status" id="status"></div>
+</section>
+
+<section class="section alt" id="researchResults" style="display:none">
+<h2 id="resultTitle">City assessment</h2>
+<div class="carousel">
+  <div class="track" id="track"></div>
+</div>
+<div class="nav">
+  <button id="prev" type="button" aria-label="Previous">&lsaquo;</button>
+  <div class="dots" id="dots"></div>
+  <button id="next" type="button" aria-label="Next">&rsaquo;</button>
+</div>
+</section>
+
+<section class="section">
+<div class="manual-head">
+  <div><h2>Quick self-audit</h2><div class="small">Three questions for each element. 1 = weak; 5 = strong.</div></div>
+  <button class="secondary" id="toggleManual" type="button">Open questions</button>
+</div>
+
+<div class="manual" id="manual">
+  <div id="questions"></div>
+  <button class="primary" id="scoreManual" type="button">Show my result</button>
+  <div class="summary" id="manualSummary"></div>
+</div>
+</section>
+</main>
+
+<script>
+const elements = {
+ land:{
+  title:"LAND",
+  questions:[
+   "Are affordable homes reasonably close to major employment areas?",
+   "Do lower-income communities have good access to transport and essential services?",
+   "Are parks and safe public spaces spread across different neighbourhoods?"
+  ]
+ },
+ time:{
+  title:"TIME",
+  questions:[
+   "Can most workers reach jobs without extremely long commutes?",
+   "Are public services reasonably efficient, with limited unnecessary waiting?",
+   "Is public transport reliable and well connected?"
+  ]
+ },
+ capital:{
+  title:"CAPITAL",
+  questions:[
+   "Can small and local businesses realistically access finance and support?",
+   "Is infrastructure investment spread beyond wealthy areas?",
+   "Do neglected neighbourhoods receive investment that expands opportunity?"
+  ]
+ },
+ attention:{
+  title:"ATTENTION",
+  questions:[
+   "Does public communication give attention to community needs as well as commercial messages?",
+   "Are public spaces designed for more than shopping and advertising?",
+   "Do local media and public campaigns give space to civic and cultural life?"
+  ]
+ },
+ honour:{
+  title:"HONOUR",
+  questions:[
+   "Are essential workers publicly valued?",
+   "Does the city celebrate contribution and service as well as wealth?",
+   "Are modest and sustainable lifestyles treated with respect?"
+  ]
+ }
+};
+const qWrap = document.getElementById("questions");
+const manual = document.getElementById("manual");
+const toggleManual = document.getElementById("toggleManual");
+const scoreManual = document.getElementById("scoreManual");
+const manualSummary = document.getElementById("manualSummary");
+const status = document.getElementById("status");
+const city = document.getElementById("city");
+const research = document.getElementById("research");
+const researchResults = document.getElementById("researchResults");
+const resultTitle = document.getElementById("resultTitle");
+const track = document.getElementById("track");
+const dots = document.getElementById("dots");
+const prev = document.getElementById("prev");
+const next = document.getElementById("next");
+Object.keys(elements).forEach(function(key) {
+ const e = elements[key];
+ const card = document.createElement("div");
+ card.className = "audit-card";
+ card.innerHTML = '<div class="audit-title">' + e.title + '</div>';
+ e.questions.forEach(function(q) {
+  const row = document.createElement("div");
+  row.className = "q";
+  row.innerHTML = '<div>' + escapeHtml(q) + '</div><select data-el="' + key + '"><option value="">Choose 1-5</option>' +
+   [1,2,3,4,5].map(function(n) { return '<option value="' + n + '">' + n + '</option>'; }).join("") + '</select>';
+  card.appendChild(row);
+ });
+ qWrap.appendChild(card);
+});
+toggleManual.onclick = function() {
+ manual.classList.toggle("open");
+ toggleManual.textContent = manual.classList.contains("open") ? "Hide questions" : "Open questions";
+};
+scoreManual.onclick = function() {
+ const scores = {};
+ let complete = true;
+ document.querySelectorAll("select[data-el]").forEach(function(s) {
+  if (!s.value) {
+   complete = false;
+   return;
+  }
+  if (!scores[s.dataset.el]) scores[s.dataset.el] = [];
+  scores[s.dataset.el].push(Number(s.value));
+ });
+ if (!complete) {
+  manualSummary.style.display = "block";
+  manualSummary.textContent = "Please answer all 15 questions.";
+  return;
+ }
+ const avgs = {};
+ Object.keys(scores).forEach(function(k) {
+  avgs[k] = scores[k].reduce(function(a,b) { return a + b; }, 0) / scores[k].length;
+ });
+ const ordered = Object.keys(avgs).sort(function(a,b) { return avgs[a] - avgs[b]; });
+ manualSummary.style.display = "block";
+ manualSummary.innerHTML = "<strong>Your pattern:</strong> " + Object.keys(avgs).map(function(k) {
+  return elements[k].title + " " + avgs[k].toFixed(1) + "/5";
+ }).join(" &middot; ") + "<br><br>Your lowest area is <strong>" + elements[ordered[0]].title + "</strong>. Use that as a starting point for further evidence.";
+};
+let index = 0;
+function renderCarousel(data) {
+ const arr = data.elements || [];
+ track.innerHTML = "";
+ dots.innerHTML = "";
+ arr.forEach(function(item,i) {
+  const s = document.createElement("div");
+  s.className = "slide";
+  const src = (item.sources || []).map(function(x) {
+   return '<a target="_blank" rel="noopener" href="' + escapeHtml(x.url || "#") + '">' + escapeHtml(x.title || x.url || "Source") + '</a>';
+  }).join("");
+  const ev = (item.evidence || []).map(function(x) { return '<li>' + escapeHtml(x) + '</li>'; }).join("");
+  s.innerHTML = '<div class="result"><div class="result-top"><div class="icon">' + escapeHtml((item.key || "?").charAt(0).toUpperCase()) +
+   '</div><div><h3>' + escapeHtml(item.title || item.key || "") + '</h3><div class="small">' + escapeHtml(item.rating || "") +
+   '</div></div><div class="score">' + escapeHtml(String(item.score == null ? "-" : item.score)) + '/5</div></div>' +
+   '<p class="lead">' + escapeHtml(item.assessment || "") + '</p>' +
+   '<div class="evidence"><div class="box"><strong>Why this rating?</strong><p class="small">' + escapeHtml(item.why || "") +
+   '</p><ul class="small">' + ev + '</ul></div><div class="box sources"><strong>Sources</strong>' + src + '</div></div></div>';
+  track.appendChild(s);
+  const d = document.createElement("span");
+  d.className = "dot" + (i === 0 ? " on" : "");
+  dots.appendChild(d);
+ });
+ index = 0;
+ updateSlide();
+ resultTitle.textContent = (data.city || city.value) + " - City assessment";
+ researchResults.style.display = "block";
+}
+function updateSlide() {
+ track.style.transform = "translateX(-" + (index * 100) + "%)";
+ Array.prototype.forEach.call(dots.children, function(d,i) { d.classList.toggle("on", i === index); });
+}
+prev.onclick = function() { const n = track.children.length; if (n) { index = (index - 1 + n) % n; updateSlide(); } };
+next.onclick = function() { const n = track.children.length; if (n) { index = (index + 1) % n; updateSlide(); } };
+research.onclick = async function() {
+ const name = city.value.trim();
+ if (!name) { showStatus("Enter a city first."); return; }
+ showStatus("Searching current sources for " + name + "...");
+ research.disabled = true;
+ try {
+  const r = await fetch("/.netlify/functions/city-audit", {
+   method:"POST",
+   headers:{"Content-Type":"application/json"},
+   body:JSON.stringify({city:name})
+  });
+  if (!r.ok) throw new Error(await r.text());
+  const data = await r.json();
+  renderCarousel(data);
+  showStatus("Research complete. Use the arrows to compare all five elements.");
+ } catch(e) {
+  showStatus("Live research needs the hosted version with the city-audit server function. The self-audit below still works in this standalone file.");
+ } finally {
+  research.disabled = false;
+ }
+};
+function showStatus(t) { status.textContent = t; status.style.display = "block"; }
+function escapeHtml(s) {
+ return String(s == null ? "" : s).replace(/[&<>"']/g,function(c) {
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c];
+ });
+}
+</script>
+</body>
+</html>`;
+
+  return {
+    id: `${lessonId}-city-not-neutral-economic-unit`,
+    kind: "customHtml",
+    title: "Step 3: The City Is Not a Neutral Economic Unit",
+    body: richLessonStepHtml(`
+      <section class="city-neutral-page">
+        <header class="city-neutral-hero">
+          <p class="eyebrow">No neutral economic units</p>
+          <h2>The City Is Not a Neutral Economic Unit</h2>
+          <p class="intro">
+            A city is more than a place where people happen to live and trade. It is an economic unit:
+            a connected system that organises land, labour, capital, infrastructure, time and human
+            relationships. Because these arrangements influence people's daily choices and opportunities,
+            the city is not neutral. Its design and institutions encourage some patterns of life more than others.
+          </p>
+          <p>
+            In conventional socio-economic discussions, a city is frequently described as a passive spatial
+            background. In this standard view, urban settlements are merely geographic areas where independent
+            individuals, businesses, and markets exchange goods and services. Just as a city is more than a neutral
+            place where trade happens, an economic system is more than a neutral tool for buying and selling.
+            Every economic system teaches people something. Through its rules, rewards and repeated practices,
+            it shapes how people think, what they value and how they behave.
+          </p>
+        </header>
+
+        <div class="city-neutral-visuals" aria-label="City economic unit visuals">
+          <figure>
+            <img
+              src="https://static.wixstatic.com/media/7638b6_765686efba994ddd9c2cb90bb7c674ea~mv2.png"
+              alt="Illustration of the city as an economic unit."
+            />
+          </figure>
+          <figure>
+            <img
+              src="https://static.wixstatic.com/media/7638b6_378e35b9ed7d4aa391c68c68354fe5e8~mv2.png"
+              alt="Visual showing urban economic systems shaping daily life."
+            />
+          </figure>
+        </div>
+
+        <section class="augustine-panel">
+          <div class="augustine-layout">
+            <figure class="augustine-portrait">
+              <img
+                src="https://static.wixstatic.com/media/7638b6_26eb262c28cc445ea8f138382b07a2b9~mv2.png"
+                alt="Saint Augustine."
+              />
+            </figure>
+            <div>
+              <p class="eyebrow">Augustine's view</p>
+              <h3>Two Cities Formed by Two Different Loves</h3>
+              <p>
+                In The City of God, Augustine of Hippo argues that societies are shaped by what they love most.
+                A society is not only defined by its laws, buildings or markets. It is also defined by its deepest
+                love. Augustine describes human history as a struggle between two kinds of cities, or two ways of
+                organising life.
+              </p>
+              <p>
+                Augustine's important insight is that human beings are not only thinking beings who make choices
+                through logic and information. People are also desiring beings. We are shaped by what we love,
+                long for and practise every day. For this reason, moral character is formed through the ordering
+                of love, which Augustine calls ordinatio amoris. This means that people must learn to love the
+                right things in the right way.
+              </p>
+            </div>
+          </div>
+
+          <div class="city-love-grid" aria-label="Augustine two cities flip cards">
+            <div class="city-love-shell">
+              <input class="city-love-toggle" type="checkbox" id="${lessonId}-city-of-man-card" />
+              <label class="city-love-card" for="${lessonId}-city-of-man-card">
+                <span class="city-love-inner">
+                  <figure class="city-love-face city-love-front">
+                    <img
+                      src="https://static.wixstatic.com/media/7638b6_b36e305ca27a450fa4a58d4dc09af06e~mv2.png"
+                      alt="The City of Man flip card front."
+                    />
+                  </figure>
+                  <span class="city-love-face city-love-back">
+                    <strong>The City of Man - Civitas Terrena</strong>
+                    <p>
+                      The City of Man is built on disordered self-love. This is a love of self that becomes so
+                      strong that it pushes God and neighbour aside. In this kind of city, people seek power,
+                      status, security and success mainly for themselves.
+                    </p>
+                  </span>
+                </span>
+              </label>
+            </div>
+
+            <div class="city-love-shell">
+              <input class="city-love-toggle" type="checkbox" id="${lessonId}-city-of-god-card" />
+              <label class="city-love-card" for="${lessonId}-city-of-god-card">
+                <span class="city-love-inner">
+                  <figure class="city-love-face city-love-front">
+                    <img
+                      src="https://static.wixstatic.com/media/7638b6_a5926de0f5dd4633a4066902b05a1db5~mv2.png"
+                      alt="The City of God flip card front."
+                    />
+                  </figure>
+                  <span class="city-love-face city-love-back">
+                    <strong>The City of God - Civitas Dei</strong>
+                    <p>
+                      The City of God is built on rightly ordered love. This is love for God and neighbour that
+                      leads people towards service, justice, community and shared flourishing.
+                    </p>
+                  </span>
+                </span>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <section class="liturgy-panel">
+          <p class="eyebrow">The city as a liturgical centre</p>
+          <h3>The City as a Liturgical Centre</h3>
+          <p>
+            The word liturgy usually refers to repeated practices of worship. Christian philosopher James K. A.
+            Smith uses the term more broadly to describe cultural liturgies. These are repeated social practices
+            that shape what people imagine, love and desire.
+          </p>
+          <p>
+            Smith argues that human beings are not shaped only by ideas in their minds. They are also shaped by
+            repeated habits, physical spaces, symbols, routines and rewards. In this way, everyday places can train
+            the heart over time.
+          </p>
+          <p>
+            Shopping malls, sports stadiums, corporate office parks and commercial districts do more than provide
+            goods, entertainment or work. They guide people through planned spaces, repeated actions and powerful
+            images. Without saying it directly, they teach people what to want, what to fear, what to admire and
+            what kind of life to see as successful.
+          </p>
+          <p>
+            When this idea is applied to the city, it shows that urban life is an immersive teaching environment.
+            The city does not merely organise economic activity. Its daily rhythms, transport routes, work patterns,
+            shops, advertisements and public spaces form people's desires and expectations. In this sense, the city
+            becomes a kind of everyday liturgy.
+          </p>
+
+          <input class="city-visual-toggle" type="checkbox" id="${lessonId}-urban-liturgy-popup" data-rich-popup-toggle />
+          <label class="city-visual-button" for="${lessonId}-urban-liturgy-popup">Open visual representation</label>
+          <div class="city-visual-popup" role="dialog" aria-label="Urban liturgy visual representation">
+            <label class="city-visual-backdrop" for="${lessonId}-urban-liturgy-popup" aria-label="Close visual representation"></label>
+            <section class="city-visual-panel">
+              <header>
+                <div>
+                  <p class="eyebrow">Connected practices</p>
+                  <h3>How Urban Life Forms Desire</h3>
+                </div>
+                <label class="city-visual-close" for="${lessonId}-urban-liturgy-popup">Close</label>
+              </header>
+              <div class="liturgy-diagram">
+                <svg viewBox="0 0 920 520" role="img" aria-label="Diagram connecting urban systems, daily practices and formed desires">
+                  <defs>
+                    <filter id="${lessonId}-gold-line-shadow" x="-10%" y="-10%" width="120%" height="120%">
+                      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#234638" flood-opacity="0.68"/>
+                    </filter>
+                  </defs>
+                  <g fill="none" stroke="#b99245" stroke-width="3.45" stroke-linecap="round" filter="url(#${lessonId}-gold-line-shadow)">
+                    <path d="M460 255 C390 185 332 132 234 98"/>
+                    <path d="M460 255 C520 170 604 120 712 102"/>
+                    <path d="M460 255 C330 255 245 254 142 255"/>
+                    <path d="M460 255 C585 255 680 255 785 255"/>
+                    <path d="M460 255 C383 342 311 398 212 423"/>
+                    <path d="M460 255 C542 346 626 405 724 424"/>
+                  </g>
+                  <g font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">
+                    <rect x="330" y="198" width="260" height="114" rx="8" fill="#234638"/>
+                    <text x="460" y="244" fill="#f7f3e8" font-size="23" font-weight="800">City as</text>
+                    <text x="460" y="274" fill="#f3d99a" font-size="24" font-weight="800">Everyday Liturgy</text>
+
+                    <g fill="#fffdf8" stroke="#d8c8a8" stroke-width="1.4">
+                      <rect x="104" y="48" width="260" height="70" rx="8"/>
+                      <rect x="582" y="52" width="260" height="70" rx="8"/>
+                      <rect x="40" y="220" width="205" height="70" rx="8"/>
+                      <rect x="676" y="220" width="205" height="70" rx="8"/>
+                      <rect x="86" y="388" width="250" height="70" rx="8"/>
+                      <rect x="604" y="388" width="242" height="70" rx="8"/>
+                    </g>
+                    <g fill="#234638" font-size="18" font-weight="800">
+                      <text x="234" y="91">Physical Spaces</text>
+                      <text x="712" y="95">Daily Routines</text>
+                      <text x="142" y="263">Symbols</text>
+                      <text x="778" y="263">Rewards</text>
+                      <text x="211" y="431">Habits</text>
+                      <text x="725" y="431">Formed Desires</text>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="moral-budget-panel">
+          <p class="eyebrow">Urban ethics</p>
+          <h3>A City's Moral Budget</h3>
+          <p>
+            While a standard financial budget tracks the movement of money within a municipal administration,
+            an urban system possesses a moral budget that reveals its underlying priorities through the distribution
+            of scarce civic resources. The term moral budget helps evaluate the ethical values embedded within urban
+            planning and economic management.
+          </p>
+          <p>
+            A city reveals its true values through how it allocates five critical resources: Land, Time, Capital,
+            Attention, and Honour.
+          </p>
+          <div class="moral-budget-grid" aria-label="Five resources in a city's moral budget">
+            <section class="budget-resource">
+              <strong>Land</strong>
+              <p>Who gets access to housing, work, parks, services and safe public space.</p>
+            </section>
+            <section class="budget-resource">
+              <strong>Time</strong>
+              <p>Whose days are protected or consumed by commutes, queues and unreliable systems.</p>
+            </section>
+            <section class="budget-resource">
+              <strong>Capital</strong>
+              <p>Where investment, infrastructure, support and economic opportunity are directed.</p>
+            </section>
+            <section class="budget-resource">
+              <strong>Attention</strong>
+              <p>Which needs, messages, neighbourhoods and stories become visible in public life.</p>
+            </section>
+            <section class="budget-resource">
+              <strong>Honour</strong>
+              <p>Which people, lifestyles and contributions are celebrated as worthy of respect.</p>
+            </section>
+          </div>
+          <iframe
+            class="moral-budget-embed"
+            title="Your City's Moral Budget"
+            sandbox="allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox"
+            srcdoc="${htmlAttributeEscape(moralBudgetToolSrcDoc)}"
+          ></iframe>
+        </section>
+      </section>
+    `, { completeButtonLabel: "Complete moral budget step" }),
+  };
+};
+
 export const lessons: Lesson[] = curriculum.flatMap((level, levelIndex) =>
   level.sessions.map((sessionTitle, sessionIndex) => {
     const levelNumber = levelIndex + 1;
@@ -3306,10 +4224,15 @@ export const lessons: Lesson[] = curriculum.flatMap((level, levelIndex) =>
         videoCheckpoint: taleOfTwoCitiesVideoCheckpoint,
       };
       content[1] = createCityEconomicEngineStep(id);
-      content.splice(3, 0, {
+      content.splice(2, 0, createCityNotNeutralEconomicUnitStep(id));
+      const businessApplicationStep = content.find((block) => block.id === `${id}-session-application`);
+      if (businessApplicationStep) {
+        businessApplicationStep.title = "Step 4: Business Application";
+      }
+      content.splice(4, 0, {
         id: `${id}-resource-link`,
         kind: "webLink",
-        title: "Step 4: Wix Resource Link",
+        title: "Step 5: Wix Resource Link",
         body: "Open the lecturer-approved web resource stored in Wix CMS, then return here to confirm you reviewed it.",
         url: "https://www.wix.com/learn",
       });

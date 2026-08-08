@@ -109,9 +109,10 @@ describe("level access", () => {
     expect(competingParadigms?.content.map((block) => block.title)).toEqual([
       "Step 1: Tale of Two Cities",
       "Step 2: The City: Economic Engine",
-      "Step 3: Business Application",
-      "Step 4: Wix Resource Link",
-      "Step 5: Reflection Checkpoint",
+      "Step 3: The City Is Not a Neutral Economic Unit",
+      "Step 4: Business Application",
+      "Step 5: Wix Resource Link",
+      "Step 6: Reflection Checkpoint",
     ]);
 
     const cityStep = competingParadigms?.content[1];
@@ -154,6 +155,28 @@ describe("level access", () => {
     expect(cityStep?.body).toContain("Complete city lesson");
     expect(cityStep?.body).not.toContain("cdn.tailwindcss.com");
     expect(cityStep?.body).not.toContain("chart.js");
+
+    const neutralStep = competingParadigms?.content[2];
+    expect(neutralStep?.kind).toBe("customHtml");
+    expect(neutralStep?.body).toContain("No neutral economic units");
+    expect(neutralStep?.body).toContain("The City Is Not a Neutral Economic Unit");
+    expect(neutralStep?.body).toContain("7638b6_765686efba994ddd9c2cb90bb7c674ea");
+    expect(neutralStep?.body).toContain("7638b6_378e35b9ed7d4aa391c68c68354fe5e8");
+    expect(neutralStep?.body).toContain("7638b6_26eb262c28cc445ea8f138382b07a2b9");
+    expect(neutralStep?.body).toContain("7638b6_b36e305ca27a450fa4a58d4dc09af06e");
+    expect(neutralStep?.body).toContain("7638b6_a5926de0f5dd4633a4066902b05a1db5");
+    expect(neutralStep?.body).toContain("The City of Man - Civitas Terrena");
+    expect(neutralStep?.body).toContain("The City of God - Civitas Dei");
+    expect(neutralStep?.body).toContain("ordinatio amoris");
+    expect(neutralStep?.body).toContain("The City as a Liturgical Centre");
+    expect(neutralStep?.body).toContain("Open visual representation");
+    expect(neutralStep?.body).toContain('stroke-width="3.45"');
+    expect(neutralStep?.body).toContain("A City's Moral Budget");
+    expect(neutralStep?.body).toContain("Your City's Moral Budget");
+    expect(neutralStep?.body).toContain("/.netlify/functions/city-audit");
+    expect(neutralStep?.body).toContain("Quick self-audit");
+    expect(neutralStep?.body).toContain("Complete moral budget step");
+    expect(neutralStep?.body).not.toContain("<script>");
     expect(activities.filter((activity) => activity.lessonId === competingParadigms?.id)).toHaveLength(0);
   });
 
