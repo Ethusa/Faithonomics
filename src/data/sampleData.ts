@@ -796,7 +796,7 @@ const richLessonStepHtml = (
 
     .augustine-copy {
       display: grid;
-      gap: 12px;
+      gap: 10px;
       align-content: start;
     }
 
@@ -806,11 +806,11 @@ const richLessonStepHtml = (
     }
 
     .augustine-copy .city-love-grid {
-      margin-top: 8px;
+      margin-top: 4px;
     }
 
     .augustine-copy .city-love-shell {
-      min-height: clamp(250px, 22vw, 340px);
+      min-height: clamp(210px, 18vw, 280px);
     }
 
     .city-love-shell {
@@ -3972,16 +3972,12 @@ function escapeHtml(s) {
               <h3>Two Cities Formed by Two Different Loves</h3>
               <p>
                 In The City of God, Augustine of Hippo argues that societies are shaped by what they love most.
-                A society is not only defined by its laws, buildings or markets. It is also defined by its deepest
+                A society is not only defined by its laws, buildings or markets; it is also defined by its deepest
                 love. Augustine describes human history as a struggle between two kinds of cities, or two ways of
-                organising life.
-              </p>
-              <p>
-                Augustine's important insight is that human beings are not only thinking beings who make choices
-                through logic and information. People are also desiring beings. We are shaped by what we love,
-                long for and practise every day. For this reason, moral character is formed through the ordering
-                of love, which Augustine calls ordinatio amoris. This means that people must learn to love the
-                right things in the right way.
+                organising life, because human beings are not only thinking beings who choose through logic and
+                information. We are also desiring beings, shaped by what we love, long for and practise every day.
+                Moral character is formed through the ordering of love, which Augustine calls ordinatio amoris:
+                learning to love the right things in the right way.
               </p>
 
               <div class="city-love-grid" aria-label="Augustine two cities flip cards">
