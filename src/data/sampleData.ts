@@ -431,9 +431,12 @@ const richLessonStepHtml = (
       font-size: 1.08rem;
     }
 
-    p {
+    p,
+    li {
       color: var(--muted);
       line-height: 1.62;
+      text-align: justify;
+      text-justify: inter-word;
     }
 
     .intro {
@@ -3629,8 +3632,9 @@ h1,h2,h3 { font-family:Georgia,"Times New Roman",serif; }
 h1 { margin:0; color:var(--deep); font-size:clamp(2.2rem,4vw,3.9rem); line-height:1; }
 h2 { margin:.1em 0 .45em; color:var(--deep); }
 h3 { margin:.1em 0 .45em; color:var(--kraft); }
-.lead { max-width:1000px; color:var(--muted); line-height:1.6; }
-.small { color:var(--muted); font-size:.86rem; line-height:1.45; }
+p,li { text-align:justify; text-justify:inter-word; }
+.lead { max-width:1000px; color:var(--muted); line-height:1.6; text-align:justify; text-justify:inter-word; }
+.small { color:var(--muted); font-size:.86rem; line-height:1.45; text-align:justify; text-justify:inter-word; }
 .searchrow { display:grid; grid-template-columns:1fr auto; gap:10px; margin-top:16px; }
 input[type=text] {
   width:100%;

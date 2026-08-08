@@ -59,4 +59,4 @@ bundle should contain your Supabase project URL.
 The schema includes pilot policies that allow browser-based anon reads, inserts, and updates.
 This is enough to prove the live workflow from a static GitHub Pages site, but it is not appropriate
 for private production learner data. Before real learners use it, add Supabase Auth or route writes
-through a backend API with server-side authorization.
+through a backend API with server-side authorisation.

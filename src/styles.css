@@ -129,6 +129,12 @@ p {
   margin-top: 0;
 }
 
+p,
+li {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
 .topbar h1 {
   margin: 0;
   font-size: clamp(1.1rem, 2vw, 1.45rem);
