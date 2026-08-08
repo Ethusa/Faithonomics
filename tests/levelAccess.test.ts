@@ -186,9 +186,12 @@ describe("level access", () => {
     expect(neutralStep?.body).toContain('stroke-width="1.15"');
     expect(neutralStep?.body).toContain('stroke-width="0.8"');
     expect(neutralStep?.body).toContain("A City's Moral Budget");
-    expect(neutralStep?.body).toContain("Your City's Moral Budget");
-    expect(neutralStep?.body).toContain("/.netlify/functions/city-audit");
-    expect(neutralStep?.body).toContain("Quick self-audit");
+    expect(neutralStep?.body).toContain("Global Moral Budget Observatory");
+    expect(neutralStep?.body).toContain("GHS-UCDB R2024A");
+    expect(neutralStep?.body).toContain("Land, Time, Capital, Attention and Honour");
+    expect(neutralStep?.body).toContain("city_moral_budget_search");
+    expect(neutralStep?.body).not.toContain("/.netlify/functions/city-audit");
+    expect(neutralStep?.body).not.toContain("Quick self-audit");
     expect(neutralStep?.body).toContain("Complete moral budget step");
     expect(neutralStep?.body).not.toContain("<script>");
     expect(activities.filter((activity) => activity.lessonId === competingParadigms?.id)).toHaveLength(0);
