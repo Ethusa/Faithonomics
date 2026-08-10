@@ -25,6 +25,7 @@ button{font:inherit}
 .primary,.secondary{border-radius:10px;padding:11px 15px;cursor:pointer;font-weight:800}
 .primary{background:var(--deep);color:#F4DFAD;border:1px solid var(--gold)}
 .secondary{background:#FFFDF8;color:var(--deep);border:1px solid var(--line)}
+button:disabled{cursor:not-allowed;opacity:.58}
 .note{font-size:.9rem;color:var(--muted);margin-top:10px;line-height:1.5}
 .modal-backdrop{display:none;position:fixed;inset:0;background:rgba(20,24,24,.68);z-index:100;align-items:center;justify-content:center;padding:18px}
 .modal-backdrop.show{display:flex}
@@ -45,6 +46,7 @@ button{font:inherit}
 .answer{border:2px solid var(--line);background:#FBF7EF;color:#4D5048;border-radius:11px;padding:12px 9px;cursor:pointer;font-weight:800;text-align:center}
 .answer:hover,.answer:focus-visible{border-color:var(--gold);outline:none}
 .answer.selected{background:var(--deep);color:#F3DDA7;border-color:var(--gold)}
+.answer-hint{min-height:22px;margin-top:10px;color:var(--kraft);font-size:.92rem;font-weight:800}
 .qnav{display:flex;justify-content:space-between;gap:10px;margin-top:14px}
 .analysis{display:none}.analysis.show{display:block}
 .chart{display:grid;gap:13px;margin-top:16px}
@@ -107,6 +109,7 @@ button{font:inherit}
         </div>
         <div class="question" id="questionText"></div>
         <div class="answers" id="answers"></div>
+        <div class="answer-hint" id="answerHint" role="status" aria-live="polite"></div>
         <div class="qnav">
           <button class="secondary" id="prevBtn">Previous</button>
           <button class="primary" id="nextBtn">Next</button>
@@ -164,6 +167,7 @@ button{font:inherit}
   const progressFill=document.getElementById("progressFill");
   const prevBtn=document.getElementById("prevBtn");
   const nextBtn=document.getElementById("nextBtn");
+  const answerHint=document.getElementById("answerHint");
 
   function shuffle(arr){
     const a=[...arr];
@@ -196,18 +200,29 @@ button{font:inherit}
         answers[qi]=opt;
         [...answerWrap.children].forEach(x=>x.classList.remove("selected"));
         b.classList.add("selected");
+        updateNavState();
       });
       answerWrap.appendChild(b);
     });
     progressBadge.textContent=(idx+1)+" / "+order.length;
     progressFill.style.width=((idx+1)/order.length*100)+"%";
+    updateNavState();
+  }
+
+  function updateNavState(){
+    const qi=order[idx];
+    const hasAnswer=answers[qi]!==undefined;
+    const isLast=idx===order.length-1;
     prevBtn.disabled=idx===0;
-    nextBtn.textContent=idx===order.length-1?"Show Analysis":"Next";
+    nextBtn.disabled=!hasAnswer;
+    nextBtn.textContent=isLast?"Show Analysis":"Next";
+    answerHint.textContent=hasAnswer?"":(isLast?"Select one answer to show your analysis.":"Select one answer to continue.");
   }
 
   nextBtn.addEventListener("click",()=>{
     const qi=order[idx];
     if(answers[qi]===undefined){
+      updateNavState();
       qText.animate([{opacity:.45},{opacity:1}],{duration:250});
       return;
     }
@@ -247,6 +262,7 @@ button{font:inherit}
   function showAnalysis(avgs){
     const chart=document.getElementById("chart");
     const cards=document.getElementById("cardgrid");
+    const analysis=document.getElementById("analysis");
     chart.innerHTML="";cards.innerHTML="";
     Object.entries(avgs).forEach(([k,v])=>{
       chart.innerHTML += '<div class="row"><strong>'+elementNames[k]+'</strong><div class="trackbar"><div class="fill" style="width:'+(v/5*100)+'%"></div></div><div class="score">'+v.toFixed(1)+'/5</div></div>';
@@ -258,8 +274,15 @@ button{font:inherit}
     document.getElementById("interpretation").innerHTML =
       '<strong>What your answers suggest:</strong> Your strongest area is <strong>'+elementNames[high[0]]+'</strong> ('+high[1].toFixed(1)+'/5), while your weakest is <strong>'+elementNames[low[0]]+'</strong> ('+low[1].toFixed(1)+'/5). This profile reflects your observations of the city. Use it to decide which area needs stronger evidence or deeper discussion.';
 
-    document.getElementById("analysis").classList.add("show");
-    document.getElementById("analysis").scrollIntoView({behavior:"smooth"});
+    analysis.classList.add("show");
+    if(typeof analysis.scrollIntoView==="function"){
+      analysis.scrollIntoView({behavior:"smooth",block:"start"});
+    }
+    const analysisTitle=analysis.querySelector("h2");
+    analysisTitle.setAttribute("tabindex","-1");
+    if(typeof analysisTitle.focus==="function"){
+      analysisTitle.focus({preventScroll:true});
+    }
   }
 
   document.getElementById("openQuiz").addEventListener("click",start);

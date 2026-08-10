@@ -239,6 +239,10 @@ describe("level access", () => {
     expect(moralBudgetAuditHtml).not.toContain("quickDemo");
     expect(moralBudgetAuditHtml).toContain("City Moral Budget Audit");
     expect(moralBudgetAuditHtml).toContain("Your City's Moral Budget Profile");
+    expect(moralBudgetAuditHtml).toContain('id="answerHint"');
+    expect(moralBudgetAuditHtml).toContain("Select one answer to show your analysis.");
+    expect(moralBudgetAuditHtml).toContain("nextBtn.disabled=!hasAnswer");
+    expect(moralBudgetAuditHtml).toContain('analysis.classList.add("show")');
     expect(moralBudgetAuditHtml).toContain("Land, Time, Capital, Attention and Honour");
     expect(moralBudgetAuditHtml).toContain("const BANK");
     expect(moralBudgetAuditHtml).toContain("land:");
@@ -250,6 +254,29 @@ describe("level access", () => {
     expect(moralBudgetAuditHtml).not.toContain("supabase");
     expect(moralBudgetAuditHtml).not.toContain("\u00c3\u0097");
     expect(moralBudgetAuditHtml).not.toContain("\u00e2\u0080\u0094");
+  });
+
+  it("shows the Moral Budget analysis after all audit questions are answered", () => {
+    const scriptMatch = moralBudgetAuditHtml.match(/<script>([\s\S]*)<\/script>/);
+    expect(scriptMatch?.[1]).toBeTruthy();
+    document.open();
+    document.write(moralBudgetAuditHtml.replace(/<script>[\s\S]*<\/script>/, ""));
+    document.close();
+    window.eval(scriptMatch?.[1] ?? "");
+
+    document.getElementById("openQuiz")?.click();
+    expect((document.getElementById("nextBtn") as HTMLButtonElement | null)?.disabled).toBe(true);
+    expect(document.getElementById("answerHint")?.textContent).toContain("Select one answer");
+
+    for (let index = 0; index < 20; index += 1) {
+      (document.querySelector(".answer") as HTMLButtonElement | null)?.click();
+      (document.getElementById("nextBtn") as HTMLButtonElement | null)?.click();
+    }
+
+    expect(document.getElementById("analysis")?.classList.contains("show")).toBe(true);
+    expect(document.querySelectorAll("#chart .row")).toHaveLength(5);
+    expect(document.querySelectorAll("#cardgrid .statcard")).toHaveLength(5);
+    expect(document.getElementById("modalBackdrop")?.classList.contains("show")).toBe(false);
   });
 
   it("keeps the Urban Liturgy popup source visual connected and intact", () => {
