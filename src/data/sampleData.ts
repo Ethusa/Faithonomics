@@ -839,7 +839,9 @@ const richLessonStepHtml = (
     }
 
     .city-love-inner {
+      display: block;
       position: relative;
+      width: 100%;
       min-height: inherit;
       height: 100%;
       transform-style: preserve-3d;

@@ -179,6 +179,7 @@ describe("level access", () => {
     expect(neutralText).toContain("service, justice, community and shared flourishing");
     expect(neutralStep?.body).toContain("ordinatio amoris");
     expect(neutralStep?.body).toMatch(/\.city-love-card\s*\{[\s\S]*?min-height: inherit/);
+    expect(neutralStep?.body).toMatch(/\.city-love-inner\s*\{[\s\S]*?display: block/);
     const flipCardMarkupIndex = neutralBody.indexOf('class="city-love-grid"');
     expect(flipCardMarkupIndex).toBeGreaterThan(neutralBody.indexOf("ordinatio amoris"));
     expect(flipCardMarkupIndex).toBeLessThan(neutralBody.indexOf('class="liturgy-panel"'));
