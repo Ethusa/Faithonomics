@@ -220,10 +220,22 @@ describe("level access", () => {
     expect(neutralStep?.body).not.toContain("Search city");
     expect(neutralStep?.body).not.toContain("/.netlify/functions/city-audit");
     expect(neutralStep?.body).not.toContain("Quick self-audit");
+    expect(neutralStep?.body).toContain('class="lesson-main-takeaway"');
+    expect(neutralStep?.body).toContain("Main takeaway");
+    expect(neutralText).toContain("The city is not a neutral economic unit, and neither are we neutral participants in it.");
+    expect(neutralText).toContain("through our work, buying, travel, saving, spending, giving and status-seeking");
+    expect(neutralText).toContain("Augustine's two cities remind us that our economic lives are shaped by love");
+    expect(neutralText).toContain("What do I value, how am I being shaped by my economic choices");
     expect(neutralStep?.body).not.toContain("Student reflection");
     expect(neutralStep?.body).not.toContain("Which part of city life most trains desire?");
     expect(neutralStep?.body).not.toContain("city-reflection");
     expect(neutralStep?.body).not.toContain("<textarea");
+    expect(neutralBody.indexOf('class="lesson-main-takeaway"')).toBeGreaterThan(
+      neutralBody.indexOf('src="moral-budget-audit.html"'),
+    );
+    expect(neutralBody.indexOf('class="lesson-main-takeaway"')).toBeLessThan(
+      neutralBody.indexOf("Complete moral budget step"),
+    );
     expect(neutralStep?.body).toContain("Complete moral budget step");
     expect(neutralStep?.body).not.toContain("<script>");
     expect(activities.filter((activity) => activity.lessonId === competingParadigms?.id)).toHaveLength(0);

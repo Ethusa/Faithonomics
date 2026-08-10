@@ -784,6 +784,52 @@ const richLessonStepHtml = (
       text-justify: inter-word;
     }
 
+    .lesson-main-takeaway {
+      position: relative;
+      overflow: hidden;
+      border: 2px solid rgba(185, 146, 69, 0.72);
+      border-radius: 8px;
+      padding: clamp(20px, 3vw, 32px);
+      background:
+        linear-gradient(135deg, rgba(35, 70, 56, 0.98), rgba(28, 55, 46, 0.96)),
+        radial-gradient(circle at 92% 8%, rgba(217, 154, 61, 0.24), transparent 34%);
+      color: #fff7df;
+      box-shadow: 0 20px 44px rgba(35, 70, 56, 0.28);
+    }
+
+    .lesson-main-takeaway::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-top: 6px solid var(--gold);
+      pointer-events: none;
+    }
+
+    .lesson-main-takeaway strong {
+      display: inline-block;
+      margin-bottom: 12px;
+      border: 1px solid rgba(244, 223, 173, 0.46);
+      border-radius: 999px;
+      padding: 6px 11px;
+      background: rgba(255, 247, 223, 0.12);
+      color: #f4dfad;
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .lesson-main-takeaway p {
+      position: relative;
+      margin: 0;
+      color: #fff7df;
+      font-size: clamp(1.02rem, 1.8vw, 1.25rem);
+      font-weight: 700;
+      line-height: 1.62;
+      text-align: justify;
+      text-justify: inter-word;
+    }
+
     .city-neutral-visuals,
     .augustine-layout,
     .city-love-grid,
@@ -3906,6 +3952,20 @@ const createCityNotNeutralEconomicUnitStep = (lessonId: string): Lesson["content
             sandbox="allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox"
             src="moral-budget-audit.html"
           ></iframe>
+        </section>
+
+        <section class="lesson-main-takeaway" aria-label="Main takeaway">
+          <strong>Main takeaway</strong>
+          <p>
+            The city is not a neutral economic unit, and neither are we neutral participants in it. Every day,
+            through our work, buying, travel, saving, spending, giving and status-seeking, we show what we value.
+            Augustine's two cities remind us that our economic lives are shaped by love: either love curved inward
+            toward self, power and possession, or love directed toward God, neighbour and the common good. The city
+            acts like a liturgical centre because its repeated rhythms train our desires, but our personal economic
+            engagement also reveals our own moral budget. So the key question is not only, "What does the city
+            prioritise?" but also, "What do I value, how am I being shaped by my economic choices, and what does my
+            daily economic life show that I truly love?"
+          </p>
         </section>
       </section>
     `, { completeButtonLabel: "Complete moral budget step" }),
