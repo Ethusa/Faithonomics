@@ -1177,7 +1177,7 @@ const richLessonStepHtml = (
 
     .moral-budget-embed {
       width: 100%;
-      min-height: 860px;
+      height: 350px;
       border: 1px solid rgba(91, 58, 36, 0.22);
       border-radius: 8px;
       background: #f7f3e8;
@@ -2495,7 +2495,7 @@ const richLessonStepHtml = (
       }
 
       .moral-budget-embed {
-        min-height: 960px;
+        height: 520px;
       }
 
       .ordinary-hero {

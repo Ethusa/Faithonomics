@@ -213,6 +213,10 @@ describe("level access", () => {
     expect(neutralStep?.body).not.toContain('class="liturgy-diagram"');
     expect(neutralStep?.body).toContain("A City's Moral Budget");
     expect(neutralStep?.body).toContain("Global Moral Budget Observatory City Audit Quiz");
+    expect(neutralStep?.body).toContain("height: 350px");
+    expect(neutralStep?.body).toContain("height: 520px");
+    expect(neutralStep?.body).not.toContain("min-height: 860px");
+    expect(neutralStep?.body).not.toContain("min-height: 960px");
     expect(neutralText).toContain("Land, Time, Capital, Attention, and Honour");
     expect(neutralStep?.body).toContain('src="moral-budget-audit.html"');
     expect(neutralStep?.body).not.toContain("GHS-UCDB R2024A");
