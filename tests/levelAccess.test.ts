@@ -180,9 +180,9 @@ describe("level access", () => {
     expect(neutralStep?.body).toContain("ordinatio amoris");
     expect(neutralStep?.body).toMatch(/\.city-love-card\s*\{[\s\S]*?min-height: inherit/);
     expect(neutralStep?.body).toMatch(/\.city-love-inner\s*\{[\s\S]*?display: block/);
-    expect(neutralStep?.body).toMatch(/\.augustine-copy \.city-love-shell\s*\{[\s\S]*?aspect-ratio: 1 \/ 1/);
-    expect(neutralStep?.body).toMatch(/\.city-love-front\s*\{[\s\S]*?background: transparent/);
-    expect(neutralStep?.body).toMatch(/\.city-love-front img\s*\{[\s\S]*?object-fit: contain[\s\S]*?padding: 0/);
+    expect(neutralStep?.body).toMatch(/\.augustine-copy \.city-love-shell\s*\{[\s\S]*?aspect-ratio: auto[\s\S]*?min-height: 0/);
+    expect(neutralStep?.body).toMatch(/\.augustine-copy \.city-love-front\s*\{[\s\S]*?position: relative[\s\S]*?background: transparent/);
+    expect(neutralStep?.body).toMatch(/\.augustine-copy \.city-love-front img\s*\{[\s\S]*?height: auto[\s\S]*?padding: 0/);
     const flipCardMarkupIndex = neutralBody.indexOf('class="city-love-grid"');
     expect(flipCardMarkupIndex).toBeGreaterThan(neutralBody.indexOf("ordinatio amoris"));
     expect(flipCardMarkupIndex).toBeLessThan(neutralBody.indexOf('class="liturgy-panel"'));
