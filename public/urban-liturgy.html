@@ -19,9 +19,17 @@
   --muted:#5B6057;
 }
 *{box-sizing:border-box}
+html{
+  width:100%;
+  min-height:100%;
+}
 body{
   margin:0;
-  padding:18px;
+  min-height:100vh;
+  padding:0;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
   font-family:Arial,Helvetica,sans-serif;
   color:var(--black);
   background:
@@ -29,11 +37,11 @@ body{
     linear-gradient(180deg,#E9DDC7,#D8C4A3);
 }
 .app{
-  width:min(1380px,100%);
+  width:min(1380px,100vw);
   margin:auto;
   background:var(--paper);
   border:1px solid rgba(91,58,36,.25);
-  border-radius:22px;
+  border-radius:10px;
   overflow:hidden;
   box-shadow:0 22px 58px rgba(45,31,17,.18);
 }
@@ -58,7 +66,7 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:10px;
+  padding:clamp(6px,.8vw,10px);
 }
 .cover button{
   width:100%;
@@ -76,9 +84,11 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:10px;
+  gap:clamp(6px,.8vw,10px);
+  line-height:1.12;
   text-align:center;
-  padding:12px;
+  padding:clamp(8px,1vw,12px);
+  min-width:0;
 }
 .cover button:hover,.cover button:focus{
   transform:translateY(-2px) scale(1.01);
@@ -99,7 +109,8 @@ body{
 #travelBox{left:2.9%;top:29.1%;width:18.8%;height:12.6%;}
 #buyingBox{right:2.9%;top:6.1%;width:18.8%;height:12.6%;}
 #statusBox{right:2.9%;top:29.1%;width:18.8%;height:12.6%;}
-#spaceBox{left:38.6%;bottom:1.7%;width:23.8%;height:10.3%;}
+#spaceBox{left:35.8%;bottom:1.7%;width:28.4%;height:10.8%;}
+#spaceBox button span:not(.badge){white-space:nowrap;}
 
 .modal{
   position:fixed;
@@ -203,6 +214,7 @@ body{
   .badge{width:26px;height:26px;font-size:.9rem}
   #workBox,#travelBox,#buyingBox,#statusBox{width:21%;}
   #spaceBox{width:29%;left:35.5%;}
+  #spaceBox button span:not(.badge){white-space:normal;}
 }
 .cover button:focus-visible,.close:focus-visible{outline:3px solid #234638;outline-offset:3px}
 </style>

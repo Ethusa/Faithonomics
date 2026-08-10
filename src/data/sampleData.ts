@@ -967,7 +967,8 @@ const richLessonStepHtml = (
     }
 
     .city-visual-button,
-    .city-visual-close {
+    .city-visual-close,
+    .city-visual-enlarge {
       min-height: 42px;
       width: fit-content;
       display: inline-flex;
@@ -986,7 +987,8 @@ const richLessonStepHtml = (
     }
 
     .city-visual-button:hover,
-    .city-visual-close:hover {
+    .city-visual-close:hover,
+    .city-visual-enlarge:hover {
       background: #1d3a2f;
       transform: translateY(-1px);
     }
@@ -1002,7 +1004,7 @@ const richLessonStepHtml = (
       z-index: 9999;
       display: grid;
       place-items: center;
-      padding: clamp(12px, 2.8vw, 32px);
+      padding: clamp(54px, 7vh, 72px) clamp(12px, 2.8vw, 32px) clamp(12px, 2.8vw, 32px);
       background: rgba(23, 19, 15, 0.72);
       backdrop-filter: blur(5px);
     }
@@ -1029,7 +1031,7 @@ const richLessonStepHtml = (
       position: relative;
       z-index: 1;
       width: min(1380px, calc(100vw - 24px));
-      max-height: calc(100vh - 32px);
+      max-height: calc(100vh - 96px);
       aspect-ratio: 16 / 9;
       overflow: visible;
       border: 1px solid rgba(185, 146, 69, 0.48);
@@ -1051,14 +1053,28 @@ const richLessonStepHtml = (
       background: #f7f3e8;
     }
 
-    .city-visual-close {
+    .city-visual-actions {
       position: absolute;
-      top: max(-18px, -1.4vw);
-      right: max(-18px, -1.4vw);
-      z-index: 2;
+      top: -46px;
+      right: 0;
+      z-index: 3;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .city-visual-actions .city-visual-close,
+    .city-visual-actions .city-visual-enlarge {
       min-height: 38px;
       border-color: rgba(185, 146, 69, 0.72);
+      font-size: 0.9rem;
       box-shadow: 0 12px 28px rgba(23, 19, 15, 0.34);
+    }
+
+    .city-visual-enlarge {
+      text-decoration: none;
     }
 
     .moral-budget-grid {
@@ -2401,9 +2417,10 @@ const richLessonStepHtml = (
         max-width: calc(100vw - 18px);
       }
 
-      .city-visual-close {
-        top: 8px;
-        right: 8px;
+      .city-visual-actions {
+        top: -46px;
+        right: 0;
+        left: 0;
       }
 
       .moral-budget-embed {
@@ -3795,7 +3812,18 @@ const createCityNotNeutralEconomicUnitStep = (lessonId: string): Lesson["content
               aria-label="Close visual representation"
             ></button>
             <section class="city-visual-panel">
-              <button class="city-visual-close" type="button" data-rich-dialog-close>Close</button>
+              <div class="city-visual-actions" aria-label="Visual representation controls">
+                <a
+                  class="city-visual-enlarge"
+                  href="urban-liturgy.html"
+                  target="_blank"
+                  rel="noopener"
+                  role="button"
+                >
+                  Enlarge image
+                </a>
+                <button class="city-visual-close" type="button" data-rich-dialog-close>Close</button>
+              </div>
               <iframe
                 class="urban-liturgy-frame"
                 title="Interactive Urban Liturgy visual"

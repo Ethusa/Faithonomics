@@ -198,6 +198,10 @@ describe("level access", () => {
     expect(neutralStep?.body).toContain("margin: 4px auto 0");
     expect(neutralStep?.body).toContain(`data-rich-dialog-open="#${competingParadigms?.id}-urban-liturgy-popup"`);
     expect(neutralText).toContain("data-rich-dialog hidden");
+    expect(neutralStep?.body).toContain('class="city-visual-actions"');
+    expect(neutralStep?.body).toContain("Enlarge image");
+    expect(neutralStep?.body).toContain('href="urban-liturgy.html"');
+    expect(neutralStep?.body).toContain('class="city-visual-enlarge"');
     expect(neutralStep?.body).toContain('class="urban-liturgy-frame"');
     expect(neutralStep?.body).toContain('src="urban-liturgy.html"');
     expect(neutralStep?.body).not.toContain("How Urban Life Forms Desire");
@@ -216,6 +220,7 @@ describe("level access", () => {
 
   it("keeps the Urban Liturgy popup source visual connected and intact", () => {
     expect(urbanLiturgyHtml).toContain("data:image/png;base64");
+    expect(urbanLiturgyHtml).toContain("overflow:hidden");
     expect(urbanLiturgyHtml).toContain('id="workBox"');
     expect(urbanLiturgyHtml).toContain('id="travelBox"');
     expect(urbanLiturgyHtml).toContain('id="buyingBox"');
@@ -223,6 +228,8 @@ describe("level access", () => {
     expect(urbanLiturgyHtml).toContain('id="spaceBox"');
     expect(urbanLiturgyHtml).toContain('aria-label="Open Work teaching popup"');
     expect(urbanLiturgyHtml).toContain('aria-label="Open The Production of Space teaching popup"');
+    expect(urbanLiturgyHtml).toContain("#spaceBox{left:35.8%;bottom:1.7%;width:28.4%;height:10.8%;}");
+    expect(urbanLiturgyHtml).toContain("#spaceBox button span:not(.badge){white-space:nowrap;}");
     expect(urbanLiturgyHtml).toContain("stroke-width:3.45");
     expect(urbanLiturgyHtml).toContain("stroke-width:1.2");
     expect(urbanLiturgyHtml).toContain('r="0.85"');
