@@ -164,6 +164,7 @@ describe("level access", () => {
     const neutralText = neutralBody.replace(/\s+/g, " ");
     expect(neutralStep?.body).toContain("No neutral economic units");
     expect(neutralStep?.body).toContain("The City Is Not a Neutral Economic Unit");
+    expect(neutralStep?.body).not.toContain("min-height: 100vh");
     expect(neutralStep?.body).toContain("Lesson main point");
     expect(neutralText).toContain(
       "The city shows that no economic entity is neutral. Every zoning map, transit schedule, and retail district is a decision about the human soul and what we should learn to love.",
@@ -213,8 +214,9 @@ describe("level access", () => {
     expect(neutralStep?.body).not.toContain('class="liturgy-diagram"');
     expect(neutralStep?.body).toContain("A City's Moral Budget");
     expect(neutralStep?.body).toContain("Global Moral Budget Observatory City Audit Quiz");
-    expect(neutralStep?.body).toContain("height: 350px");
-    expect(neutralStep?.body).toContain("height: 520px");
+    expect(neutralStep?.body).toMatch(/\.moral-budget-embed\s*\{[\s\S]*?height: 315px[\s\S]*?min-height: 0 !important[\s\S]*?max-height: 315px/);
+    expect(neutralStep?.body).toMatch(/@media \(max-width: 640px\)[\s\S]*?\.moral-budget-embed\s*\{[\s\S]*?height: 470px[\s\S]*?max-height: 470px/);
+    expect(neutralStep?.body).not.toMatch(/\.moral-budget-embed\s*\{[\s\S]*?height: 350px/);
     expect(neutralStep?.body).not.toContain("min-height: 860px");
     expect(neutralStep?.body).not.toContain("min-height: 960px");
     expect(neutralText).toContain("Land, Time, Capital, Attention, and Honour");
