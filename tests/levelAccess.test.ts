@@ -183,6 +183,12 @@ describe("level access", () => {
     expect(neutralStep?.body).toMatch(/\.augustine-copy \.city-love-shell\s*\{[\s\S]*?aspect-ratio: auto[\s\S]*?min-height: 0/);
     expect(neutralStep?.body).toMatch(/\.augustine-copy \.city-love-front\s*\{[\s\S]*?position: relative[\s\S]*?background: transparent/);
     expect(neutralStep?.body).toMatch(/\.augustine-copy \.city-love-front img\s*\{[\s\S]*?height: auto[\s\S]*?padding: 0/);
+    expect(neutralStep?.body).toMatch(/\.city-love-back\s*\{[\s\S]*?align-content: start[\s\S]*?justify-items: stretch/);
+    expect(neutralStep?.body).toContain(".city-love-back-man");
+    expect(neutralStep?.body).toContain(".city-love-back-god");
+    expect(neutralStep?.body).toMatch(/\.city-love-back p\s*\{[\s\S]*?text-align: justify/);
+    expect(neutralStep?.body).toContain('class="city-love-face city-love-back city-love-back-man"');
+    expect(neutralStep?.body).toContain('class="city-love-face city-love-back city-love-back-god"');
     const flipCardMarkupIndex = neutralBody.indexOf('class="city-love-grid"');
     expect(flipCardMarkupIndex).toBeGreaterThan(neutralBody.indexOf("ordinatio amoris"));
     expect(flipCardMarkupIndex).toBeLessThan(neutralBody.indexOf('class="liturgy-panel"'));

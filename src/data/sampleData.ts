@@ -905,8 +905,9 @@ const richLessonStepHtml = (
     }
 
     .city-love-back {
-      align-content: center;
-      gap: 10px;
+      align-content: start;
+      justify-items: stretch;
+      gap: 12px;
       padding: clamp(18px, 3vw, 30px);
       background:
         linear-gradient(145deg, rgba(35, 70, 56, 0.97), rgba(79, 107, 58, 0.92)),
@@ -915,10 +916,25 @@ const richLessonStepHtml = (
       transform: rotateY(180deg);
     }
 
+    .city-love-back-man {
+      background:
+        linear-gradient(145deg, rgba(83, 48, 42, 0.98), rgba(116, 73, 50, 0.94)),
+        radial-gradient(circle at 0% 0%, rgba(217, 154, 61, 0.22), transparent 40%);
+    }
+
+    .city-love-back-god {
+      background:
+        linear-gradient(145deg, rgba(35, 70, 56, 0.97), rgba(79, 107, 58, 0.92)),
+        radial-gradient(circle at 0% 0%, rgba(185, 146, 69, 0.26), transparent 38%);
+    }
+
     .city-love-back strong {
+      display: block;
       color: #f3d99a;
       font-size: 0.82rem;
       letter-spacing: 0;
+      line-height: 1.25;
+      text-align: left;
       text-transform: uppercase;
     }
 
@@ -927,6 +943,8 @@ const richLessonStepHtml = (
       color: #fff7df;
       font-size: clamp(1rem, 1.6vw, 1.18rem);
       line-height: 1.62;
+      text-align: justify;
+      text-justify: inter-word;
     }
 
     .city-visual-button,
@@ -3681,7 +3699,7 @@ const createCityNotNeutralEconomicUnitStep = (lessonId: string): Lesson["content
                           alt="The City of Man flip card front."
                         />
                       </figure>
-                      <span class="city-love-face city-love-back">
+                      <span class="city-love-face city-love-back city-love-back-man">
                         <strong>The City of Man (Civitas Terrena)</strong>
                         <p>
                           The City of Man (Civitas Terrena) is built on disordered self-love. This is a love of self
@@ -3703,7 +3721,7 @@ const createCityNotNeutralEconomicUnitStep = (lessonId: string): Lesson["content
                           alt="The City of God flip card front."
                         />
                       </figure>
-                      <span class="city-love-face city-love-back">
+                      <span class="city-love-face city-love-back city-love-back-god">
                         <strong>The City of God (Civitas Dei)</strong>
                         <p>
                           The City of God (Civitas Dei) is built on rightly ordered love. This is love for God and
