@@ -813,7 +813,8 @@ const richLessonStepHtml = (
     }
 
     .augustine-copy .city-love-shell {
-      min-height: clamp(210px, 18vw, 280px);
+      aspect-ratio: 1 / 1;
+      min-height: clamp(260px, 24vw, 380px);
     }
 
     .city-love-shell {
@@ -866,7 +867,10 @@ const richLessonStepHtml = (
     .city-love-front {
       place-items: center;
       margin: 0;
-      background: rgba(255, 255, 255, 0.5);
+      overflow: visible;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
     }
 
     .city-love-front img {
@@ -874,7 +878,7 @@ const richLessonStepHtml = (
       width: 100%;
       height: 100%;
       object-fit: contain;
-      padding: clamp(8px, 1.5vw, 14px);
+      padding: 0;
     }
 
     .city-love-back {
