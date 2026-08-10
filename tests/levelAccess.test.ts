@@ -7,6 +7,7 @@ import {
   modules,
 } from "../src/data/sampleData";
 import { authenticateLevelAccess } from "../src/domain/levelAccess";
+import moralBudgetAuditHtml from "../public/moral-budget-audit.html?raw";
 import urbanLiturgyHtml from "../public/urban-liturgy.html?raw";
 
 describe("level access", () => {
@@ -207,15 +208,37 @@ describe("level access", () => {
     expect(neutralStep?.body).not.toContain("How Urban Life Forms Desire");
     expect(neutralStep?.body).not.toContain('class="liturgy-diagram"');
     expect(neutralStep?.body).toContain("A City's Moral Budget");
-    expect(neutralStep?.body).toContain("Global Moral Budget Observatory");
-    expect(neutralStep?.body).toContain("GHS-UCDB R2024A");
-    expect(neutralStep?.body).toContain("Land, Time, Capital, Attention and Honour");
-    expect(neutralStep?.body).toContain("city_moral_budget_search");
+    expect(neutralStep?.body).toContain("Global Moral Budget Observatory City Audit Quiz");
+    expect(neutralText).toContain("Land, Time, Capital, Attention, and Honour");
+    expect(neutralStep?.body).toContain('src="moral-budget-audit.html"');
+    expect(neutralStep?.body).not.toContain("GHS-UCDB R2024A");
+    expect(neutralStep?.body).not.toContain("city_moral_budget_search");
+    expect(neutralStep?.body).not.toContain("Search city");
     expect(neutralStep?.body).not.toContain("/.netlify/functions/city-audit");
     expect(neutralStep?.body).not.toContain("Quick self-audit");
     expect(neutralStep?.body).toContain("Complete moral budget step");
     expect(neutralStep?.body).not.toContain("<script>");
     expect(activities.filter((activity) => activity.lessonId === competingParadigms?.id)).toHaveLength(0);
+  });
+
+  it("keeps the Moral Budget city audit quiz connected and intact", () => {
+    expect(moralBudgetAuditHtml).toContain("Global Moral Budget Observatory");
+    expect(moralBudgetAuditHtml).toContain("What Does Your City Prioritise?");
+    expect(moralBudgetAuditHtml).toContain("Start City Audit");
+    expect(moralBudgetAuditHtml).toContain("Try Sample Pattern");
+    expect(moralBudgetAuditHtml).toContain("City Moral Budget Audit");
+    expect(moralBudgetAuditHtml).toContain("Your City's Moral Budget Profile");
+    expect(moralBudgetAuditHtml).toContain("Land, Time, Capital, Attention and Honour");
+    expect(moralBudgetAuditHtml).toContain("const BANK");
+    expect(moralBudgetAuditHtml).toContain("land:");
+    expect(moralBudgetAuditHtml).toContain("time:");
+    expect(moralBudgetAuditHtml).toContain("capital:");
+    expect(moralBudgetAuditHtml).toContain("attention:");
+    expect(moralBudgetAuditHtml).toContain("honour:");
+    expect(moralBudgetAuditHtml).not.toContain("city_moral_budget_search");
+    expect(moralBudgetAuditHtml).not.toContain("supabase");
+    expect(moralBudgetAuditHtml).not.toContain("\u00c3\u0097");
+    expect(moralBudgetAuditHtml).not.toContain("\u00e2\u0080\u0094");
   });
 
   it("keeps the Urban Liturgy popup source visual connected and intact", () => {
