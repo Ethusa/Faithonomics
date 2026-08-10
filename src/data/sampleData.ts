@@ -721,8 +721,7 @@ const richLessonStepHtml = (
     .city-neutral-hero,
     .augustine-panel,
     .liturgy-panel,
-    .moral-budget-panel,
-    .city-reflection-panel {
+    .moral-budget-panel {
       border: 1px solid rgba(91, 58, 36, 0.18);
       border-radius: 8px;
       padding: clamp(18px, 3vw, 30px);
@@ -735,8 +734,7 @@ const richLessonStepHtml = (
     .city-neutral-hero h2,
     .augustine-panel h3,
     .liturgy-panel h3,
-    .moral-budget-panel h3,
-    .city-reflection-panel h3 {
+    .moral-budget-panel h3 {
       font-family: Georgia, "Times New Roman", serif;
       color: var(--forest);
       line-height: 1.08;
@@ -750,8 +748,7 @@ const richLessonStepHtml = (
     .city-neutral-hero p:last-child,
     .augustine-panel p:last-child,
     .liturgy-panel p:last-child,
-    .moral-budget-panel p:last-child,
-    .city-reflection-panel p:last-child {
+    .moral-budget-panel p:last-child {
       margin-bottom: 0;
     }
 
@@ -1139,80 +1136,6 @@ const richLessonStepHtml = (
       border-radius: 8px;
       background: #f7f3e8;
       box-shadow: 0 16px 34px rgba(91, 58, 36, 0.12);
-    }
-
-    .city-reflection-panel {
-      display: grid;
-      gap: 12px;
-    }
-
-    .city-reflection-options {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(120px, 1fr));
-      gap: 10px;
-      margin-top: 4px;
-    }
-
-    .city-reflection-options input {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .city-reflection-options label {
-      display: grid;
-      gap: 5px;
-      align-content: start;
-      min-height: 112px;
-      border: 2px solid rgba(185, 146, 69, 0.34);
-      border-radius: 8px;
-      padding: 13px;
-      background: rgba(255, 253, 248, 0.72);
-      color: var(--ink);
-      cursor: pointer;
-      transition:
-        background 180ms ease,
-        border-color 180ms ease,
-        box-shadow 180ms ease,
-        transform 180ms ease;
-    }
-
-    .city-reflection-options label:hover,
-    .city-reflection-options input:focus-visible + label {
-      border-color: rgba(185, 146, 69, 0.78);
-      box-shadow: 0 10px 24px rgba(91, 58, 36, 0.14);
-      transform: translateY(-1px);
-    }
-
-    .city-reflection-options input:checked + label {
-      border-color: var(--gold);
-      background: var(--forest);
-      color: #fff7df;
-      box-shadow: 0 12px 28px rgba(35, 70, 56, 0.24);
-    }
-
-    .city-reflection-options strong {
-      color: inherit;
-      font-size: 0.82rem;
-      text-transform: uppercase;
-    }
-
-    .city-reflection-options span {
-      color: inherit;
-      font-size: 0.92rem;
-      line-height: 1.42;
-    }
-
-    .city-reflection-feedback {
-      border-left: 4px solid var(--gold);
-      padding: 10px 12px;
-      border-radius: 8px;
-      background: rgba(185, 146, 69, 0.12);
-      color: var(--muted);
-      font-size: 0.96rem;
-      line-height: 1.52;
     }
 
     .comparison {
@@ -2501,8 +2424,7 @@ const richLessonStepHtml = (
       .city-neutral-visuals,
       .augustine-layout,
       .city-love-grid,
-      .moral-budget-grid,
-      .city-reflection-options {
+      .moral-budget-grid {
         grid-template-columns: 1fr;
       }
 
@@ -3984,44 +3906,6 @@ const createCityNotNeutralEconomicUnitStep = (lessonId: string): Lesson["content
             sandbox="allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox"
             src="moral-budget-audit.html"
           ></iframe>
-        </section>
-
-        <section class="city-reflection-panel" aria-labelledby="${lessonId}-city-reflection-title">
-          <p class="eyebrow">Student reflection</p>
-          <h3 id="${lessonId}-city-reflection-title">Which part of city life most trains desire?</h3>
-          <p>
-            Choose one area you think most shapes what people learn to love in your city.
-          </p>
-          <div class="city-reflection-options" role="radiogroup" aria-label="Choose one reflective response">
-            <input type="radio" name="${lessonId}-city-reflection" id="${lessonId}-reflect-land" value="land" />
-            <label for="${lessonId}-reflect-land">
-              <strong>Land</strong>
-              <span>Where people are allowed to live, gather and belong.</span>
-            </label>
-            <input type="radio" name="${lessonId}-city-reflection" id="${lessonId}-reflect-time" value="time" />
-            <label for="${lessonId}-reflect-time">
-              <strong>Time</strong>
-              <span>Whose days are protected or consumed by the system.</span>
-            </label>
-            <input type="radio" name="${lessonId}-city-reflection" id="${lessonId}-reflect-capital" value="capital" />
-            <label for="${lessonId}-reflect-capital">
-              <strong>Capital</strong>
-              <span>Where investment, opportunity and support are directed.</span>
-            </label>
-            <input type="radio" name="${lessonId}-city-reflection" id="${lessonId}-reflect-attention" value="attention" />
-            <label for="${lessonId}-reflect-attention">
-              <strong>Attention</strong>
-              <span>Which stories, needs and images fill public life.</span>
-            </label>
-            <input type="radio" name="${lessonId}-city-reflection" id="${lessonId}-reflect-honour" value="honour" />
-            <label for="${lessonId}-reflect-honour">
-              <strong>Honour</strong>
-              <span>Which people and ways of life are treated as admirable.</span>
-            </label>
-          </div>
-          <p class="city-reflection-feedback">
-            Hold that one choice in mind as you complete the lesson: it is your first clue to the city's moral budget.
-          </p>
         </section>
       </section>
     `, { completeButtonLabel: "Complete moral budget step" }),

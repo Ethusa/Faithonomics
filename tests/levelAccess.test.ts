@@ -220,11 +220,9 @@ describe("level access", () => {
     expect(neutralStep?.body).not.toContain("Search city");
     expect(neutralStep?.body).not.toContain("/.netlify/functions/city-audit");
     expect(neutralStep?.body).not.toContain("Quick self-audit");
-    expect(neutralStep?.body).toContain("Student reflection");
-    expect(neutralStep?.body).toContain("Which part of city life most trains desire?");
-    expect(neutralStep?.body).toContain('class="city-reflection-options"');
-    expect(neutralStep?.body).toContain('role="radiogroup"');
-    expect(neutralStep?.body).toContain('type="radio"');
+    expect(neutralStep?.body).not.toContain("Student reflection");
+    expect(neutralStep?.body).not.toContain("Which part of city life most trains desire?");
+    expect(neutralStep?.body).not.toContain("city-reflection");
     expect(neutralStep?.body).not.toContain("<textarea");
     expect(neutralStep?.body).toContain("Complete moral budget step");
     expect(neutralStep?.body).not.toContain("<script>");
