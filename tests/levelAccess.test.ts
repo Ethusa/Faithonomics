@@ -235,7 +235,8 @@ describe("level access", () => {
     expect(moralBudgetAuditHtml).toContain("Global Moral Budget Observatory");
     expect(moralBudgetAuditHtml).toContain("What Does Your City Prioritise?");
     expect(moralBudgetAuditHtml).toContain("Start City Audit");
-    expect(moralBudgetAuditHtml).toContain("Try Sample Pattern");
+    expect(moralBudgetAuditHtml).not.toContain("Try Sample Pattern");
+    expect(moralBudgetAuditHtml).not.toContain("quickDemo");
     expect(moralBudgetAuditHtml).toContain("City Moral Budget Audit");
     expect(moralBudgetAuditHtml).toContain("Your City's Moral Budget Profile");
     expect(moralBudgetAuditHtml).toContain("Land, Time, Capital, Attention and Honour");

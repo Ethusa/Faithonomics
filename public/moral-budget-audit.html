@@ -75,7 +75,6 @@ button{font:inherit}
   <p class="lead">Answer 20 short questions about the city you know. The quiz mixes questions from <strong>Land, Time, Capital, Attention and Honour</strong>, then creates a visual Moral Budget profile.</p>
   <div class="startrow">
     <button class="primary" id="openQuiz">Start City Audit</button>
-    <button class="secondary" id="quickDemo">Try Sample Pattern</button>
   </div>
   <div class="note">This is a classroom reflection tool based on your observations. It does not by itself prove that a city is morally good or bad.</div>
 </section>
@@ -265,9 +264,6 @@ button{font:inherit}
 
   document.getElementById("openQuiz").addEventListener("click",start);
   document.getElementById("retake").addEventListener("click",start);
-  document.getElementById("quickDemo").addEventListener("click",()=>{
-    showAnalysis({land:2.4,time:2.1,capital:3.2,attention:2.8,honour:3.0});
-  });
 })();
 </script>
 </body>
