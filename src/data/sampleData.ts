@@ -789,12 +789,12 @@ const richLessonStepHtml = (
       overflow: hidden;
       border: 2px solid rgba(185, 146, 69, 0.72);
       border-radius: 8px;
-      padding: clamp(20px, 3vw, 32px);
+      padding: clamp(18px, 2.4vw, 26px);
       background:
         linear-gradient(135deg, rgba(35, 70, 56, 0.98), rgba(28, 55, 46, 0.96)),
         radial-gradient(circle at 92% 8%, rgba(217, 154, 61, 0.24), transparent 34%);
       color: #fff7df;
-      box-shadow: 0 20px 44px rgba(35, 70, 56, 0.28);
+      box-shadow: 0 16px 34px rgba(35, 70, 56, 0.22);
     }
 
     .lesson-main-takeaway::before {
@@ -807,13 +807,13 @@ const richLessonStepHtml = (
 
     .lesson-main-takeaway strong {
       display: inline-block;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       border: 1px solid rgba(244, 223, 173, 0.46);
       border-radius: 999px;
       padding: 6px 11px;
       background: rgba(255, 247, 223, 0.12);
       color: #f4dfad;
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       font-weight: 900;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -823,9 +823,9 @@ const richLessonStepHtml = (
       position: relative;
       margin: 0;
       color: #fff7df;
-      font-size: clamp(1.02rem, 1.8vw, 1.25rem);
-      font-weight: 700;
-      line-height: 1.62;
+      font-size: clamp(0.95rem, 1.15vw, 1.05rem);
+      font-weight: 500;
+      line-height: 1.58;
       text-align: justify;
       text-justify: inter-word;
     }
