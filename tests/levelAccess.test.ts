@@ -112,7 +112,7 @@ describe("level access", () => {
       "Step 1: Tale of Two Cities",
       "Step 2: The City: Economic Engine",
       "Step 3: The City Is Not a Neutral Economic Unit",
-      "Step 4: Business Application",
+      "Step 4: The Trajectory of the City",
       "Step 5: Wix Resource Link",
       "Step 6: Reflection Checkpoint",
     ]);
@@ -244,6 +244,27 @@ describe("level access", () => {
     );
     expect(neutralStep?.body).toContain("Complete moral budget step");
     expect(neutralStep?.body).not.toContain("<script>");
+
+    const timelineStep = competingParadigms?.content[3];
+    const timelineBody = timelineStep?.body ?? "";
+    expect(timelineStep?.kind).toBe("customHtml");
+    expect(timelineBody).toContain("Interactive timeline");
+    expect(timelineBody).toContain("The Trajectory of the City");
+    expect(timelineBody).toContain("7638b6_3c725c9d31f74d438d5c8f5f77b5c2f5");
+    expect(timelineBody.match(/class="trajectory-hotspot trajectory-point-/g)).toHaveLength(7);
+    expect(timelineBody.match(/data-rich-dialog hidden/g)).toHaveLength(7);
+    expect(timelineBody).toContain("7638b6_9b3d754226284d84a5ef13072ed390bf");
+    expect(timelineBody).toContain("7638b6_b8c7fe9434324c149d30f6f0808635d8");
+    expect(timelineBody).toContain("7638b6_fb077df9d0ef479c9dad04dbaab24801");
+    expect(timelineBody).toContain("7638b6_c5eced9d51024b30a082fa95aecaa072");
+    expect(timelineBody).toContain("7638b6_7138836788404b1e8d0a7845c67d0f13");
+    expect(timelineBody).toContain("7638b6_746226c4458c4ba0a84f471a91f7ab8e");
+    expect(timelineBody).toContain("7638b6_e8310d3aaeaa4399b3b21b99205ea496");
+    expect(timelineBody).toContain("7638b6_42d34737fe6a4bdb926e486578aed5f2");
+    expect(timelineBody.match(/7638b6_17b750fcfbe94417b4b05d76a3be35d9/g)).toHaveLength(1);
+    expect(timelineBody).toContain("7638b6_f53711fae80b4e62812d52830282d31d");
+    expect(timelineBody).toContain("Complete trajectory timeline");
+    expect(timelineBody).not.toContain("<script>");
     expect(activities.filter((activity) => activity.lessonId === competingParadigms?.id)).toHaveLength(0);
   });
 

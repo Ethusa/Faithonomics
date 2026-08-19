@@ -3975,6 +3975,326 @@ const createCityNotNeutralEconomicUnitStep = (lessonId: string): Lesson["content
   };
 };
 
+const createCityTrajectoryTimelineStep = (lessonId: string): Lesson["content"][number] => ({
+  id: `${lessonId}-city-trajectory-timeline`,
+  kind: "customHtml",
+  title: "Step 4: The Trajectory of the City",
+  body: richLessonStepHtml(`
+    <style>
+      .trajectory-page {
+        display: grid;
+        gap: clamp(16px, 2.6vw, 24px);
+      }
+
+      .trajectory-header h2,
+      .trajectory-header p {
+        margin: 0;
+      }
+
+      .trajectory-header h2 {
+        color: var(--forest);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(1.7rem, 4vw, 2.8rem);
+        line-height: 1.08;
+      }
+
+      .trajectory-stage {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        margin: 0;
+        overflow: hidden;
+        border: 1px solid rgba(91, 58, 36, 0.18);
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 18px 38px rgba(91, 58, 36, 0.14);
+      }
+
+      .trajectory-stage > img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .trajectory-hotspot {
+        position: absolute;
+        top: 69.7%;
+        width: clamp(34px, 5vw, 52px);
+        aspect-ratio: 1;
+        display: grid;
+        place-items: center;
+        border: 3px solid #fff;
+        border-radius: 50%;
+        padding: 0;
+        background: rgba(35, 70, 56, 0.94);
+        color: #f4dfad;
+        font: inherit;
+        font-size: clamp(0.9rem, 2vw, 1.2rem);
+        font-weight: 850;
+        line-height: 1;
+        cursor: pointer;
+        box-shadow: 0 6px 14px rgba(23, 19, 15, 0.3);
+        transform: translate(-50%, -50%);
+        transition:
+          background 160ms ease,
+          transform 160ms ease,
+          box-shadow 160ms ease;
+      }
+
+      .trajectory-hotspot:hover,
+      .trajectory-hotspot:focus-visible {
+        background: #1d3a2f;
+        box-shadow: 0 8px 18px rgba(23, 19, 15, 0.4);
+        outline: 3px solid rgba(185, 146, 69, 0.72);
+        outline-offset: 3px;
+        transform: translate(-50%, -50%) scale(1.08);
+      }
+
+      .trajectory-point-1 { left: 9.6%; }
+      .trajectory-point-2 { left: 24.1%; }
+      .trajectory-point-3 { left: 38%; }
+      .trajectory-point-4 { left: 51.4%; }
+      .trajectory-point-5 { left: 65.3%; }
+      .trajectory-point-6 { left: 79.4%; }
+      .trajectory-point-7 { left: 93.1%; }
+
+      .trajectory-popup[hidden] {
+        display: none;
+      }
+
+      .trajectory-popup.is-open {
+        position: fixed;
+        inset: 0;
+        z-index: 10000;
+        display: grid;
+        place-items: center;
+        overflow: auto;
+        padding: clamp(12px, 3vw, 30px);
+        background: rgba(23, 19, 15, 0.84);
+        backdrop-filter: blur(5px);
+      }
+
+      .trajectory-popup-backdrop {
+        position: absolute;
+        inset: 0;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .trajectory-popup-panel {
+        position: relative;
+        z-index: 1;
+        width: min(1120px, calc(100vw - 24px));
+        max-height: min(92vh, 860px);
+        overflow: auto;
+        border: 2px solid rgba(185, 146, 69, 0.62);
+        border-radius: 8px;
+        padding: clamp(14px, 2.4vw, 24px);
+        background: #f7f3e8;
+        box-shadow: 0 34px 90px rgba(0, 0, 0, 0.52);
+      }
+
+      .trajectory-popup-head {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 14px;
+      }
+
+      .trajectory-popup-head h3 {
+        margin: 0;
+        color: var(--forest);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(1.25rem, 3vw, 2rem);
+      }
+
+      .trajectory-close {
+        flex: 0 0 auto;
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(91, 58, 36, 0.22);
+        border-radius: 50%;
+        padding: 0;
+        background: var(--forest);
+        color: var(--paper);
+        font: inherit;
+        font-size: 1.5rem;
+        line-height: 1;
+        cursor: pointer;
+      }
+
+      .trajectory-close:hover,
+      .trajectory-close:focus-visible {
+        background: #1d3a2f;
+        outline: 3px solid rgba(185, 146, 69, 0.58);
+        outline-offset: 2px;
+      }
+
+      .trajectory-popup-images {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: clamp(12px, 2vw, 20px);
+        align-items: center;
+      }
+
+      .trajectory-popup-images.single {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .trajectory-popup-images figure {
+        margin: 0;
+        background: transparent;
+      }
+
+      .trajectory-popup-images img {
+        display: block;
+        width: 100%;
+        height: auto;
+        max-height: 72vh;
+        object-fit: contain;
+        border-radius: 6px;
+      }
+
+      @media (max-width: 640px) {
+        .trajectory-hotspot {
+          width: 32px;
+          border-width: 2px;
+          font-size: 0.86rem;
+        }
+
+        .trajectory-popup-images {
+          grid-template-columns: 1fr;
+        }
+
+        .trajectory-popup-panel {
+          width: calc(100vw - 16px);
+          padding: 10px;
+        }
+      }
+    </style>
+
+    <section class="trajectory-page">
+      <header class="trajectory-header">
+        <p class="eyebrow">Interactive timeline</p>
+        <h2>The Trajectory of the City</h2>
+      </header>
+
+      <figure class="trajectory-stage">
+        <img
+          src="https://static.wixstatic.com/media/7638b6_3c725c9d31f74d438d5c8f5f77b5c2f5~mv2.png"
+          alt="The trajectory of the city that excludes God, from the Fall through Cain, Enoch, Lamech, Babel and Babylon to total collapse."
+        />
+        <button class="trajectory-hotspot trajectory-point-1" type="button" aria-label="Open point 1: The Fall" data-rich-dialog-open="#${lessonId}-trajectory-popup-1">1</button>
+        <button class="trajectory-hotspot trajectory-point-2" type="button" aria-label="Open point 2: Cain" data-rich-dialog-open="#${lessonId}-trajectory-popup-2">2</button>
+        <button class="trajectory-hotspot trajectory-point-3" type="button" aria-label="Open point 3: Enoch" data-rich-dialog-open="#${lessonId}-trajectory-popup-3">3</button>
+        <button class="trajectory-hotspot trajectory-point-4" type="button" aria-label="Open point 4: Lamech" data-rich-dialog-open="#${lessonId}-trajectory-popup-4">4</button>
+        <button class="trajectory-hotspot trajectory-point-5" type="button" aria-label="Open point 5: Babel" data-rich-dialog-open="#${lessonId}-trajectory-popup-5">5</button>
+        <button class="trajectory-hotspot trajectory-point-6" type="button" aria-label="Open point 6: Babylon" data-rich-dialog-open="#${lessonId}-trajectory-popup-6">6</button>
+        <button class="trajectory-hotspot trajectory-point-7" type="button" aria-label="Open point 7: Total collapse" data-rich-dialog-open="#${lessonId}-trajectory-popup-7">7</button>
+      </figure>
+
+      <section class="trajectory-popup" id="${lessonId}-trajectory-popup-1" role="dialog" aria-modal="true" aria-labelledby="${lessonId}-trajectory-title-1" data-rich-dialog hidden>
+        <button class="trajectory-popup-backdrop" type="button" aria-label="Close point 1 popup" data-rich-dialog-close></button>
+        <div class="trajectory-popup-panel">
+          <header class="trajectory-popup-head">
+            <h3 id="${lessonId}-trajectory-title-1">Point 1: The Fall</h3>
+            <button class="trajectory-close" type="button" aria-label="Close point 1 popup" data-rich-dialog-close>&times;</button>
+          </header>
+          <div class="trajectory-popup-images single">
+            <figure><img src="https://static.wixstatic.com/media/7638b6_9b3d754226284d84a5ef13072ed390bf~mv2.png" alt="Point 1 teaching visual: The Fall." /></figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="trajectory-popup" id="${lessonId}-trajectory-popup-2" role="dialog" aria-modal="true" aria-labelledby="${lessonId}-trajectory-title-2" data-rich-dialog hidden>
+        <button class="trajectory-popup-backdrop" type="button" aria-label="Close point 2 popup" data-rich-dialog-close></button>
+        <div class="trajectory-popup-panel">
+          <header class="trajectory-popup-head">
+            <h3 id="${lessonId}-trajectory-title-2">Point 2: Cain</h3>
+            <button class="trajectory-close" type="button" aria-label="Close point 2 popup" data-rich-dialog-close>&times;</button>
+          </header>
+          <div class="trajectory-popup-images">
+            <figure><img src="https://static.wixstatic.com/media/7638b6_b8c7fe9434324c149d30f6f0808635d8~mv2.png" alt="Point 2 teaching visual about Cain, image 1." /></figure>
+            <figure><img src="https://static.wixstatic.com/media/7638b6_fb077df9d0ef479c9dad04dbaab24801~mv2.png" alt="Point 2 teaching visual about Cain, image 2." /></figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="trajectory-popup" id="${lessonId}-trajectory-popup-3" role="dialog" aria-modal="true" aria-labelledby="${lessonId}-trajectory-title-3" data-rich-dialog hidden>
+        <button class="trajectory-popup-backdrop" type="button" aria-label="Close point 3 popup" data-rich-dialog-close></button>
+        <div class="trajectory-popup-panel">
+          <header class="trajectory-popup-head">
+            <h3 id="${lessonId}-trajectory-title-3">Point 3: Enoch</h3>
+            <button class="trajectory-close" type="button" aria-label="Close point 3 popup" data-rich-dialog-close>&times;</button>
+          </header>
+          <div class="trajectory-popup-images single">
+            <figure><img src="https://static.wixstatic.com/media/7638b6_c5eced9d51024b30a082fa95aecaa072~mv2.png" alt="Point 3 teaching visual about Enoch." /></figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="trajectory-popup" id="${lessonId}-trajectory-popup-4" role="dialog" aria-modal="true" aria-labelledby="${lessonId}-trajectory-title-4" data-rich-dialog hidden>
+        <button class="trajectory-popup-backdrop" type="button" aria-label="Close point 4 popup" data-rich-dialog-close></button>
+        <div class="trajectory-popup-panel">
+          <header class="trajectory-popup-head">
+            <h3 id="${lessonId}-trajectory-title-4">Point 4: Lamech</h3>
+            <button class="trajectory-close" type="button" aria-label="Close point 4 popup" data-rich-dialog-close>&times;</button>
+          </header>
+          <div class="trajectory-popup-images">
+            <figure><img src="https://static.wixstatic.com/media/7638b6_7138836788404b1e8d0a7845c67d0f13~mv2.png" alt="Point 4 teaching visual about Lamech, image 1." /></figure>
+            <figure><img src="https://static.wixstatic.com/media/7638b6_746226c4458c4ba0a84f471a91f7ab8e~mv2.png" alt="Point 4 teaching visual about Lamech, image 2." /></figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="trajectory-popup" id="${lessonId}-trajectory-popup-5" role="dialog" aria-modal="true" aria-labelledby="${lessonId}-trajectory-title-5" data-rich-dialog hidden>
+        <button class="trajectory-popup-backdrop" type="button" aria-label="Close point 5 popup" data-rich-dialog-close></button>
+        <div class="trajectory-popup-panel">
+          <header class="trajectory-popup-head">
+            <h3 id="${lessonId}-trajectory-title-5">Point 5: Babel</h3>
+            <button class="trajectory-close" type="button" aria-label="Close point 5 popup" data-rich-dialog-close>&times;</button>
+          </header>
+          <div class="trajectory-popup-images single">
+            <figure><img src="https://static.wixstatic.com/media/7638b6_e8310d3aaeaa4399b3b21b99205ea496~mv2.png" alt="Point 5 teaching visual about Babel." /></figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="trajectory-popup" id="${lessonId}-trajectory-popup-6" role="dialog" aria-modal="true" aria-labelledby="${lessonId}-trajectory-title-6" data-rich-dialog hidden>
+        <button class="trajectory-popup-backdrop" type="button" aria-label="Close point 6 popup" data-rich-dialog-close></button>
+        <div class="trajectory-popup-panel">
+          <header class="trajectory-popup-head">
+            <h3 id="${lessonId}-trajectory-title-6">Point 6: Babylon</h3>
+            <button class="trajectory-close" type="button" aria-label="Close point 6 popup" data-rich-dialog-close>&times;</button>
+          </header>
+          <div class="trajectory-popup-images">
+            <figure><img src="https://static.wixstatic.com/media/7638b6_42d34737fe6a4bdb926e486578aed5f2~mv2.png" alt="Point 6 teaching visual about Babylon, image 1." /></figure>
+            <figure><img src="https://static.wixstatic.com/media/7638b6_17b750fcfbe94417b4b05d76a3be35d9~mv2.png" alt="Point 6 teaching visual about Babylon, image 2." /></figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="trajectory-popup" id="${lessonId}-trajectory-popup-7" role="dialog" aria-modal="true" aria-labelledby="${lessonId}-trajectory-title-7" data-rich-dialog hidden>
+        <button class="trajectory-popup-backdrop" type="button" aria-label="Close point 7 popup" data-rich-dialog-close></button>
+        <div class="trajectory-popup-panel">
+          <header class="trajectory-popup-head">
+            <h3 id="${lessonId}-trajectory-title-7">Point 7: Total Collapse</h3>
+            <button class="trajectory-close" type="button" aria-label="Close point 7 popup" data-rich-dialog-close>&times;</button>
+          </header>
+          <div class="trajectory-popup-images single">
+            <figure><img src="https://static.wixstatic.com/media/7638b6_f53711fae80b4e62812d52830282d31d~mv2.png" alt="Point 7 teaching visual: total collapse." /></figure>
+          </div>
+        </div>
+      </section>
+    </section>
+  `, { completeButtonLabel: "Complete trajectory timeline" }),
+});
+
 export const lessons: Lesson[] = curriculum.flatMap((level, levelIndex) =>
   level.sessions.map((sessionTitle, sessionIndex) => {
     const levelNumber = levelIndex + 1;
@@ -4056,9 +4376,9 @@ export const lessons: Lesson[] = curriculum.flatMap((level, levelIndex) =>
       };
       content[1] = createCityEconomicEngineStep(id);
       content.splice(2, 0, createCityNotNeutralEconomicUnitStep(id));
-      const businessApplicationStep = content.find((block) => block.id === `${id}-session-application`);
-      if (businessApplicationStep) {
-        businessApplicationStep.title = "Step 4: Business Application";
+      const businessApplicationIndex = content.findIndex((block) => block.id === `${id}-session-application`);
+      if (businessApplicationIndex !== -1) {
+        content[businessApplicationIndex] = createCityTrajectoryTimelineStep(id);
       }
       content.splice(4, 0, {
         id: `${id}-resource-link`,
