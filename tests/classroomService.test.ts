@@ -33,7 +33,12 @@ describe("ClassroomService completion gates", () => {
     const service = new ClassroomService(createMockRepository());
     const lesson = lessons.find((item) => item.id === "level-1-session-2-competing-paradigms");
     expect(lesson).toBeDefined();
-    expect(activities.filter((activity) => activity.lessonId === lesson!.id)).toHaveLength(0);
+    const lessonActivities = activities.filter((activity) => activity.lessonId === lesson!.id);
+    expect(lessonActivities).toHaveLength(1);
+    expect(lessonActivities[0]).toMatchObject({
+      id: "activity-living-between-two-cities-discussion",
+      required: true,
+    });
 
     const progressInput = {
       id: "progress-service-gate",
@@ -58,6 +63,19 @@ describe("ClassroomService completion gates", () => {
         maxScore: 1,
       });
     }
+
+    await expect(service.saveLessonProgress(identities.learner, progressInput)).rejects.toThrow(
+      /required lesson steps and activities/i,
+    );
+
+    await service.saveActivityCompletion(identities.learner, {
+      activityId: lessonActivities[0]!.id,
+      lessonId: lesson!.id,
+      completed: true,
+      score: 5,
+      maxScore: 5,
+    });
+
     await expect(service.saveLessonProgress(identities.learner, progressInput)).resolves.toMatchObject({
       lessonId: lesson!.id,
       status: "completed",

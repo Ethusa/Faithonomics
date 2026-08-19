@@ -114,7 +114,8 @@ describe("level access", () => {
       "Step 3: The City Is Not a Neutral Economic Unit",
       "Step 4: The Trajectory of the City",
       "Step 5: The Trajectory of the City with God at the Centre",
-      "Step 6: Reflection Checkpoint",
+      "Step 6: Living Between Two Cities Discussion",
+      "Step 7: Reflection Checkpoint",
     ]);
 
     const cityStep = competingParadigms?.content[1];
@@ -296,7 +297,35 @@ describe("level access", () => {
     expect(kingdomTimelineBody).toContain("7638b6_a04f8ce1bddc41a797f6298a82d30dfd");
     expect(kingdomTimelineBody).toContain("Complete kingdom trajectory timeline");
     expect(kingdomTimelineBody).not.toContain("<script>");
-    expect(activities.filter((activity) => activity.lessonId === competingParadigms?.id)).toHaveLength(0);
+
+    const discussionStep = competingParadigms?.content[5];
+    const discussionBody = discussionStep?.body ?? "";
+    expect(discussionStep?.kind).toBe("customHtml");
+    expect(discussionBody).toContain("How Do We Live Between the Reality of Two Cities?");
+    expect(discussionBody).toContain("Recognise the City of Man");
+    expect(discussionBody).toContain("Notice signs of the City of God");
+    expect(discussionBody).toContain("Live faithfully between the two cities");
+    expect(discussionBody).toContain("one concrete economic choice");
+    expect(discussionBody).not.toContain("data-classroom-complete");
+
+    const twoCitiesForum = activities.find(
+      (activity) => activity.id === "activity-living-between-two-cities-discussion",
+    );
+    expect(twoCitiesForum).toMatchObject({
+      lessonId: competingParadigms?.id,
+      contentStepId: discussionStep?.id,
+      kind: "discussion",
+      required: true,
+      completionMode: "postAndReply",
+      replyRequirement: 2,
+    });
+    expect(twoCitiesForum?.instructions).toContain("City of Man");
+    expect(twoCitiesForum?.instructions).toContain("City of God");
+    expect(twoCitiesForum?.instructions).toContain("two course participants");
+    const twoCitiesPosts = discussionPosts.filter((post) => post.activityId === twoCitiesForum?.id);
+    expect(twoCitiesPosts).toHaveLength(3);
+    expect(twoCitiesPosts.map((post) => post.body).join(" ")).toMatch(/faithful presence/i);
+    expect(activities.filter((activity) => activity.lessonId === competingParadigms?.id)).toHaveLength(1);
   });
 
   it("keeps the Moral Budget city audit quiz connected and intact", () => {

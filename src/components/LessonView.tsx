@@ -61,8 +61,8 @@ const isWixMediaReference = (url: string | undefined): boolean => url?.startsWit
 const isHttpUrl = (url: string | undefined): url is string => /^https?:\/\//i.test(url ?? "");
 
 const youTubeEmbedOrigin = "https://www.youtube-nocookie.com";
-const fourPillarsForumButtonImage = `${import.meta.env.BASE_URL}assets/discussion-forum-button-clean.png`;
-const fourPillarsForumImage = `${import.meta.env.BASE_URL}assets/discussion-forum-header-clean.png`;
+const discussionForumButtonImage = `${import.meta.env.BASE_URL}assets/discussion-forum-button-clean.png`;
+const discussionForumImage = `${import.meta.env.BASE_URL}assets/discussion-forum-header-clean.png`;
 
 const getYouTubeVideoId = (url: string | undefined): string | null => {
   if (!url) {
@@ -2356,9 +2356,9 @@ export const LessonView = ({
               className="discussion-image-button"
               type="button"
               onClick={() => setOpenLinkedActivityId(linkedActivity.id)}
-              aria-label="Open the Step 4 discussion forum"
+              aria-label={`Open ${content.title} forum`}
             >
-              <img src={fourPillarsForumButtonImage} alt="" />
+              <img src={discussionForumButtonImage} alt="" />
               <span>Open discussion forum</span>
             </button>
             <div className="discussion-step-actions">
@@ -2395,7 +2395,7 @@ export const LessonView = ({
                   <X size={18} />
                   Close
                 </button>
-                <img className="discussion-popup-hero" src={fourPillarsForumImage} alt="" />
+                <img className="discussion-popup-hero" src={discussionForumImage} alt="" />
                 <ActivityPanel
                   activity={linkedActivity}
                   courseId={course.id}

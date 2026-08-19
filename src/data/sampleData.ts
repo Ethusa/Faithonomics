@@ -4841,6 +4841,143 @@ const createKingdomTrajectoryTimelineStep = (lessonId: string): Lesson["content"
   };
 };
 
+const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][number] => ({
+  id: `${lessonId}-living-between-two-cities-discussion`,
+  kind: "customHtml",
+  title: "Step 6: Living Between Two Cities Discussion",
+  body: richLessonStepHtml(`
+    <style>
+      .two-cities-discussion {
+        display: grid;
+        gap: clamp(18px, 3vw, 28px);
+      }
+
+      .two-cities-discussion header h2,
+      .two-cities-discussion header p {
+        margin: 0;
+      }
+
+      .two-cities-discussion header {
+        display: grid;
+        gap: 10px;
+      }
+
+      .two-cities-discussion .intro {
+        margin: 0;
+      }
+
+      .two-cities-questions {
+        display: grid;
+        gap: 0;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        border-top: 1px solid rgba(91, 58, 36, 0.2);
+      }
+
+      .two-cities-questions li {
+        display: grid;
+        grid-template-columns: 42px minmax(0, 1fr);
+        gap: 14px;
+        align-items: start;
+        padding: 18px 0;
+        border-bottom: 1px solid rgba(91, 58, 36, 0.2);
+      }
+
+      .two-cities-question-number {
+        width: 38px;
+        height: 38px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--forest);
+        color: var(--paper);
+        font-weight: 800;
+        line-height: 1;
+      }
+
+      .two-cities-questions strong {
+        display: block;
+        margin-bottom: 5px;
+        color: var(--forest);
+        font-size: 1.04rem;
+      }
+
+      .two-cities-questions p {
+        margin: 0;
+      }
+
+      .two-cities-practice {
+        border-left: 5px solid var(--gold);
+        padding: 14px 0 14px 18px;
+      }
+
+      .two-cities-practice strong {
+        display: block;
+        margin-bottom: 5px;
+        color: var(--forest);
+      }
+
+      .two-cities-practice p {
+        margin: 0;
+      }
+
+      @media (max-width: 520px) {
+        .two-cities-questions li {
+          grid-template-columns: 34px minmax(0, 1fr);
+          gap: 10px;
+        }
+
+        .two-cities-question-number {
+          width: 32px;
+          height: 32px;
+        }
+      }
+    </style>
+
+    <section class="two-cities-discussion">
+      <header>
+        <p class="eyebrow">Two cities reflection</p>
+        <h2>How Do We Live Between the Reality of Two Cities?</h2>
+        <p class="intro">
+          We live in the tension between the City of Man, shaped by self-love, scarcity, status and control, and the
+          City of God, shaped by love of God and neighbour, gift, justice, stewardship and healing. Reflect on how
+          both trajectories appear in ordinary economic life and how faithful presence can point toward the New Jerusalem.
+        </p>
+      </header>
+
+      <ol class="two-cities-questions" aria-label="Two cities discussion questions">
+        <li>
+          <span class="two-cities-question-number" aria-hidden="true">1</span>
+          <div>
+            <strong>Recognise the City of Man</strong>
+            <p>Where do you see scarcity, fear, status, domination or exploitation shaping work, business, consumption or city life?</p>
+          </div>
+        </li>
+        <li>
+          <span class="two-cities-question-number" aria-hidden="true">2</span>
+          <div>
+            <strong>Notice signs of the City of God</strong>
+            <p>Where do you already see generosity, stewardship, justice, worship, healing or shared flourishing breaking into economic life?</p>
+          </div>
+        </li>
+        <li>
+          <span class="two-cities-question-number" aria-hidden="true">3</span>
+          <div>
+            <strong>Live faithfully between the two cities</strong>
+            <p>How can we resist the City of Man without withdrawing from our workplaces, markets and communities while we await the New Jerusalem?</p>
+          </div>
+        </li>
+      </ol>
+
+      <section class="two-cities-practice" aria-label="Practical response">
+        <strong>Practical response</strong>
+        <p>End your forum post with one concrete economic choice you will practise this week as a sign of faithful presence.</p>
+      </section>
+    </section>
+  `, { includeCompleteButton: false }),
+});
+
 export const lessons: Lesson[] = curriculum.flatMap((level, levelIndex) =>
   level.sessions.map((sessionTitle, sessionIndex) => {
     const levelNumber = levelIndex + 1;
@@ -4927,6 +5064,7 @@ export const lessons: Lesson[] = curriculum.flatMap((level, levelIndex) =>
         content[businessApplicationIndex] = createCityTrajectoryTimelineStep(id);
       }
       content.splice(4, 0, createKingdomTrajectoryTimelineStep(id));
+      content.splice(5, 0, createTwoCitiesDiscussionStep(id));
     }
 
     if (levelNumber === 1 && sessionNumber === 3) {
@@ -4971,6 +5109,19 @@ export const activities: Activity[] = [
     title: "Four pillars discussion forum",
     instructions:
       "Choose one pillar: property, relationships, work, or consumption. Post one everyday example that shows how this pillar influences choices. Then reply to two course participants' posts with a thoughtful question, connection, or practical suggestion.",
+    required: true,
+    maxScore: 5,
+    completionMode: "postAndReply",
+    replyRequirement: 2,
+  },
+  {
+    id: "activity-living-between-two-cities-discussion",
+    lessonId: "level-1-session-2-competing-paradigms",
+    contentStepId: "level-1-session-2-competing-paradigms-living-between-two-cities-discussion",
+    kind: "discussion",
+    title: "Living Between Two Cities discussion forum",
+    instructions:
+      "Drawing on the two city trajectories, write one post that identifies a City of Man pattern in everyday economic life, recognises a sign of the City of God, and reflects on how we live faithfully between these two realities while awaiting the New Jerusalem. End with one concrete economic practice for this week. Then reply thoughtfully to two course participants.",
     required: true,
     maxScore: 5,
     completionMode: "postAndReply",
@@ -5176,6 +5327,33 @@ export const discussionPosts: DiscussionPost[] = [
     body:
       "I chose consumption. Every purchase trains my habits. Sometimes I buy because I need something, but sometimes I buy because I feel pressure to look successful. This pillar helps me think about whether my choices serve a good purpose.",
     createdAt: "2026-06-22T08:26:00.000Z",
+  },
+  {
+    id: "post-two-cities-001",
+    activityId: "activity-living-between-two-cities-discussion",
+    memberId: "member-learner-002",
+    authorName: "Thabo Mokoena",
+    body:
+      "I see the City of Man in workplace cultures where status and constant availability become measures of human worth. I also see the City of God when colleagues share knowledge and protect one another from burnout. Living between the two means staying present while refusing to treat productivity as identity. This week I will protect one honest rest boundary and help a colleague finish a difficult task.",
+    createdAt: "2026-06-22T08:34:00.000Z",
+  },
+  {
+    id: "post-two-cities-002",
+    activityId: "activity-living-between-two-cities-discussion",
+    memberId: "member-learner-003",
+    authorName: "Lerato Dlamini",
+    body:
+      "Our city often reflects scarcity by giving safe transport and good services mainly to people who can pay more. Yet community food gardens and shared childcare show another economy based on gift and neighbour-love. Faithful presence means working for better systems without pretending we can build the New Jerusalem ourselves. I will support one local initiative that restores dignity rather than only offering temporary relief.",
+    createdAt: "2026-06-22T08:38:00.000Z",
+  },
+  {
+    id: "post-two-cities-003",
+    activityId: "activity-living-between-two-cities-discussion",
+    memberId: "member-learner-004",
+    authorName: "Johan van der Merwe",
+    body:
+      "The City of Man appears when a business treats customers, workers and suppliers only as costs or revenue. Signs of the City of God appear when profit supports excellent work, fair relationships and service. We live between the cities by reforming ordinary institutions instead of escaping them or idolising them. This week I will review one supplier decision for fairness as well as price.",
+    createdAt: "2026-06-22T08:43:00.000Z",
   },
   {
     id: "post-monday-practice-001",
