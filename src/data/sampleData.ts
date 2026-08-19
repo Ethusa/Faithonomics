@@ -4020,22 +4020,19 @@ const createCityTrajectoryTimelineStep = (lessonId: string): Lesson["content"][n
 
       .trajectory-hotspot {
         position: absolute;
-        top: 69.7%;
-        width: clamp(34px, 5vw, 52px);
+        top: 88.2%;
+        width: clamp(32px, 4.4vw, 48px);
         aspect-ratio: 1;
         display: grid;
         place-items: center;
-        border: 3px solid #fff;
+        border: 0;
         border-radius: 50%;
         padding: 0;
-        background: rgba(35, 70, 56, 0.94);
-        color: #f4dfad;
-        font: inherit;
-        font-size: clamp(0.9rem, 2vw, 1.2rem);
-        font-weight: 850;
-        line-height: 1;
+        background: transparent;
+        color: transparent;
+        font-size: 0;
         cursor: pointer;
-        box-shadow: 0 6px 14px rgba(23, 19, 15, 0.3);
+        box-shadow: none;
         transform: translate(-50%, -50%);
         transition:
           background 160ms ease,
@@ -4045,10 +4042,10 @@ const createCityTrajectoryTimelineStep = (lessonId: string): Lesson["content"][n
 
       .trajectory-hotspot:hover,
       .trajectory-hotspot:focus-visible {
-        background: #1d3a2f;
-        box-shadow: 0 8px 18px rgba(23, 19, 15, 0.4);
+        background: rgba(185, 146, 69, 0.18);
+        box-shadow: 0 0 0 4px rgba(247, 243, 232, 0.72);
         outline: 3px solid rgba(185, 146, 69, 0.72);
-        outline-offset: 3px;
+        outline-offset: 1px;
         transform: translate(-50%, -50%) scale(1.08);
       }
 
@@ -4261,8 +4258,6 @@ const createCityTrajectoryTimelineStep = (lessonId: string): Lesson["content"][n
       @media (max-width: 640px) {
         .trajectory-hotspot {
           width: 32px;
-          border-width: 2px;
-          font-size: 0.86rem;
         }
 
         .trajectory-popup-images {
@@ -4287,13 +4282,13 @@ const createCityTrajectoryTimelineStep = (lessonId: string): Lesson["content"][n
           src="https://static.wixstatic.com/media/7638b6_3c725c9d31f74d438d5c8f5f77b5c2f5~mv2.png"
           alt="The trajectory of the city that excludes God, from the Fall through Cain, Enoch, Lamech, Babel and Babylon to total collapse."
         />
-        <button class="trajectory-hotspot trajectory-point-1" type="button" aria-label="Open point 1: The Fall" data-rich-dialog-open="#${lessonId}-trajectory-popup-1">1</button>
-        <button class="trajectory-hotspot trajectory-point-2" type="button" aria-label="Open point 2: Cain" data-rich-dialog-open="#${lessonId}-trajectory-popup-2">2</button>
-        <button class="trajectory-hotspot trajectory-point-3" type="button" aria-label="Open point 3: Enoch" data-rich-dialog-open="#${lessonId}-trajectory-popup-3">3</button>
-        <button class="trajectory-hotspot trajectory-point-4" type="button" aria-label="Open point 4: Lamech" data-rich-dialog-open="#${lessonId}-trajectory-popup-4">4</button>
-        <button class="trajectory-hotspot trajectory-point-5" type="button" aria-label="Open point 5: Babel" data-rich-dialog-open="#${lessonId}-trajectory-popup-5">5</button>
-        <button class="trajectory-hotspot trajectory-point-6" type="button" aria-label="Open point 6: Babylon" data-rich-dialog-open="#${lessonId}-trajectory-popup-6">6</button>
-        <button class="trajectory-hotspot trajectory-point-7" type="button" aria-label="Open point 7: Total collapse" data-rich-dialog-open="#${lessonId}-trajectory-popup-7">7</button>
+        <button class="trajectory-hotspot trajectory-point-1" type="button" aria-label="Open point 1 image: The Fall" data-rich-dialog-open="#${lessonId}-trajectory-popup-1"></button>
+        <button class="trajectory-hotspot trajectory-point-2" type="button" aria-label="Open point 2 images: Cain" data-rich-dialog-open="#${lessonId}-trajectory-popup-2"></button>
+        <button class="trajectory-hotspot trajectory-point-3" type="button" aria-label="Open point 3 image: Enoch" data-rich-dialog-open="#${lessonId}-trajectory-popup-3"></button>
+        <button class="trajectory-hotspot trajectory-point-4" type="button" aria-label="Open point 4 images: Lamech" data-rich-dialog-open="#${lessonId}-trajectory-popup-4"></button>
+        <button class="trajectory-hotspot trajectory-point-5" type="button" aria-label="Open point 5 image: Babel" data-rich-dialog-open="#${lessonId}-trajectory-popup-5"></button>
+        <button class="trajectory-hotspot trajectory-point-6" type="button" aria-label="Open point 6 images: Babylon" data-rich-dialog-open="#${lessonId}-trajectory-popup-6"></button>
+        <button class="trajectory-hotspot trajectory-point-7" type="button" aria-label="Open point 7 image: Total collapse" data-rich-dialog-open="#${lessonId}-trajectory-popup-7"></button>
       </figure>
 
       <section class="trajectory-popup" id="${lessonId}-trajectory-popup-1" role="dialog" aria-modal="true" aria-labelledby="${lessonId}-trajectory-title-1" data-rich-dialog hidden>

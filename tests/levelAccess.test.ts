@@ -252,6 +252,9 @@ describe("level access", () => {
     expect(timelineBody).toContain("The Trajectory of the City");
     expect(timelineBody).toContain("7638b6_3c725c9d31f74d438d5c8f5f77b5c2f5");
     expect(timelineBody.match(/class="trajectory-hotspot trajectory-point-/g)).toHaveLength(7);
+    expect(timelineBody.match(/class="trajectory-hotspot trajectory-point-[1-7]"[^>]*><\/button>/g)).toHaveLength(7);
+    expect(timelineBody).toContain("top: 88.2%");
+    expect(timelineBody).toContain("font-size: 0");
     expect(timelineBody.match(/data-rich-dialog hidden/g)).toHaveLength(7);
     expect(timelineBody).toContain("7638b6_9b3d754226284d84a5ef13072ed390bf");
     expect(timelineBody).toContain("7638b6_b8c7fe9434324c149d30f6f0808635d8");
