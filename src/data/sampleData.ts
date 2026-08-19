@@ -4430,6 +4430,417 @@ const createCityTrajectoryTimelineStep = (lessonId: string): Lesson["content"][n
   `, { completeButtonLabel: "Complete trajectory timeline" }),
 });
 
+const kingdomTrajectoryPoints = [
+  {
+    number: 1,
+    label: "The Garden",
+    images: [
+      {
+        url: "https://static.wixstatic.com/media/7638b6_3232598d947547769b19edd2f2963e0e~mv2.png",
+        alt: "The Garden: an economy of gift, abundance, stewardship and divine generosity.",
+      },
+      {
+        url: "https://static.wixstatic.com/media/7638b6_29e376cb2414463d8ddd637d76bb56f4~mv2.png",
+        alt: "The Garden economy expressed through abundance as gift, work as stewardship and limits as freedom.",
+      },
+    ],
+  },
+  {
+    number: 2,
+    label: "Jerusalem",
+    images: [
+      {
+        url: "https://static.wixstatic.com/media/7638b6_ffdea86f0e1e40b5b19202f684ad4aa9~mv2.png",
+        alt: "Jerusalem as the earthly shadow centred on worship, justice and covenant.",
+      },
+      {
+        url: "https://static.wixstatic.com/media/7638b6_994b99b252df4e17aa830f35dfb03796~mv2.png",
+        alt: "The collapse of the earthly city through greed, exploitation and exile.",
+      },
+    ],
+  },
+  {
+    number: 3,
+    label: "New Jerusalem",
+    images: [
+      {
+        url: "https://static.wixstatic.com/media/7638b6_309bf85168744a9195377b3d4fee4906~mv2.png",
+        alt: "The New Jerusalem where economics and worship are one, scarcity ends and moral clarity returns.",
+      },
+      {
+        url: "https://static.wixstatic.com/media/7638b6_a04f8ce1bddc41a797f6298a82d30dfd~mv2.png",
+        alt: "Human vocation and everyday jobs finding their purpose in healing the world.",
+      },
+    ],
+  },
+] as const;
+
+const createKingdomTrajectoryTimelineStep = (lessonId: string): Lesson["content"][number] => {
+  const hotspotMarkup = kingdomTrajectoryPoints
+    .map(
+      (point) => `
+        <button
+          class="kingdom-hotspot kingdom-number-hotspot kingdom-point-${point.number}"
+          type="button"
+          aria-label="Open point ${point.number}: ${point.label}"
+          data-rich-dialog-open="#${lessonId}-kingdom-trajectory-popup-${point.number}"
+        ></button>
+        <button
+          class="kingdom-hotspot kingdom-hand-hotspot kingdom-point-${point.number}"
+          type="button"
+          aria-label="Open point ${point.number} images: ${point.label}"
+          data-rich-dialog-open="#${lessonId}-kingdom-trajectory-popup-${point.number}"
+        ></button>`,
+    )
+    .join("");
+
+  const popupMarkup = kingdomTrajectoryPoints
+    .map(
+      (point) => `
+      <section
+        class="kingdom-popup"
+        id="${lessonId}-kingdom-trajectory-popup-${point.number}"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="${lessonId}-kingdom-trajectory-title-${point.number}"
+        data-rich-dialog
+        hidden
+      >
+        <button class="kingdom-popup-backdrop" type="button" aria-label="Close point ${point.number} popup" data-rich-dialog-close></button>
+        <div class="kingdom-popup-panel">
+          <header class="kingdom-popup-head">
+            <h3 id="${lessonId}-kingdom-trajectory-title-${point.number}">Point ${point.number}: ${point.label}</h3>
+            <button class="kingdom-close" type="button" aria-label="Close point ${point.number} popup" data-rich-dialog-close>&times;</button>
+          </header>
+          <div class="kingdom-flipbook" aria-label="Point ${point.number} two-sided image">
+            <input
+              class="kingdom-flip-toggle kingdom-flip-front-toggle"
+              type="radio"
+              name="${lessonId}-kingdom-flip-${point.number}"
+              id="${lessonId}-kingdom-flip-${point.number}-front"
+              checked
+            />
+            <input
+              class="kingdom-flip-toggle kingdom-flip-back-toggle"
+              type="radio"
+              name="${lessonId}-kingdom-flip-${point.number}"
+              id="${lessonId}-kingdom-flip-${point.number}-back"
+            />
+            <div class="kingdom-flip-stage">
+              <div class="kingdom-flip-card">
+                <figure class="kingdom-flip-face kingdom-flip-front">
+                  <img src="${point.images[0].url}" alt="${point.images[0].alt}" />
+                </figure>
+                <figure class="kingdom-flip-face kingdom-flip-back">
+                  <img src="${point.images[1].url}" alt="${point.images[1].alt}" />
+                </figure>
+              </div>
+            </div>
+            <div class="kingdom-flip-controls">
+              <label class="kingdom-flip-arrow kingdom-flip-prev" for="${lessonId}-kingdom-flip-${point.number}-front" aria-label="Show previous ${point.label} image">&#8592;</label>
+              <div class="kingdom-flip-dots" aria-label="Choose ${point.label} image">
+                <label class="kingdom-flip-dot kingdom-flip-dot-front" for="${lessonId}-kingdom-flip-${point.number}-front" aria-label="Show ${point.label} image 1"></label>
+                <label class="kingdom-flip-dot kingdom-flip-dot-back" for="${lessonId}-kingdom-flip-${point.number}-back" aria-label="Show ${point.label} image 2"></label>
+              </div>
+              <label class="kingdom-flip-arrow kingdom-flip-next" for="${lessonId}-kingdom-flip-${point.number}-back" aria-label="Flip to next ${point.label} image">&#8594;</label>
+            </div>
+          </div>
+        </div>
+      </section>`,
+    )
+    .join("");
+
+  return {
+    id: `${lessonId}-kingdom-trajectory-timeline`,
+    kind: "customHtml",
+    title: "Step 5: The Trajectory of the City with God at the Centre",
+    body: richLessonStepHtml(`
+      <style>
+        .kingdom-trajectory-page {
+          display: grid;
+          gap: clamp(16px, 2.6vw, 24px);
+        }
+
+        .kingdom-trajectory-header h2,
+        .kingdom-trajectory-header p {
+          margin: 0;
+        }
+
+        .kingdom-trajectory-header h2 {
+          color: var(--forest);
+          font-family: Georgia, "Times New Roman", serif;
+          font-size: clamp(1.7rem, 4vw, 2.8rem);
+          line-height: 1.08;
+        }
+
+        .kingdom-trajectory-stage {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 16 / 9;
+          margin: 0;
+          overflow: hidden;
+          border: 0;
+          background: transparent;
+          box-shadow: none;
+        }
+
+        .kingdom-trajectory-stage > img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          mix-blend-mode: multiply;
+        }
+
+        .kingdom-hotspot {
+          position: absolute;
+          width: clamp(32px, 4.4vw, 48px);
+          aspect-ratio: 1;
+          border: 0;
+          border-radius: 50%;
+          padding: 0;
+          background: transparent;
+          color: transparent;
+          font-size: 0;
+          cursor: pointer;
+          box-shadow: none;
+          transform: translate(-50%, -50%);
+          transition: background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+        }
+
+        .kingdom-number-hotspot {
+          top: 73.1%;
+        }
+
+        .kingdom-hand-hotspot {
+          top: 94.3%;
+        }
+
+        .kingdom-hotspot:hover,
+        .kingdom-hotspot:focus-visible {
+          background: rgba(185, 146, 69, 0.18);
+          box-shadow: 0 0 0 4px rgba(247, 243, 232, 0.76);
+          outline: 3px solid rgba(185, 146, 69, 0.76);
+          outline-offset: 1px;
+          transform: translate(-50%, -50%) scale(1.08);
+        }
+
+        .kingdom-point-1 { left: 17%; }
+        .kingdom-point-2 { left: 50.9%; }
+        .kingdom-point-3 { left: 84.7%; }
+
+        .kingdom-popup[hidden] {
+          display: none;
+        }
+
+        .kingdom-popup.is-open {
+          position: fixed;
+          inset: 0;
+          z-index: 10000;
+          display: grid;
+          place-items: center;
+          overflow: auto;
+          padding: clamp(12px, 3vw, 30px);
+          background: rgba(23, 19, 15, 0.84);
+          backdrop-filter: blur(5px);
+        }
+
+        .kingdom-popup-backdrop {
+          position: absolute;
+          inset: 0;
+          border: 0;
+          background: transparent;
+          cursor: pointer;
+        }
+
+        .kingdom-popup-panel {
+          position: relative;
+          z-index: 1;
+          width: min(1120px, calc(100vw - 24px));
+          max-height: min(92vh, 860px);
+          overflow: auto;
+          border: 2px solid rgba(185, 146, 69, 0.62);
+          border-radius: 8px;
+          padding: clamp(14px, 2.4vw, 24px);
+          background: #f7f3e8;
+          box-shadow: 0 34px 90px rgba(0, 0, 0, 0.52);
+        }
+
+        .kingdom-popup-head {
+          display: flex;
+          gap: 14px;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 14px;
+        }
+
+        .kingdom-popup-head h3 {
+          margin: 0;
+          color: var(--forest);
+          font-family: Georgia, "Times New Roman", serif;
+          font-size: clamp(1.25rem, 3vw, 2rem);
+        }
+
+        .kingdom-close {
+          flex: 0 0 auto;
+          width: 42px;
+          height: 42px;
+          display: grid;
+          place-items: center;
+          border: 1px solid rgba(91, 58, 36, 0.22);
+          border-radius: 50%;
+          padding: 0;
+          background: var(--forest);
+          color: var(--paper);
+          font: inherit;
+          font-size: 1.5rem;
+          line-height: 1;
+          cursor: pointer;
+        }
+
+        .kingdom-close:hover,
+        .kingdom-close:focus-visible,
+        .kingdom-flip-arrow:hover,
+        .kingdom-flip-arrow:focus-visible {
+          background: #1d3a2f;
+          outline: 3px solid rgba(185, 146, 69, 0.58);
+          outline-offset: 2px;
+        }
+
+        .kingdom-flipbook {
+          position: relative;
+        }
+
+        .kingdom-flip-toggle {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          overflow: hidden;
+          opacity: 0;
+          pointer-events: none;
+        }
+
+        .kingdom-flip-stage {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 16 / 9;
+          perspective: 1600px;
+        }
+
+        .kingdom-flip-card {
+          position: absolute;
+          inset: 0;
+          transform-style: preserve-3d;
+          transition: transform 560ms cubic-bezier(0.22, 0.72, 0.22, 1);
+        }
+
+        .kingdom-flip-face {
+          position: absolute;
+          inset: 0;
+          margin: 0;
+          overflow: hidden;
+          border-radius: 6px;
+          background: #f7f3e8;
+          backface-visibility: hidden;
+        }
+
+        .kingdom-flip-back {
+          transform: rotateY(180deg);
+        }
+
+        .kingdom-flip-face img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+
+        .kingdom-flip-back-toggle:checked ~ .kingdom-flip-stage .kingdom-flip-card {
+          transform: rotateY(180deg);
+        }
+
+        .kingdom-flip-controls {
+          display: grid;
+          grid-template-columns: 42px minmax(0, 1fr) 42px;
+          gap: 12px;
+          align-items: center;
+          margin-top: 14px;
+        }
+
+        .kingdom-flip-arrow {
+          width: 42px;
+          height: 42px;
+          display: grid;
+          place-items: center;
+          border: 1px solid rgba(91, 58, 36, 0.28);
+          border-radius: 50%;
+          background: var(--forest);
+          color: var(--paper);
+          font-size: 1.35rem;
+          line-height: 1;
+          cursor: pointer;
+          transition: opacity 160ms ease, background 160ms ease;
+        }
+
+        .kingdom-flip-front-toggle:checked ~ .kingdom-flip-controls .kingdom-flip-prev,
+        .kingdom-flip-back-toggle:checked ~ .kingdom-flip-controls .kingdom-flip-next {
+          opacity: 0.35;
+          pointer-events: none;
+        }
+
+        .kingdom-flip-dots {
+          display: flex;
+          gap: 9px;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .kingdom-flip-dot {
+          width: 11px;
+          height: 11px;
+          border: 2px solid var(--forest);
+          border-radius: 50%;
+          background: transparent;
+          cursor: pointer;
+        }
+
+        .kingdom-flip-front-toggle:checked ~ .kingdom-flip-controls .kingdom-flip-dot-front,
+        .kingdom-flip-back-toggle:checked ~ .kingdom-flip-controls .kingdom-flip-dot-back {
+          background: var(--forest);
+        }
+
+        @media (max-width: 640px) {
+          .kingdom-hotspot {
+            width: 32px;
+          }
+
+          .kingdom-popup-panel {
+            width: calc(100vw - 16px);
+            padding: 10px;
+          }
+        }
+      </style>
+
+      <section class="kingdom-trajectory-page">
+        <header class="kingdom-trajectory-header">
+          <p class="eyebrow">Interactive timeline</p>
+          <h2>The Trajectory of the City with God at the Centre</h2>
+        </header>
+
+        <figure class="kingdom-trajectory-stage">
+          <img
+            src="https://static.wixstatic.com/media/7638b6_bece28cf41be4c1089a1ea1faef3bdf0~mv2.png"
+            alt="The trajectory of the city with God at the centre, from the Garden through Jerusalem to the New Jerusalem."
+          />
+          ${hotspotMarkup}
+        </figure>
+
+        ${popupMarkup}
+      </section>
+    `, { completeButtonLabel: "Complete kingdom trajectory timeline" }),
+  };
+};
+
 export const lessons: Lesson[] = curriculum.flatMap((level, levelIndex) =>
   level.sessions.map((sessionTitle, sessionIndex) => {
     const levelNumber = levelIndex + 1;
@@ -4515,13 +4926,7 @@ export const lessons: Lesson[] = curriculum.flatMap((level, levelIndex) =>
       if (businessApplicationIndex !== -1) {
         content[businessApplicationIndex] = createCityTrajectoryTimelineStep(id);
       }
-      content.splice(4, 0, {
-        id: `${id}-resource-link`,
-        kind: "webLink",
-        title: "Step 5: Wix Resource Link",
-        body: "Open the lecturer-approved web resource stored in Wix CMS, then return here to confirm you reviewed it.",
-        url: "https://www.wix.com/learn",
-      });
+      content.splice(4, 0, createKingdomTrajectoryTimelineStep(id));
     }
 
     if (levelNumber === 1 && sessionNumber === 3) {

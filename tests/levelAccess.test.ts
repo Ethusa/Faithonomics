@@ -113,7 +113,7 @@ describe("level access", () => {
       "Step 2: The City: Economic Engine",
       "Step 3: The City Is Not a Neutral Economic Unit",
       "Step 4: The Trajectory of the City",
-      "Step 5: Wix Resource Link",
+      "Step 5: The Trajectory of the City with God at the Centre",
       "Step 6: Reflection Checkpoint",
     ]);
 
@@ -276,6 +276,26 @@ describe("level access", () => {
     expect(timelineBody).toContain("mix-blend-mode: multiply");
     expect(timelineBody).toContain("Complete trajectory timeline");
     expect(timelineBody).not.toContain("<script>");
+
+    const kingdomTimelineStep = competingParadigms?.content[4];
+    const kingdomTimelineBody = kingdomTimelineStep?.body ?? "";
+    expect(kingdomTimelineStep?.kind).toBe("customHtml");
+    expect(kingdomTimelineBody).toContain("The Trajectory of the City with God at the Centre");
+    expect(kingdomTimelineBody).toContain("7638b6_bece28cf41be4c1089a1ea1faef3bdf0");
+    expect(kingdomTimelineBody.match(/class="kingdom-hotspot kingdom-number-hotspot/g)).toHaveLength(3);
+    expect(kingdomTimelineBody.match(/class="kingdom-hotspot kingdom-hand-hotspot/g)).toHaveLength(3);
+    expect(kingdomTimelineBody.match(/data-rich-dialog-open=/g)).toHaveLength(6);
+    expect(kingdomTimelineBody.match(/class="kingdom-popup"/g)).toHaveLength(3);
+    expect(kingdomTimelineBody.match(/class="kingdom-flipbook"/g)).toHaveLength(3);
+    expect(kingdomTimelineBody).toContain("transform: rotateY(180deg)");
+    expect(kingdomTimelineBody).toContain("7638b6_3232598d947547769b19edd2f2963e0e");
+    expect(kingdomTimelineBody).toContain("7638b6_29e376cb2414463d8ddd637d76bb56f4");
+    expect(kingdomTimelineBody).toContain("7638b6_ffdea86f0e1e40b5b19202f684ad4aa9");
+    expect(kingdomTimelineBody).toContain("7638b6_994b99b252df4e17aa830f35dfb03796");
+    expect(kingdomTimelineBody).toContain("7638b6_309bf85168744a9195377b3d4fee4906");
+    expect(kingdomTimelineBody).toContain("7638b6_a04f8ce1bddc41a797f6298a82d30dfd");
+    expect(kingdomTimelineBody).toContain("Complete kingdom trajectory timeline");
+    expect(kingdomTimelineBody).not.toContain("<script>");
     expect(activities.filter((activity) => activity.lessonId === competingParadigms?.id)).toHaveLength(0);
   });
 
