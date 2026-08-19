@@ -263,6 +263,14 @@ describe("level access", () => {
     expect(timelineBody).toContain("7638b6_42d34737fe6a4bdb926e486578aed5f2");
     expect(timelineBody.match(/7638b6_17b750fcfbe94417b4b05d76a3be35d9/g)).toHaveLength(1);
     expect(timelineBody).toContain("7638b6_f53711fae80b4e62812d52830282d31d");
+    expect(timelineBody.match(/class="trajectory-slideshow"/g)).toHaveLength(3);
+    expect(timelineBody.match(/class="trajectory-slide-track"/g)).toHaveLength(3);
+    expect(timelineBody.match(/class="trajectory-slide-arrow trajectory-slide-prev"/g)).toHaveLength(3);
+    expect(timelineBody.match(/class="trajectory-slide-arrow trajectory-slide-next"/g)).toHaveLength(3);
+    expect(timelineBody).toContain("transform: translateX(-100%)");
+    expect(timelineBody).toContain("background: transparent");
+    expect(timelineBody).toContain("box-shadow: none");
+    expect(timelineBody).toContain("mix-blend-mode: multiply");
     expect(timelineBody).toContain("Complete trajectory timeline");
     expect(timelineBody).not.toContain("<script>");
     expect(activities.filter((activity) => activity.lessonId === competingParadigms?.id)).toHaveLength(0);

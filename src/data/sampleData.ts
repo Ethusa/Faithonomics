@@ -4004,10 +4004,10 @@ const createCityTrajectoryTimelineStep = (lessonId: string): Lesson["content"][n
         aspect-ratio: 16 / 9;
         margin: 0;
         overflow: hidden;
-        border: 1px solid rgba(91, 58, 36, 0.18);
-        border-radius: 8px;
-        background: #fff;
-        box-shadow: 0 18px 38px rgba(91, 58, 36, 0.14);
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
       }
 
       .trajectory-stage > img {
@@ -4015,6 +4015,7 @@ const createCityTrajectoryTimelineStep = (lessonId: string): Lesson["content"][n
         width: 100%;
         height: 100%;
         object-fit: contain;
+        mix-blend-mode: multiply;
       }
 
       .trajectory-hotspot {
@@ -4160,6 +4161,103 @@ const createCityTrajectoryTimelineStep = (lessonId: string): Lesson["content"][n
         border-radius: 6px;
       }
 
+      .trajectory-slideshow {
+        position: relative;
+      }
+
+      .trajectory-slide-toggle {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .trajectory-slide-window {
+        overflow: hidden;
+        border-radius: 6px;
+      }
+
+      .trajectory-slide-track {
+        display: flex;
+        transition: transform 360ms ease;
+      }
+
+      .trajectory-slide {
+        flex: 0 0 100%;
+        margin: 0;
+      }
+
+      .trajectory-slide img {
+        display: block;
+        width: 100%;
+        height: auto;
+        max-height: 68vh;
+        object-fit: contain;
+      }
+
+      .trajectory-slide-2:checked ~ .trajectory-slide-window .trajectory-slide-track {
+        transform: translateX(-100%);
+      }
+
+      .trajectory-slide-controls {
+        display: grid;
+        grid-template-columns: 42px minmax(0, 1fr) 42px;
+        gap: 12px;
+        align-items: center;
+        margin-top: 14px;
+      }
+
+      .trajectory-slide-arrow {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(91, 58, 36, 0.28);
+        border-radius: 50%;
+        background: var(--forest);
+        color: var(--paper);
+        font-size: 1.35rem;
+        line-height: 1;
+        cursor: pointer;
+        transition: opacity 160ms ease, background 160ms ease;
+      }
+
+      .trajectory-slide-arrow:hover,
+      .trajectory-slide-arrow:focus-visible {
+        background: #1d3a2f;
+        outline: 3px solid rgba(185, 146, 69, 0.58);
+        outline-offset: 2px;
+      }
+
+      .trajectory-slide-1:checked ~ .trajectory-slide-controls .trajectory-slide-prev,
+      .trajectory-slide-2:checked ~ .trajectory-slide-controls .trajectory-slide-next {
+        opacity: 0.35;
+        pointer-events: none;
+      }
+
+      .trajectory-slide-dots {
+        display: flex;
+        gap: 9px;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .trajectory-slide-dot {
+        width: 11px;
+        height: 11px;
+        border: 2px solid var(--forest);
+        border-radius: 50%;
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .trajectory-slide-1:checked ~ .trajectory-slide-controls .trajectory-slide-dot-1,
+      .trajectory-slide-2:checked ~ .trajectory-slide-controls .trajectory-slide-dot-2 {
+        background: var(--forest);
+      }
+
       @media (max-width: 640px) {
         .trajectory-hotspot {
           width: 32px;
@@ -4218,9 +4316,23 @@ const createCityTrajectoryTimelineStep = (lessonId: string): Lesson["content"][n
             <h3 id="${lessonId}-trajectory-title-2">Point 2: Cain</h3>
             <button class="trajectory-close" type="button" aria-label="Close point 2 popup" data-rich-dialog-close>&times;</button>
           </header>
-          <div class="trajectory-popup-images">
-            <figure><img src="https://static.wixstatic.com/media/7638b6_b8c7fe9434324c149d30f6f0808635d8~mv2.png" alt="Point 2 teaching visual about Cain, image 1." /></figure>
-            <figure><img src="https://static.wixstatic.com/media/7638b6_fb077df9d0ef479c9dad04dbaab24801~mv2.png" alt="Point 2 teaching visual about Cain, image 2." /></figure>
+          <div class="trajectory-slideshow" aria-label="Point 2 image slideshow">
+            <input class="trajectory-slide-toggle trajectory-slide-1" type="radio" name="${lessonId}-trajectory-slides-2" id="${lessonId}-trajectory-slide-2-1" checked />
+            <input class="trajectory-slide-toggle trajectory-slide-2" type="radio" name="${lessonId}-trajectory-slides-2" id="${lessonId}-trajectory-slide-2-2" />
+            <div class="trajectory-slide-window">
+              <div class="trajectory-slide-track">
+                <figure class="trajectory-slide"><img src="https://static.wixstatic.com/media/7638b6_b8c7fe9434324c149d30f6f0808635d8~mv2.png" alt="Point 2 teaching visual about Cain, image 1." /></figure>
+                <figure class="trajectory-slide"><img src="https://static.wixstatic.com/media/7638b6_fb077df9d0ef479c9dad04dbaab24801~mv2.png" alt="Point 2 teaching visual about Cain, image 2." /></figure>
+              </div>
+            </div>
+            <div class="trajectory-slide-controls">
+              <label class="trajectory-slide-arrow trajectory-slide-prev" for="${lessonId}-trajectory-slide-2-1" aria-label="Show previous Point 2 image">&#8592;</label>
+              <div class="trajectory-slide-dots" aria-label="Choose Point 2 image">
+                <label class="trajectory-slide-dot trajectory-slide-dot-1" for="${lessonId}-trajectory-slide-2-1" aria-label="Show Point 2 image 1"></label>
+                <label class="trajectory-slide-dot trajectory-slide-dot-2" for="${lessonId}-trajectory-slide-2-2" aria-label="Show Point 2 image 2"></label>
+              </div>
+              <label class="trajectory-slide-arrow trajectory-slide-next" for="${lessonId}-trajectory-slide-2-2" aria-label="Show next Point 2 image">&#8594;</label>
+            </div>
           </div>
         </div>
       </section>
@@ -4245,9 +4357,23 @@ const createCityTrajectoryTimelineStep = (lessonId: string): Lesson["content"][n
             <h3 id="${lessonId}-trajectory-title-4">Point 4: Lamech</h3>
             <button class="trajectory-close" type="button" aria-label="Close point 4 popup" data-rich-dialog-close>&times;</button>
           </header>
-          <div class="trajectory-popup-images">
-            <figure><img src="https://static.wixstatic.com/media/7638b6_7138836788404b1e8d0a7845c67d0f13~mv2.png" alt="Point 4 teaching visual about Lamech, image 1." /></figure>
-            <figure><img src="https://static.wixstatic.com/media/7638b6_746226c4458c4ba0a84f471a91f7ab8e~mv2.png" alt="Point 4 teaching visual about Lamech, image 2." /></figure>
+          <div class="trajectory-slideshow" aria-label="Point 4 image slideshow">
+            <input class="trajectory-slide-toggle trajectory-slide-1" type="radio" name="${lessonId}-trajectory-slides-4" id="${lessonId}-trajectory-slide-4-1" checked />
+            <input class="trajectory-slide-toggle trajectory-slide-2" type="radio" name="${lessonId}-trajectory-slides-4" id="${lessonId}-trajectory-slide-4-2" />
+            <div class="trajectory-slide-window">
+              <div class="trajectory-slide-track">
+                <figure class="trajectory-slide"><img src="https://static.wixstatic.com/media/7638b6_7138836788404b1e8d0a7845c67d0f13~mv2.png" alt="Point 4 teaching visual about Lamech, image 1." /></figure>
+                <figure class="trajectory-slide"><img src="https://static.wixstatic.com/media/7638b6_746226c4458c4ba0a84f471a91f7ab8e~mv2.png" alt="Point 4 teaching visual about Lamech, image 2." /></figure>
+              </div>
+            </div>
+            <div class="trajectory-slide-controls">
+              <label class="trajectory-slide-arrow trajectory-slide-prev" for="${lessonId}-trajectory-slide-4-1" aria-label="Show previous Point 4 image">&#8592;</label>
+              <div class="trajectory-slide-dots" aria-label="Choose Point 4 image">
+                <label class="trajectory-slide-dot trajectory-slide-dot-1" for="${lessonId}-trajectory-slide-4-1" aria-label="Show Point 4 image 1"></label>
+                <label class="trajectory-slide-dot trajectory-slide-dot-2" for="${lessonId}-trajectory-slide-4-2" aria-label="Show Point 4 image 2"></label>
+              </div>
+              <label class="trajectory-slide-arrow trajectory-slide-next" for="${lessonId}-trajectory-slide-4-2" aria-label="Show next Point 4 image">&#8594;</label>
+            </div>
           </div>
         </div>
       </section>
@@ -4272,9 +4398,23 @@ const createCityTrajectoryTimelineStep = (lessonId: string): Lesson["content"][n
             <h3 id="${lessonId}-trajectory-title-6">Point 6: Babylon</h3>
             <button class="trajectory-close" type="button" aria-label="Close point 6 popup" data-rich-dialog-close>&times;</button>
           </header>
-          <div class="trajectory-popup-images">
-            <figure><img src="https://static.wixstatic.com/media/7638b6_42d34737fe6a4bdb926e486578aed5f2~mv2.png" alt="Point 6 teaching visual about Babylon, image 1." /></figure>
-            <figure><img src="https://static.wixstatic.com/media/7638b6_17b750fcfbe94417b4b05d76a3be35d9~mv2.png" alt="Point 6 teaching visual about Babylon, image 2." /></figure>
+          <div class="trajectory-slideshow" aria-label="Point 6 image slideshow">
+            <input class="trajectory-slide-toggle trajectory-slide-1" type="radio" name="${lessonId}-trajectory-slides-6" id="${lessonId}-trajectory-slide-6-1" checked />
+            <input class="trajectory-slide-toggle trajectory-slide-2" type="radio" name="${lessonId}-trajectory-slides-6" id="${lessonId}-trajectory-slide-6-2" />
+            <div class="trajectory-slide-window">
+              <div class="trajectory-slide-track">
+                <figure class="trajectory-slide"><img src="https://static.wixstatic.com/media/7638b6_42d34737fe6a4bdb926e486578aed5f2~mv2.png" alt="Point 6 teaching visual about Babylon, image 1." /></figure>
+                <figure class="trajectory-slide"><img src="https://static.wixstatic.com/media/7638b6_17b750fcfbe94417b4b05d76a3be35d9~mv2.png" alt="Point 6 teaching visual about Babylon, image 2." /></figure>
+              </div>
+            </div>
+            <div class="trajectory-slide-controls">
+              <label class="trajectory-slide-arrow trajectory-slide-prev" for="${lessonId}-trajectory-slide-6-1" aria-label="Show previous Point 6 image">&#8592;</label>
+              <div class="trajectory-slide-dots" aria-label="Choose Point 6 image">
+                <label class="trajectory-slide-dot trajectory-slide-dot-1" for="${lessonId}-trajectory-slide-6-1" aria-label="Show Point 6 image 1"></label>
+                <label class="trajectory-slide-dot trajectory-slide-dot-2" for="${lessonId}-trajectory-slide-6-2" aria-label="Show Point 6 image 2"></label>
+              </div>
+              <label class="trajectory-slide-arrow trajectory-slide-next" for="${lessonId}-trajectory-slide-6-2" aria-label="Show next Point 6 image">&#8594;</label>
+            </div>
           </div>
         </div>
       </section>
