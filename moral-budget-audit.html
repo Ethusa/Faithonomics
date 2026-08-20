@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Global Moral Budget Observatory - City Audit Quiz</title>
+<style>
+:root{
+  --paper:#F7F3E8;--cream:#E8D8B8;--kraft:#9A6B3F;--deep:#234638;
+  --green:#4F6B3A;--navy:#1E2A33;--gold:#B99245;--amber:#D99A3D;
+  --black:#17130F;--muted:#62675E;--line:#D8C8A8;--white:#FFFDF8;
+}
+*{box-sizing:border-box}
+body{margin:0;padding:18px;font-family:Arial,Helvetica,sans-serif;color:var(--black);background:linear-gradient(180deg,#E9DDC7,#D7C3A2)}
+.app{width:min(1220px,100%);margin:auto;background:var(--paper);border:1px solid rgba(91,58,36,.25);border-radius:22px;overflow:hidden;box-shadow:0 22px 58px rgba(45,31,17,.18)}
+.bar{height:5px;background:linear-gradient(90deg,var(--deep),var(--gold),var(--deep))}
+.hero,.section{padding:26px 32px}.section{border-top:1px solid var(--line)}.alt{background:#F1E7D5}
+.kicker{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--kraft);font-weight:800}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif}
+h1{margin:.1em 0;color:var(--deep);font-size:clamp(2.2rem,4.5vw,4.3rem);line-height:.98}
+h2{margin:.15em 0 .4em;color:var(--deep)} h3{margin:.1em 0 .35em;color:var(--kraft)}
+.lead{color:var(--muted);line-height:1.62;max-width:960px;text-align:justify;text-justify:inter-word}
+.startrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+button{font:inherit}
+.primary,.secondary{border-radius:10px;padding:11px 15px;cursor:pointer;font-weight:800}
+.primary{background:var(--deep);color:#F4DFAD;border:1px solid var(--gold)}
+.secondary{background:#FFFDF8;color:var(--deep);border:1px solid var(--line)}
+button:disabled{cursor:not-allowed;opacity:.58}
+.note{font-size:.9rem;color:var(--muted);margin-top:10px;line-height:1.5}
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(20,24,24,.68);z-index:100;align-items:center;justify-content:center;padding:18px}
+.modal-backdrop.show{display:flex}
+.modal{width:min(820px,96vw);max-height:92vh;overflow:auto;background:linear-gradient(145deg,#FFFDF8,#EFE5D5);border:2px solid var(--gold);border-radius:20px;box-shadow:0 28px 74px rgba(0,0,0,.30)}
+.modal-head{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:16px 18px;background:var(--deep);color:#F2DDA9;border-bottom:3px solid var(--gold)}
+.modal-head h2{margin:0;color:#F2DDA9}
+.close{width:38px;height:38px;border-radius:50%;border:1px solid var(--gold);background:#F7EBCF;color:var(--deep);font-weight:900;cursor:pointer}
+.modal-body{padding:18px}
+.progressrow{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}
+.progress{height:10px;border-radius:999px;background:#D6C8AC;overflow:hidden}
+.progress>div{height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--gold));transition:.25s}
+.badge{background:var(--navy);color:#F3DDA7;border:1px solid var(--gold);padding:6px 10px;border-radius:999px;font-size:.82rem;font-weight:800}
+.qcard{margin-top:16px;border:1px solid var(--line);border-radius:15px;background:#FFFDF8;padding:17px}
+.qmeta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:9px}
+.element-chip{background:#E5E9D8;color:var(--deep);border:1px solid #BAC8A8;padding:5px 9px;border-radius:999px;font-size:.78rem;font-weight:800}
+.question{font-size:1.15rem;line-height:1.5;font-weight:700;color:#36413A;text-align:justify;text-justify:inter-word}
+.answers{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:14px}
+.answer{border:2px solid var(--line);background:#FBF7EF;color:#4D5048;border-radius:11px;padding:12px 9px;cursor:pointer;font-weight:800;text-align:center}
+.answer:hover,.answer:focus-visible{border-color:var(--gold);outline:none}
+.answer.selected{background:var(--deep);color:#F3DDA7;border-color:var(--gold)}
+.answer-hint{min-height:22px;margin-top:10px;color:var(--kraft);font-size:.92rem;font-weight:800}
+.qnav{display:flex;justify-content:space-between;gap:10px;margin-top:14px}
+.analysis{display:none}.analysis.show{display:block}
+.chart{display:grid;gap:13px;margin-top:16px}
+.row{display:grid;grid-template-columns:110px 1fr 72px;gap:10px;align-items:center}
+.trackbar{height:18px;border-radius:999px;background:#E4D7BC;overflow:hidden;border:1px solid #CDBD9A}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--kraft),var(--gold),var(--green));transition:.45s}
+.score{text-align:right;font-weight:900;color:var(--deep)}
+.cardgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-top:18px}
+.statcard{background:#FFFDF8;border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
+.statcard strong{display:block;color:var(--deep);font-family:Georgia,serif;font-size:1.6rem}
+.interpretation{margin-top:17px;border-left:5px solid var(--gold);background:#F4E8CB;border-radius:10px;padding:13px 15px;line-height:1.55;text-align:justify;text-justify:inter-word}
+.small{font-size:.88rem;color:var(--muted);line-height:1.5}
+@media(max-width:800px){
+  body{padding:0}.app{border-radius:0}
+  .hero,.section{padding:22px 17px}
+  .answers{grid-template-columns:1fr}
+  .cardgrid{grid-template-columns:1fr 1fr}
+  .row{grid-template-columns:90px 1fr 56px}
+}
+</style>
+</head>
+<body>
+<main class="app">
+<div class="bar"></div>
+<section class="hero">
+  <div class="kicker">Global Moral Budget Observatory</div>
+  <h1>What Does Your City Prioritise?</h1>
+  <p class="lead">Answer 20 short questions about the city you know. The quiz mixes questions from <strong>Land, Time, Capital, Attention and Honour</strong>, then creates a visual Moral Budget profile.</p>
+  <div class="startrow">
+    <button class="primary" id="openQuiz">Start City Audit</button>
+  </div>
+  <div class="note">This is a classroom reflection tool based on your observations. It does not by itself prove that a city is morally good or bad.</div>
+</section>
+
+<section class="section alt analysis" id="analysis">
+  <h2>Your City's Moral Budget Profile</h2>
+  <p class="lead">Higher scores mean your answers suggest broader access, lower burdens or a wider distribution of value in that dimension.</p>
+  <div class="chart" id="chart"></div>
+  <div class="cardgrid" id="cardgrid"></div>
+  <div class="interpretation" id="interpretation"></div>
+  <div class="startrow"><button class="primary" id="retake">Retake Audit</button></div>
+</section>
+</main>
+
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="quizTitle">
+    <div class="modal-head">
+      <h2 id="quizTitle">City Moral Budget Audit</h2>
+      <button class="close" id="closeQuiz" aria-label="Close quiz">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="progressrow">
+        <div class="progress"><div id="progressFill"></div></div>
+        <span class="badge" id="progressBadge">1 / 20</span>
+      </div>
+      <div class="qcard">
+        <div class="qmeta">
+          <span class="element-chip" id="elementChip">LAND</span>
+          <span class="small">Choose the answer that best describes your city.</span>
+        </div>
+        <div class="question" id="questionText"></div>
+        <div class="answers" id="answers"></div>
+        <div class="answer-hint" id="answerHint" role="status" aria-live="polite"></div>
+        <div class="qnav">
+          <button class="secondary" id="prevBtn">Previous</button>
+          <button class="primary" id="nextBtn">Next</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const BANK = {
+    land: [
+      {q:"Can people with lower incomes live reasonably close to major job areas?", labels:["Mostly yes","Sometimes / depends","Mostly no"]},
+      {q:"Are useful public spaces such as parks, schools and clinics spread across different neighbourhoods?", labels:["Widely available","Unevenly available","Very limited in some areas"]},
+      {q:"Does public transport connect outer neighbourhoods to important opportunities?", labels:["Usually well","Partly","Poorly"]},
+      {q:"Are valuable locations used for a mix of people and activities rather than only the highest-paying uses?", labels:["Often","Mixed","Rarely"]}
+    ],
+    time: [
+      {q:"Can most workers reach jobs without losing several hours each day?", labels:["Usually","Sometimes","Often not"]},
+      {q:"Is public transport reliable enough for people to plan their day confidently?", labels:["Generally reliable","Mixed","Often unreliable"]},
+      {q:"Do queues, congestion and inefficient services take a small rather than large part of daily life?", labels:["Usually small","Moderate","Often large"]},
+      {q:"Are essential services close enough that most residents do not need long trips for basic needs?", labels:["Mostly yes","Depends on area","Mostly no"]}
+    ],
+    capital: [
+      {q:"Do less wealthy neighbourhoods receive visible investment in roads, services and infrastructure?", labels:["Regularly","Somewhat","Rarely"]},
+      {q:"Can small and local businesses realistically access support, customers and finance?", labels:["Generally yes","Mixed","Generally no"]},
+      {q:"Is new development spread beyond already prosperous business districts?", labels:["Often","Sometimes","Rarely"]},
+      {q:"Does investment appear to expand opportunity for many communities, not only property values in a few places?", labels:["Mostly","Mixed","Mostly not"]}
+    ],
+    attention: [
+      {q:"Do public spaces give meaningful visibility to civic, cultural and community life as well as advertising?", labels:["Yes, clearly","A mixture","Mostly commercial"]},
+      {q:"When you move through the city, are messages about public wellbeing visible alongside messages to buy things?", labels:["Often","Sometimes","Rarely"]},
+      {q:"Do local media and public campaigns regularly draw attention to community needs and shared responsibilities?", labels:["Regularly","Sometimes","Rarely"]},
+      {q:"Are major public spaces designed for gathering, learning and culture as well as shopping?", labels:["Mostly","Partly","Mostly not"]}
+    ],
+    honour: [
+      {q:"Are teachers, carers, nurses, artisans and other essential workers publicly respected in your city?", labels:["Strongly","Somewhat","Not much"]},
+      {q:"Does your city celebrate service and contribution as well as wealth, fame and business success?", labels:["Often","Mixed","Rarely"]},
+      {q:"Can a modest, responsible lifestyle still be treated as successful?", labels:["Yes","Sometimes","Not really"]},
+      {q:"Do neighbourhoods and careers gain prestige mainly from contribution, not only income and luxury?", labels:["Often","Mixed","Rarely"]}
+    ]
+  };
+
+  const elementNames={land:"LAND",time:"TIME",capital:"CAPITAL",attention:"ATTENTION",honour:"HONOUR"};
+  const questions=[];
+  Object.entries(BANK).forEach(([key,arr])=>arr.forEach(item=>questions.push({element:key,...item})));
+
+  let order=[], idx=0, answers={};
+  const modal=document.getElementById("modalBackdrop");
+  const qText=document.getElementById("questionText");
+  const answerWrap=document.getElementById("answers");
+  const elementChip=document.getElementById("elementChip");
+  const progressBadge=document.getElementById("progressBadge");
+  const progressFill=document.getElementById("progressFill");
+  const prevBtn=document.getElementById("prevBtn");
+  const nextBtn=document.getElementById("nextBtn");
+  const answerHint=document.getElementById("answerHint");
+
+  function shuffle(arr){
+    const a=[...arr];
+    for(let i=a.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [a[i],a[j]]=[a[j],a[i]];
+    }
+    return a;
+  }
+
+  function start(){
+    order=shuffle(questions.map((_,i)=>i));
+    idx=0;answers={};
+    modal.classList.add("show");
+    document.body.style.overflow="hidden";
+    renderQuestion();
+  }
+
+  function renderQuestion(){
+    const qi=order[idx], q=questions[qi];
+    elementChip.textContent=elementNames[q.element];
+    qText.textContent=q.q;
+    answerWrap.innerHTML="";
+    q.labels.forEach((label,opt)=>{
+      const b=document.createElement("button");
+      b.className="answer"+(answers[qi]===opt?" selected":"");
+      b.type="button";
+      b.textContent=label;
+      b.addEventListener("click",()=>{
+        answers[qi]=opt;
+        [...answerWrap.children].forEach(x=>x.classList.remove("selected"));
+        b.classList.add("selected");
+        updateNavState();
+      });
+      answerWrap.appendChild(b);
+    });
+    progressBadge.textContent=(idx+1)+" / "+order.length;
+    progressFill.style.width=((idx+1)/order.length*100)+"%";
+    updateNavState();
+  }
+
+  function updateNavState(){
+    const qi=order[idx];
+    const hasAnswer=answers[qi]!==undefined;
+    const isLast=idx===order.length-1;
+    prevBtn.disabled=idx===0;
+    nextBtn.disabled=!hasAnswer;
+    nextBtn.textContent=isLast?"Show Analysis":"Next";
+    answerHint.textContent=hasAnswer?"":(isLast?"Select one answer to show your analysis.":"Select one answer to continue.");
+  }
+
+  nextBtn.addEventListener("click",()=>{
+    const qi=order[idx];
+    if(answers[qi]===undefined){
+      updateNavState();
+      qText.animate([{opacity:.45},{opacity:1}],{duration:250});
+      return;
+    }
+    if(idx<order.length-1){idx++;renderQuestion()} else finish();
+  });
+
+  prevBtn.addEventListener("click",()=>{if(idx>0){idx--;renderQuestion()}});
+
+  function closeModal(){
+    modal.classList.remove("show");
+    document.body.style.overflow="";
+  }
+  document.getElementById("closeQuiz").addEventListener("click",closeModal);
+  modal.addEventListener("click",e=>{if(e.target===modal)closeModal()});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&modal.classList.contains("show"))closeModal()});
+
+  function finish(){
+    closeModal();
+    const scores={land:[],time:[],capital:[],attention:[],honour:[]};
+    questions.forEach((q,i)=>{
+      const val=answers[i]===0?5:answers[i]===1?3:1;
+      scores[q.element].push(val);
+    });
+    const avgs={};
+    Object.entries(scores).forEach(([k,v])=>avgs[k]=v.reduce((a,b)=>a+b,0)/v.length);
+    showAnalysis(avgs);
+  }
+
+  function phrase(v){
+    if(v>=4.2)return "Broadly strong";
+    if(v>=3.4)return "Relatively strong";
+    if(v>=2.6)return "Mixed";
+    if(v>=1.8)return "Concern";
+    return "Serious concern";
+  }
+
+  function showAnalysis(avgs){
+    const chart=document.getElementById("chart");
+    const cards=document.getElementById("cardgrid");
+    const analysis=document.getElementById("analysis");
+    chart.innerHTML="";cards.innerHTML="";
+    Object.entries(avgs).forEach(([k,v])=>{
+      chart.innerHTML += '<div class="row"><strong>'+elementNames[k]+'</strong><div class="trackbar"><div class="fill" style="width:'+(v/5*100)+'%"></div></div><div class="score">'+v.toFixed(1)+'/5</div></div>';
+      cards.innerHTML += '<div class="statcard">'+elementNames[k]+'<strong>'+v.toFixed(1)+'</strong><span class="small">'+phrase(v)+'</span></div>';
+    });
+
+    const ordered=Object.entries(avgs).sort((a,b)=>a[1]-b[1]);
+    const low=ordered[0], high=ordered[ordered.length-1];
+    document.getElementById("interpretation").innerHTML =
+      '<strong>What your answers suggest:</strong> Your strongest area is <strong>'+elementNames[high[0]]+'</strong> ('+high[1].toFixed(1)+'/5), while your weakest is <strong>'+elementNames[low[0]]+'</strong> ('+low[1].toFixed(1)+'/5). This profile reflects your observations of the city. Use it to decide which area needs stronger evidence or deeper discussion.';
+
+    analysis.classList.add("show");
+    if(typeof analysis.scrollIntoView==="function"){
+      analysis.scrollIntoView({behavior:"smooth",block:"start"});
+    }
+    const analysisTitle=analysis.querySelector("h2");
+    analysisTitle.setAttribute("tabindex","-1");
+    if(typeof analysisTitle.focus==="function"){
+      analysisTitle.focus({preventScroll:true});
+    }
+  }
+
+  document.getElementById("openQuiz").addEventListener("click",start);
+  document.getElementById("retake").addEventListener("click",start);
+})();
+</script>
+</body>
+</html>
