@@ -112,10 +112,9 @@ describe("level access", () => {
       "Step 1: Tale of Two Cities",
       "Step 2: The City: Economic Engine",
       "Step 3: The City Is Not a Neutral Economic Unit",
-      "Step 4: The Trajectory of the City",
-      "Step 5: The Trajectory of the City with God at the Centre",
-      "Step 6: Living Between Two Cities Discussion",
-      "Step 7: Reflection Checkpoint",
+      "Step 4: The Two Trajectories of the City",
+      "Step 5: Living Between Two Cities Discussion",
+      "Step 6: Reflection Checkpoint",
     ]);
 
     const cityStep = competingParadigms?.content[1];
@@ -249,6 +248,7 @@ describe("level access", () => {
     const timelineStep = competingParadigms?.content[3];
     const timelineBody = timelineStep?.body ?? "";
     expect(timelineStep?.kind).toBe("customHtml");
+    expect(timelineStep?.title).toBe("Step 4: The Two Trajectories of the City");
     expect(timelineBody).toContain("Interactive timeline");
     expect(timelineBody).toContain("The Trajectory of the City");
     expect(timelineBody).toContain("7638b6_3c725c9d31f74d438d5c8f5f77b5c2f5");
@@ -275,17 +275,17 @@ describe("level access", () => {
     expect(timelineBody).toContain("background: transparent");
     expect(timelineBody).toContain("box-shadow: none");
     expect(timelineBody).toContain("mix-blend-mode: multiply");
-    expect(timelineBody).toContain("Complete trajectory timeline");
+    expect(timelineBody).not.toContain("Complete trajectory timeline");
     expect(timelineBody).not.toContain("<script>");
 
-    const kingdomTimelineStep = competingParadigms?.content[4];
+    const kingdomTimelineStep = timelineStep;
     const kingdomTimelineBody = kingdomTimelineStep?.body ?? "";
     expect(kingdomTimelineStep?.kind).toBe("customHtml");
     expect(kingdomTimelineBody).toContain("The Trajectory of the City with God at the Centre");
     expect(kingdomTimelineBody).toContain("7638b6_bece28cf41be4c1089a1ea1faef3bdf0");
     expect(kingdomTimelineBody.match(/class="kingdom-hotspot kingdom-number-hotspot/g)).toHaveLength(3);
     expect(kingdomTimelineBody.match(/class="kingdom-hotspot kingdom-hand-hotspot/g)).toHaveLength(3);
-    expect(kingdomTimelineBody.match(/data-rich-dialog-open=/g)).toHaveLength(6);
+    expect(kingdomTimelineBody.match(/data-rich-dialog-open="#[^"]+-kingdom-trajectory-popup-/g)).toHaveLength(6);
     expect(kingdomTimelineBody.match(/class="kingdom-popup"/g)).toHaveLength(3);
     expect(kingdomTimelineBody.match(/class="kingdom-flipbook"/g)).toHaveLength(3);
     expect(kingdomTimelineBody).toContain("transform: rotateY(180deg)");
@@ -295,10 +295,12 @@ describe("level access", () => {
     expect(kingdomTimelineBody).toContain("7638b6_994b99b252df4e17aa830f35dfb03796");
     expect(kingdomTimelineBody).toContain("7638b6_309bf85168744a9195377b3d4fee4906");
     expect(kingdomTimelineBody).toContain("7638b6_a04f8ce1bddc41a797f6298a82d30dfd");
-    expect(kingdomTimelineBody).toContain("Complete kingdom trajectory timeline");
+    expect(kingdomTimelineBody).not.toContain("Complete kingdom trajectory timeline");
+    expect(kingdomTimelineBody).toContain("Complete both trajectory timelines");
+    expect(kingdomTimelineBody.match(/data-classroom-complete/g)).toHaveLength(1);
     expect(kingdomTimelineBody).not.toContain("<script>");
 
-    const discussionStep = competingParadigms?.content[5];
+    const discussionStep = competingParadigms?.content[4];
     const discussionBody = discussionStep?.body ?? "";
     expect(discussionStep?.kind).toBe("customHtml");
     expect(discussionBody).toContain("How Do We Live Between the Reality of Two Cities?");

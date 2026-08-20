@@ -3975,7 +3975,10 @@ const createCityNotNeutralEconomicUnitStep = (lessonId: string): Lesson["content
   };
 };
 
-const createCityTrajectoryTimelineStep = (lessonId: string): Lesson["content"][number] => ({
+const createCityTrajectoryTimelineStep = (
+  lessonId: string,
+  options: { includeCompleteButton?: boolean; completeButtonLabel?: string } = {},
+): Lesson["content"][number] => ({
   id: `${lessonId}-city-trajectory-timeline`,
   kind: "customHtml",
   title: "Step 4: The Trajectory of the City",
@@ -4427,7 +4430,12 @@ const createCityTrajectoryTimelineStep = (lessonId: string): Lesson["content"][n
         </div>
       </section>
     </section>
-  `, { completeButtonLabel: "Complete trajectory timeline" }),
+  `, {
+    ...(options.includeCompleteButton === undefined
+      ? {}
+      : { includeCompleteButton: options.includeCompleteButton }),
+    completeButtonLabel: options.completeButtonLabel ?? "Complete trajectory timeline",
+  }),
 });
 
 const kingdomTrajectoryPoints = [
@@ -4475,7 +4483,10 @@ const kingdomTrajectoryPoints = [
   },
 ] as const;
 
-const createKingdomTrajectoryTimelineStep = (lessonId: string): Lesson["content"][number] => {
+const createKingdomTrajectoryTimelineStep = (
+  lessonId: string,
+  options: { includeCompleteButton?: boolean; completeButtonLabel?: string } = {},
+): Lesson["content"][number] => {
   const hotspotMarkup = kingdomTrajectoryPoints
     .map(
       (point) => `
@@ -4837,14 +4848,33 @@ const createKingdomTrajectoryTimelineStep = (lessonId: string): Lesson["content"
 
         ${popupMarkup}
       </section>
-    `, { completeButtonLabel: "Complete kingdom trajectory timeline" }),
+    `, {
+      ...(options.includeCompleteButton === undefined
+        ? {}
+        : { includeCompleteButton: options.includeCompleteButton }),
+      completeButtonLabel: options.completeButtonLabel ?? "Complete kingdom trajectory timeline",
+    }),
+  };
+};
+
+const createCombinedCityTrajectoriesStep = (lessonId: string): Lesson["content"][number] => {
+  const cityWithoutGod = createCityTrajectoryTimelineStep(lessonId, { includeCompleteButton: false });
+  const cityWithGod = createKingdomTrajectoryTimelineStep(lessonId, {
+    completeButtonLabel: "Complete both trajectory timelines",
+  });
+
+  return {
+    id: `${lessonId}-combined-city-trajectories`,
+    kind: "customHtml",
+    title: "Step 4: The Two Trajectories of the City",
+    body: `${cityWithoutGod.body ?? ""}${cityWithGod.body ?? ""}`,
   };
 };
 
 const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][number] => ({
   id: `${lessonId}-living-between-two-cities-discussion`,
   kind: "customHtml",
-  title: "Step 6: Living Between Two Cities Discussion",
+  title: "Step 5: Living Between Two Cities Discussion",
   body: richLessonStepHtml(`
     <style>
       .two-cities-discussion {
@@ -5061,10 +5091,9 @@ export const lessons: Lesson[] = curriculum.flatMap((level, levelIndex) =>
       content.splice(2, 0, createCityNotNeutralEconomicUnitStep(id));
       const businessApplicationIndex = content.findIndex((block) => block.id === `${id}-session-application`);
       if (businessApplicationIndex !== -1) {
-        content[businessApplicationIndex] = createCityTrajectoryTimelineStep(id);
+        content[businessApplicationIndex] = createCombinedCityTrajectoriesStep(id);
       }
-      content.splice(4, 0, createKingdomTrajectoryTimelineStep(id));
-      content.splice(5, 0, createTwoCitiesDiscussionStep(id));
+      content.splice(4, 0, createTwoCitiesDiscussionStep(id));
     }
 
     if (levelNumber === 1 && sessionNumber === 3) {
