@@ -249,6 +249,11 @@ describe("level access", () => {
     const timelineBody = timelineStep?.body ?? "";
     expect(timelineStep?.kind).toBe("customHtml");
     expect(timelineStep?.title).toBe("Step 4: The Two Trajectories of the City");
+    expect(timelineBody).toContain('class="combined-trajectories"');
+    expect(timelineBody).toContain("City without God");
+    expect(timelineBody).toContain("City with God");
+    expect(timelineBody).toContain(".combined-trajectory-without-god");
+    expect(timelineBody).toContain(".combined-trajectory-with-god");
     expect(timelineBody).toContain("Interactive timeline");
     expect(timelineBody).toContain("The Trajectory of the City");
     expect(timelineBody).toContain("7638b6_3c725c9d31f74d438d5c8f5f77b5c2f5");

@@ -4862,12 +4862,108 @@ const createCombinedCityTrajectoriesStep = (lessonId: string): Lesson["content"]
   const cityWithGod = createKingdomTrajectoryTimelineStep(lessonId, {
     completeButtonLabel: "Complete both trajectory timelines",
   });
+  const withoutGodViewId = `${lessonId}-trajectory-view-without-god`;
+  const withGodViewId = `${lessonId}-trajectory-view-with-god`;
 
   return {
     id: `${lessonId}-combined-city-trajectories`,
     kind: "customHtml",
     title: "Step 4: The Two Trajectories of the City",
-    body: `${cityWithoutGod.body ?? ""}${cityWithGod.body ?? ""}`,
+    body: `
+      <style>
+        .combined-trajectories {
+          display: grid;
+          gap: 14px;
+        }
+
+        .combined-trajectory-toggle {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          overflow: hidden;
+          clip: rect(0 0 0 0);
+          clip-path: inset(50%);
+          white-space: nowrap;
+        }
+
+        .combined-trajectory-tabs {
+          position: sticky;
+          top: 0;
+          z-index: 70;
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 8px;
+          margin-top: 52px;
+          padding: 8px;
+          border: 1px solid #d4c39f;
+          border-radius: 8px;
+          background: rgba(255, 255, 255, 0.96);
+          box-shadow: 0 6px 18px rgba(45, 57, 42, 0.12);
+        }
+
+        .combined-trajectory-tab {
+          display: flex;
+          min-height: 46px;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid transparent;
+          border-radius: 6px;
+          padding: 9px 12px;
+          color: #294f3c;
+          cursor: pointer;
+          font-family: Arial, sans-serif;
+          font-size: 0.92rem;
+          font-weight: 800;
+          text-align: center;
+        }
+
+        #${withoutGodViewId}:checked ~ .combined-trajectory-tabs label[for="${withoutGodViewId}"],
+        #${withGodViewId}:checked ~ .combined-trajectory-tabs label[for="${withGodViewId}"] {
+          border-color: #294f3c;
+          background: #294f3c;
+          color: #ffffff;
+        }
+
+        .combined-trajectory-panel {
+          display: none;
+        }
+
+        #${withoutGodViewId}:checked ~ .combined-trajectory-panels .combined-trajectory-without-god,
+        #${withGodViewId}:checked ~ .combined-trajectory-panels .combined-trajectory-with-god {
+          display: block;
+        }
+
+        .combined-trajectory-panel > .rich-step {
+          padding-top: 10px;
+        }
+
+        @media (max-width: 560px) {
+          .combined-trajectory-tabs {
+            grid-template-columns: 1fr;
+          }
+
+          .combined-trajectory-tab {
+            min-height: 42px;
+          }
+        }
+      </style>
+      <section class="combined-trajectories" data-rich-lesson-step>
+        <input class="combined-trajectory-toggle" type="radio" name="${lessonId}-trajectory-view" id="${withoutGodViewId}" checked />
+        <input class="combined-trajectory-toggle" type="radio" name="${lessonId}-trajectory-view" id="${withGodViewId}" />
+        <nav class="combined-trajectory-tabs" aria-label="Choose a city trajectory">
+          <label class="combined-trajectory-tab" for="${withoutGodViewId}">City without God</label>
+          <label class="combined-trajectory-tab" for="${withGodViewId}">City with God</label>
+        </nav>
+        <div class="combined-trajectory-panels">
+          <section class="combined-trajectory-panel combined-trajectory-without-god">
+            ${cityWithoutGod.body ?? ""}
+          </section>
+          <section class="combined-trajectory-panel combined-trajectory-with-god">
+            ${cityWithGod.body ?? ""}
+          </section>
+        </div>
+      </section>
+    `,
   };
 };
 
