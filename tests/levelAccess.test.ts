@@ -329,7 +329,7 @@ describe("level access", () => {
     );
     expect(twoCitiesForum).toMatchObject({
       lessonId: competingParadigms?.id,
-      contentStepId: discussionStep?.id,
+      contentStepId: timelineStep?.id,
       kind: "discussion",
       required: true,
       completionMode: "postAndReply",

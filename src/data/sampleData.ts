@@ -5240,7 +5240,7 @@ export const activities: Activity[] = [
   {
     id: "activity-living-between-two-cities-discussion",
     lessonId: "level-1-session-2-competing-paradigms",
-    contentStepId: "level-1-session-2-competing-paradigms-living-between-two-cities-discussion",
+    contentStepId: "level-1-session-2-competing-paradigms-combined-city-trajectories",
     kind: "discussion",
     title: "Living Between Two Cities discussion forum",
     instructions:
