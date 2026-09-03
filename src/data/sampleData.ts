@@ -4992,71 +4992,43 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
         margin: 0;
       }
 
-      .two-cities-questions {
+      .two-cities-foundation {
         display: grid;
-        gap: 0;
-        margin: 0;
-        padding: 0;
-        list-style: none;
+        grid-template-columns: minmax(210px, 0.72fr) minmax(0, 1.28fr);
+        gap: clamp(20px, 4vw, 42px);
+        align-items: center;
+        padding: clamp(16px, 3vw, 28px) 0;
         border-top: 1px solid rgba(91, 58, 36, 0.2);
-      }
-
-      .two-cities-questions li {
-        display: grid;
-        grid-template-columns: 42px minmax(0, 1fr);
-        gap: 14px;
-        align-items: start;
-        padding: 18px 0;
         border-bottom: 1px solid rgba(91, 58, 36, 0.2);
       }
 
-      .two-cities-question-number {
-        width: 38px;
-        height: 38px;
-        display: grid;
-        place-items: center;
-        border-radius: 50%;
-        background: var(--forest);
-        color: var(--paper);
-        font-weight: 800;
-        line-height: 1;
-      }
-
-      .two-cities-questions strong {
-        display: block;
-        margin-bottom: 5px;
-        color: var(--forest);
-        font-size: 1.04rem;
-      }
-
-      .two-cities-questions p {
+      .two-cities-foundation figure {
         margin: 0;
       }
 
-      .two-cities-practice {
-        border-left: 5px solid var(--gold);
-        padding: 14px 0 14px 18px;
-      }
-
-      .two-cities-practice strong {
+      .two-cities-foundation img {
         display: block;
-        margin-bottom: 5px;
-        color: var(--forest);
+        width: 100%;
+        max-height: 520px;
+        border-radius: 8px;
+        object-fit: contain;
       }
 
-      .two-cities-practice p {
+      .two-cities-foundation p {
         margin: 0;
+        color: var(--ink);
+        font-size: clamp(1rem, 2vw, 1.14rem);
+        line-height: 1.72;
       }
 
-      @media (max-width: 520px) {
-        .two-cities-questions li {
-          grid-template-columns: 34px minmax(0, 1fr);
-          gap: 10px;
+      @media (max-width: 700px) {
+        .two-cities-foundation {
+          grid-template-columns: 1fr;
         }
 
-        .two-cities-question-number {
-          width: 32px;
-          height: 32px;
+        .two-cities-foundation figure {
+          width: min(100%, 376px);
+          justify-self: center;
         }
       }
     </style>
@@ -5074,7 +5046,7 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
         />
         <label class="audio-discussion-button" for="${lessonId}-which-city-money-building-audio">
           <img
-            src="https://static.wixstatic.com/media/7638b6_1f8d4701ddd94634946065ff3de07fda~mv2.png"
+            src="https://static.wixstatic.com/media/7638b6_4d265beddab44939b223089de3158338~mv2.png"
             alt="Open Which City Is Your Money Building audio discussion"
           />
         </label>
@@ -5111,33 +5083,16 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
         </p>
       </header>
 
-      <ol class="two-cities-questions" aria-label="Two cities discussion questions">
-        <li>
-          <span class="two-cities-question-number" aria-hidden="true">1</span>
-          <div>
-            <strong>Recognise the City without God</strong>
-            <p>Where do you see scarcity, fear, status, domination or exploitation shaping work, business, consumption or city life?</p>
-          </div>
-        </li>
-        <li>
-          <span class="two-cities-question-number" aria-hidden="true">2</span>
-          <div>
-            <strong>Notice signs of the City of God</strong>
-            <p>Where do you already see generosity, stewardship, justice, worship, healing or shared flourishing breaking into economic life?</p>
-          </div>
-        </li>
-        <li>
-          <span class="two-cities-question-number" aria-hidden="true">3</span>
-          <div>
-            <strong>Live faithfully between the two cities</strong>
-            <p>How can we resist the City without God without withdrawing from our workplaces, markets and communities while we await the New Jerusalem?</p>
-          </div>
-        </li>
-      </ol>
-
-      <section class="two-cities-practice" aria-label="Practical response">
-        <strong>Practical response</strong>
-        <p>End your forum post with one concrete economic choice you will practise this week as a sign of faithful presence.</p>
+      <section class="two-cities-foundation" aria-label="God's economic work">
+        <figure>
+          <img
+            src="https://static.wixstatic.com/media/7638b6_1f8d4701ddd94634946065ff3de07fda~mv2.png"
+            alt="Illustration accompanying the teaching about God's economic work"
+          />
+        </figure>
+        <p>
+          According to the Bible, our economic interactions - like work, running a business, investing and drinking a Coke - must be grounded in our understanding of God. A triune God has engaged in economic interactions with humans throughout history. God’s “<em>economic work</em>” includes creation, extends to redemption and culminates in a new creation. Our role is not just to produce, allocate, and distribute material goods and services. It also involves recognising God’s guidance over every aspect of life, including what we do and what we own, to achieve His ultimate purpose of salvation. Therefore, our economic worldview cannot be grounded in this is how the world works, but must be built around who God is and what He is doing.
+        </p>
       </section>
     </section>
   `, { includeCompleteButton: false }),
