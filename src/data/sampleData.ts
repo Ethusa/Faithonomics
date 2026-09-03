@@ -3812,13 +3812,13 @@ const createCityNotNeutralEconomicUnitStep = (lessonId: string): Lesson["content
                       <figure class="city-love-face city-love-front">
                         <img
                           src="https://static.wixstatic.com/media/7638b6_b36e305ca27a450fa4a58d4dc09af06e~mv2.png"
-                          alt="The City of Man flip card front."
+                          alt="The City without God flip card front."
                         />
                       </figure>
                       <span class="city-love-face city-love-back city-love-back-man" data-love-city="man">
-                        <strong>The City of Man (Civitas Terrena)</strong>
+                        <strong>The City without God (Civitas Terrena)</strong>
                         <p>
-                          The City of Man (Civitas Terrena) is built on disordered self-love. This is a love of self
+                          The City without God (Civitas Terrena) is built on disordered self-love. This is a love of self
                           that becomes so strong that it pushes God and neighbour aside. In this kind of city, people
                           seek power, status, security and success mainly for themselves.
                         </p>
@@ -5062,11 +5062,50 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
     </style>
 
     <section class="two-cities-discussion">
+      <section class="audio-discussion" aria-label="Which City Is Your Money Building audio discussion">
+        <p class="audio-discussion-copy">Click the image to listen to <strong>Which City Is Your Money Building?</strong></p>
+        <input
+          class="audio-discussion-toggle"
+          type="checkbox"
+          id="${lessonId}-which-city-money-building-audio"
+          data-rich-popup-toggle
+          data-audio-toggle
+          data-audio-target="#${lessonId}-which-city-money-building-audio-player"
+        />
+        <label class="audio-discussion-button" for="${lessonId}-which-city-money-building-audio">
+          <img
+            src="https://static.wixstatic.com/media/7638b6_1f8d4701ddd94634946065ff3de07fda~mv2.png"
+            alt="Open Which City Is Your Money Building audio discussion"
+          />
+        </label>
+        <div class="audio-popup" role="dialog" aria-label="Which City Is Your Money Building audio player">
+          <label class="audio-popup-scrim" for="${lessonId}-which-city-money-building-audio" aria-label="Close audio discussion"></label>
+          <div class="audio-popup-panel">
+            <div class="soundwave" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <audio id="${lessonId}-which-city-money-building-audio-player" controls preload="metadata">
+              <source src="https://static.wixstatic.com/mp3/7638b6_892fd48495d84ca7a131a8b908493da7.m4a" type="audio/mp4" />
+            </audio>
+            <label class="audio-popup-close" for="${lessonId}-which-city-money-building-audio">Close</label>
+          </div>
+        </div>
+      </section>
+
       <header>
         <p class="eyebrow">Two cities reflection</p>
         <h2>How Do We Live Between the Reality of Two Cities?</h2>
         <p class="intro">
-          We live in the tension between the City of Man, shaped by self-love, scarcity, status and control, and the
+          We live in the tension between the City without God, shaped by self-love, scarcity, status and control, and the
           City of God, shaped by love of God and neighbour, gift, justice, stewardship and healing. Reflect on how
           both trajectories appear in ordinary economic life and how faithful presence can point toward the New Jerusalem.
         </p>
@@ -5076,7 +5115,7 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
         <li>
           <span class="two-cities-question-number" aria-hidden="true">1</span>
           <div>
-            <strong>Recognise the City of Man</strong>
+            <strong>Recognise the City without God</strong>
             <p>Where do you see scarcity, fear, status, domination or exploitation shaping work, business, consumption or city life?</p>
           </div>
         </li>
@@ -5091,7 +5130,7 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
           <span class="two-cities-question-number" aria-hidden="true">3</span>
           <div>
             <strong>Live faithfully between the two cities</strong>
-            <p>How can we resist the City of Man without withdrawing from our workplaces, markets and communities while we await the New Jerusalem?</p>
+            <p>How can we resist the City without God without withdrawing from our workplaces, markets and communities while we await the New Jerusalem?</p>
           </div>
         </li>
       </ol>
@@ -5190,6 +5229,10 @@ export const lessons: Lesson[] = curriculum.flatMap((level, levelIndex) =>
         content[businessApplicationIndex] = createCombinedCityTrajectoriesStep(id);
       }
       content.splice(4, 0, createTwoCitiesDiscussionStep(id));
+      const reflectionIndex = content.findIndex((block) => block.id === `${id}-session-reflection`);
+      if (reflectionIndex !== -1) {
+        content.splice(reflectionIndex, 1);
+      }
     }
 
     if (levelNumber === 1 && sessionNumber === 3) {
@@ -5246,7 +5289,7 @@ export const activities: Activity[] = [
     kind: "discussion",
     title: "Living Between Two Cities discussion forum",
     instructions:
-      "Drawing on the two city trajectories, write one post that identifies a City of Man pattern in everyday economic life, recognises a sign of the City of God, and reflects on how we live faithfully between these two realities while awaiting the New Jerusalem. End with one concrete economic practice for this week. Then reply thoughtfully to two course participants.",
+      "Drawing on the two city trajectories, write one post that identifies a City without God pattern in everyday economic life, recognises a sign of the City of God, and reflects on how we live faithfully between these two realities while awaiting the New Jerusalem. End with one concrete economic practice for this week. Then reply thoughtfully to two course participants.",
     required: true,
     maxScore: 5,
     completionMode: "postAndReply",
@@ -5459,7 +5502,7 @@ export const discussionPosts: DiscussionPost[] = [
     memberId: "member-learner-002",
     authorName: "Thabo Mokoena",
     body:
-      "I see the City of Man in workplace cultures where status and constant availability become measures of human worth. I also see the City of God when colleagues share knowledge and protect one another from burnout. Living between the two means staying present while refusing to treat productivity as identity. This week I will protect one honest rest boundary and help a colleague finish a difficult task.",
+      "I see the City without God in workplace cultures where status and constant availability become measures of human worth. I also see the City of God when colleagues share knowledge and protect one another from burnout. Living between the two means staying present while refusing to treat productivity as identity. This week I will protect one honest rest boundary and help a colleague finish a difficult task.",
     createdAt: "2026-06-22T08:34:00.000Z",
   },
   {
@@ -5477,7 +5520,7 @@ export const discussionPosts: DiscussionPost[] = [
     memberId: "member-learner-004",
     authorName: "Johan van der Merwe",
     body:
-      "The City of Man appears when a business treats customers, workers and suppliers only as costs or revenue. Signs of the City of God appear when profit supports excellent work, fair relationships and service. We live between the cities by reforming ordinary institutions instead of escaping them or idolising them. This week I will review one supplier decision for fairness as well as price.",
+      "The City without God appears when a business treats customers, workers and suppliers only as costs or revenue. Signs of the City of God appear when profit supports excellent work, fair relationships and service. We live between the cities by reforming ordinary institutions instead of escaping them or idolising them. This week I will review one supplier decision for fairness as well as price.",
     createdAt: "2026-06-22T08:43:00.000Z",
   },
   {

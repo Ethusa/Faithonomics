@@ -114,7 +114,6 @@ describe("level access", () => {
       "Step 3: The City Is Not a Neutral Economic Unit",
       "Step 4: The Two Trajectories of the City",
       "Step 5: Living Between Two Cities Discussion",
-      "Step 6: Reflection Checkpoint",
     ]);
 
     const cityStep = competingParadigms?.content[1];
@@ -179,7 +178,7 @@ describe("level access", () => {
     expect(neutralStep?.body).toContain("7638b6_b36e305ca27a450fa4a58d4dc09af06e");
     expect(neutralStep?.body).toContain("7638b6_a5926de0f5dd4633a4066902b05a1db5");
     expect(neutralStep?.body).toContain("augustine-copy");
-    expect(neutralStep?.body).toContain("The City of Man (Civitas Terrena)");
+    expect(neutralStep?.body).toContain("The City without God (Civitas Terrena)");
     expect(neutralText).toContain("people seek power, status, security and success mainly for themselves");
     expect(neutralStep?.body).toContain("The City of God (Civitas Dei)");
     expect(neutralText).toContain("service, justice, community and shared flourishing");
@@ -309,11 +308,17 @@ describe("level access", () => {
     const discussionBody = discussionStep?.body ?? "";
     expect(discussionStep?.kind).toBe("customHtml");
     expect(discussionBody).toContain("How Do We Live Between the Reality of Two Cities?");
-    expect(discussionBody).toContain("Recognise the City of Man");
+    expect(discussionBody).toContain("Recognise the City without God");
     expect(discussionBody).toContain("Notice signs of the City of God");
     expect(discussionBody).toContain("Live faithfully between the two cities");
     expect(discussionBody).toContain("one concrete economic choice");
+    expect(discussionBody).toContain("Which City Is Your Money Building?");
+    expect(discussionBody).toContain("7638b6_1f8d4701ddd94634946065ff3de07fda");
+    expect(discussionBody).toContain("7638b6_892fd48495d84ca7a131a8b908493da7.m4a");
+    expect(discussionBody).toContain('class="audio-discussion"');
+    expect(discussionBody).toContain('class="audio-popup"');
     expect(discussionBody).not.toContain("data-classroom-complete");
+    expect(competingParadigms?.content.some((block) => block.id.endsWith("-session-reflection"))).toBe(false);
 
     const twoCitiesForum = activities.find(
       (activity) => activity.id === "activity-living-between-two-cities-discussion",
@@ -326,7 +331,7 @@ describe("level access", () => {
       completionMode: "postAndReply",
       replyRequirement: 2,
     });
-    expect(twoCitiesForum?.instructions).toContain("City of Man");
+    expect(twoCitiesForum?.instructions).toContain("City without God");
     expect(twoCitiesForum?.instructions).toContain("City of God");
     expect(twoCitiesForum?.instructions).toContain("two course participants");
     const twoCitiesPosts = discussionPosts.filter((post) => post.activityId === twoCitiesForum?.id);
