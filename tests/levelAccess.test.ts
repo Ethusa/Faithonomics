@@ -332,8 +332,9 @@ describe("level access", () => {
     expect(discussionBody).toContain("Being Citizens of God’s City: Faithful Presence in the City of Man");
     expect(discussionBody).toContain("the call to resist");
     expect(discussionBody).toContain("the call to engage");
-    expect(discussionBody).toContain("Open engagement guide");
-    expect(discussionBody).toContain("Open resistance guide");
+    expect(discussionBody).toContain("The Command to Engage");
+    expect(discussionBody).toContain("The Command to Resist");
+    expect(discussionBody).not.toContain("[20, 31]");
     expect(discussionBody).toContain("7638b6_1f432e0ca93f47f78f97f71a15b2a228");
     expect(discussionBody).toContain("7638b6_a2821415eaa34850898577caa2a7ddf7");
     expect(discussionBody.match(/class="two-city-contrast-card"/g)).toHaveLength(6);

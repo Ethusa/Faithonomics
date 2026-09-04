@@ -5312,6 +5312,10 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
       .faithful-presence-popup-button {
         width: fit-content;
         min-height: 42px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
         border: 1px solid var(--forest);
         border-radius: 6px;
         padding: 9px 13px;
@@ -5320,6 +5324,11 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
         cursor: pointer;
         font: inherit;
         font-weight: 800;
+      }
+
+      .faithful-presence-click-icon {
+        font-size: 1.05rem;
+        line-height: 1;
       }
 
       .faithful-presence-popup-button:hover,
@@ -5753,8 +5762,8 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
           <h2>Being Citizens of God’s City: Faithful Presence in the City of Man</h2>
         </header>
         <div class="faithful-presence-intro">
-          <p>How do we actually live as citizens of God’s coming city while working inside the everyday markets of our world [20, 31]? The Bible shows us that faithful presence is not about running away to hide in isolated communities, nor is it about blindly blending in with the crowd [20, 31]. Instead, it is a delicate daily dance guided by two powerful commands: <strong>the call to resist</strong> and <strong>the call to engage</strong> [31].</p>
-          <p>These two movements act like our economic compass [20]. They show us exactly when we must stand our ground to protect human dignity, and when we must roll up our sleeves to bring God’s love and repair directly into our workplaces [20, 31].</p>
+          <p>How do we actually live as citizens of God’s coming city while working inside the everyday markets of our world? The Bible shows us that faithful presence is not about running away to hide in isolated communities, nor is it about blindly blending in with the crowd. Instead, it is a delicate daily dance guided by two powerful commands: <strong>the call to resist</strong> and <strong>the call to engage</strong>.</p>
+          <p>These two movements act like our economic compass. They show us exactly when we must stand our ground to protect human dignity, and when we must roll up our sleeves to bring God’s love and repair directly into our workplaces.</p>
           <p>Here is how we navigate this tension:</p>
         </div>
         <div class="faithful-presence-tabs" role="tablist" aria-label="Faithful presence commands">
@@ -5765,21 +5774,21 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
           <article class="faithful-presence-panel faithful-presence-panel--engage">
             <div class="faithful-presence-panel-copy">
               <h3>&#x1F331; The Command to Engage</h3>
-              <p>Engagement brings curiosity, skill, and presence into the places where work happens [16, 31]. It asks us to listen closely, contribute generously, and seek repair from within the relationships we have been given [16, 31].</p>
+              <p>Engagement brings curiosity, skill, and presence into the places where work happens. It asks us to listen closely, contribute generously, and seek repair from within the relationships we have been given.</p>
             </div>
             <aside class="faithful-presence-callout">
-              <p>Engage when participation can make room for truth, care, and a more humane shared life [16, 31].</p>
-              <button class="faithful-presence-popup-button" type="button" data-rich-dialog-open="#${lessonId}-faithful-presence-engage-guide">Open engagement guide</button>
+              <p>Engage when participation can make room for truth, care, and a more humane shared life.</p>
+              <button class="faithful-presence-popup-button" type="button" data-rich-dialog-open="#${lessonId}-faithful-presence-engage-guide">The Command to Engage <span class="faithful-presence-click-icon" aria-hidden="true">&#x1F5B1;</span></button>
             </aside>
           </article>
           <article class="faithful-presence-panel faithful-presence-panel--resist">
             <div class="faithful-presence-panel-copy">
               <h3>&#x1F6E1;&#xFE0F; The Command to Resist</h3>
-              <p>Resistance refuses the patterns that deform people and communities [20, 31]. It may look like setting a boundary, telling the truth about harm, declining a false measure of success, or protecting a different rhythm of rest and worship [16, 20, 31].</p>
+              <p>Resistance refuses the patterns that deform people and communities. It may look like setting a boundary, telling the truth about harm, declining a false measure of success, or protecting a different rhythm of rest and worship.</p>
             </div>
             <aside class="faithful-presence-callout">
-              <p>Resist when the cost of belonging to the system is silence, complicity, or the erosion of what matters most [20, 31].</p>
-              <button class="faithful-presence-popup-button" type="button" data-rich-dialog-open="#${lessonId}-faithful-presence-resist-guide">Open resistance guide</button>
+              <p>Resist when the cost of belonging to the system is silence, complicity, or the erosion of what matters most.</p>
+              <button class="faithful-presence-popup-button" type="button" data-rich-dialog-open="#${lessonId}-faithful-presence-resist-guide">The Command to Resist <span class="faithful-presence-click-icon" aria-hidden="true">&#x1F5B1;</span></button>
             </aside>
           </article>
         </div>
