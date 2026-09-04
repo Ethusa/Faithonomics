@@ -5167,9 +5167,7 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
 
       .two-cities-in-between-content {
         display: grid;
-        grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
-        gap: clamp(22px, 4vw, 52px);
-        align-items: center;
+        gap: 24px;
       }
 
       .two-cities-in-between figure {
@@ -5183,7 +5181,9 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
       .two-cities-in-between figure img {
         display: block;
         width: 100%;
+        aspect-ratio: 16 / 9;
         height: auto;
+        object-fit: fill;
       }
 
       .two-cities-in-between-copy {
@@ -5393,10 +5393,6 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
             grid-template-columns: repeat(2, minmax(0, 1fr));
           }
 
-          .two-cities-in-between-content {
-            grid-template-columns: 1fr;
-          }
-
         .two-city-contrast-card,
         .two-city-contrast-scene {
           min-height: 280px;
@@ -5487,18 +5483,18 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
           <h2>Living in the In-Between</h2>
         </header>
         <div class="two-cities-in-between-content">
-          <figure>
-            <img
-              src="https://static.wixstatic.com/media/7638b6_91a34d5451d44738b3dffa85f4495aa2~mv2.gif"
-              alt="Animated illustration of living between Babylon and the New Jerusalem"
-            />
-          </figure>
           <div class="two-cities-in-between-copy">
             <p>We do not live in a perfect world, nor do we live in a completely hopeless one. Instead, <strong>we live in the "in-between"</strong>.</p>
             <p>Every single day, we have to navigate the messy, practical overlap between two opposite forces: <strong>Babylon (the City without God)</strong> and the <strong>New Jerusalem (the City of God)</strong>.</p>
             <p>As we go to our classes, work at our jobs, and buy our food, we are constantly pulled in two directions. One side tempts us to make decisions out of fear and self-interest, treating our neighbours as rivals. The other side invites us to trust in God’s generous provision, using our everyday choices to bring justice and healing to those around us.</p>
             <p>Living faithfully in this space means <strong>we participate in the economy without bowing to its idols</strong>. We do not run away from society, but we refuse to let greed dictate how we treat others or how we value our work.</p>
           </div>
+          <figure>
+            <img
+              src="https://static.wixstatic.com/media/7638b6_91a34d5451d44738b3dffa85f4495aa2~mv2.gif"
+              alt="Animated illustration of living between Babylon and the New Jerusalem"
+            />
+          </figure>
         </div>
       </section>
     </section>
