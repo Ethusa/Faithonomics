@@ -5740,10 +5740,7 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
         </header>
         <div class="two-cities-in-between-content">
           <div class="two-cities-in-between-copy">
-            <p>We do not live in a perfect world, nor do we live in a completely hopeless one. Instead, <strong>we live in the "in-between"</strong>.</p>
-            <p>Every single day, we have to navigate the messy, practical overlap between two opposite forces: <strong>Babylon (the City without God)</strong> and the <strong>New Jerusalem (the City of God)</strong>.</p>
-            <p>As we go to our classes, work at our jobs, and buy our food, we are constantly pulled in two directions. One side tempts us to make decisions out of fear and self-interest, treating our neighbours as rivals. The other side invites us to trust in God’s generous provision, using our everyday choices to bring justice and healing to those around us.</p>
-            <p>Living faithfully in this space means <strong>we participate in the economy without bowing to its idols</strong>. We do not run away from society, but we refuse to let greed dictate how we treat others or how we value our work.</p>
+            <p>In the <strong>"in-between"</strong> of Babylon and the New Jerusalem, we participate in everyday economic life without bowing to its idols, choosing God’s generous provision, justice, and healing over fear and self-interest.</p>
           </div>
           <figure>
             <img

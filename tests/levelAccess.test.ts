@@ -325,6 +325,7 @@ describe("level access", () => {
     expect(discussionBody).toContain("every economy is spiritual because it is built on what we love, value, and worship.");
     expect(discussionBody).toContain("Babylon represents the City without God, while New Jerusalem embodies the City of God");
     expect(discussionBody).toContain("Living in the In-Between");
+    expect(discussionBody).toContain('In the <strong>"in-between"</strong> of Babylon and the New Jerusalem');
     expect(discussionBody).toContain("we participate in the economy without bowing to its idols");
     expect(discussionBody).toContain("7638b6_91a34d5451d44738b3dffa85f4495aa2~mv2.gif");
     expect(discussionBody).toContain(".two-cities-in-between-content {\n        display: grid;\n        gap: 24px;");
