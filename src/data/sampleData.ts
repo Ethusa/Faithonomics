@@ -4967,7 +4967,106 @@ const createCombinedCityTrajectoriesStep = (lessonId: string): Lesson["content"]
   };
 };
 
-const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][number] => ({
+const twoCitiesContrastCards = [
+  {
+    key: "spiritual-centre",
+    title: "Spiritual Centre",
+    imageUrl: "https://static.wixstatic.com/media/7638b6_855f1ad517a1435480e9d5cd9b73bb93~mv2.png",
+    babylon: "Human pride, self-glory, wealth, and power apart from God.",
+    newJerusalem: "God's presence, glory, and the throne of God and of the Lamb.",
+  },
+  {
+    key: "view-of-people",
+    title: "View of People",
+    imageUrl: "https://static.wixstatic.com/media/7638b6_511388be90cb42a986331931d222ca91~mv2.png",
+    babylon: "Commodities, slaves, or consumers; economic units and disposable objects to be purchased and discarded.",
+    newJerusalem: "Image-bearers, family, priests, and servants with inherent dignity and spiritual worth.",
+  },
+  {
+    key: "view-of-wealth",
+    title: "View of Wealth",
+    imageUrl: "https://static.wixstatic.com/media/7638b6_bd952b5fa70d448ab15cccafa9c0e9d5~mv2.png",
+    babylon: "Ultimate security, status, and luxury achieved through hoarding, predatory accumulation, and power.",
+    newJerusalem: "A gift from God; stewardship, blessing, and shared abundance used for service.",
+  },
+  {
+    key: "view-of-work",
+    title: "View of Work",
+    imageUrl: "https://static.wixstatic.com/media/7638b6_84a6fb3b318649e9907772b5ac481411~mv2.png",
+    babylon: "Toil, exploitation, performance-driven mastery, and the twisting of craftsmanship into slavery.",
+    newJerusalem: "Vocation, co-creative partnership with God, worshipful service, and creativity freed from the curse of toil.",
+  },
+  {
+    key: "social-fruit",
+    title: "Social Fruit",
+    imageUrl: "https://static.wixstatic.com/media/7638b6_d3154fd777e74fbcb84f5aef137cb831~mv2.png",
+    babylon: "Intoxication, deception, excess, oppression, violence, anxiety, moral corruption, and environmental degradation.",
+    newJerusalem: "Healing of the nations, justice, righteousness, peace (shalom), restored life, and universal flourishing.",
+  },
+  {
+    key: "final-destiny",
+    title: "Final Destiny",
+    imageUrl: "https://static.wixstatic.com/media/7638b6_d568232ec526406594c8b8c22c30d89b~mv2.png",
+    babylon: "Sudden collapse, judgment, and destruction by fire.",
+    newJerusalem: "Enduring life, renewal of the material cosmos, and eternal communion with God.",
+  },
+] as const;
+
+const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][number] => {
+  const contrastCardsMarkup = twoCitiesContrastCards
+    .map((card) => {
+      const toggleId = `${lessonId}-contrast-${card.key}`;
+      const babylonPopupId = `${lessonId}-contrast-${card.key}-babylon`;
+      const newJerusalemPopupId = `${lessonId}-contrast-${card.key}-new-jerusalem`;
+
+      return `
+        <article class="two-city-contrast-card">
+          <input class="two-city-contrast-toggle" type="checkbox" id="${toggleId}" />
+          <div class="two-city-contrast-scene">
+            <div class="two-city-contrast-inner">
+              <label class="two-city-contrast-face two-city-contrast-front" for="${toggleId}">
+                <img src="${card.imageUrl}" alt="${card.title} comparison" />
+                <span>${card.title}</span>
+              </label>
+              <div class="two-city-contrast-face two-city-contrast-back">
+                <label class="two-city-contrast-return" for="${toggleId}">
+                  <strong>${card.title}</strong>
+                  <span>Choose a city to compare</span>
+                </label>
+                <div class="two-city-contrast-actions">
+                  <button type="button" data-rich-dialog-open="#${babylonPopupId}">Babylon: The City without God</button>
+                  <button type="button" data-rich-dialog-open="#${newJerusalemPopupId}">New Jerusalem: The City of God</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+        <section class="two-city-contrast-popup" id="${babylonPopupId}" role="dialog" aria-modal="true" aria-labelledby="${babylonPopupId}-title" data-rich-dialog hidden>
+          <button class="two-city-contrast-scrim" type="button" aria-label="Close ${card.title} Babylon comparison" data-rich-dialog-close></button>
+          <div class="two-city-contrast-popup-panel">
+            <header>
+              <p class="eyebrow">${card.title}</p>
+              <h3 id="${babylonPopupId}-title">Babylon: The City without God</h3>
+              <button class="two-city-contrast-close" type="button" aria-label="Close ${card.title} Babylon comparison" data-rich-dialog-close>&times;</button>
+            </header>
+            <p>${card.babylon}</p>
+          </div>
+        </section>
+        <section class="two-city-contrast-popup" id="${newJerusalemPopupId}" role="dialog" aria-modal="true" aria-labelledby="${newJerusalemPopupId}-title" data-rich-dialog hidden>
+          <button class="two-city-contrast-scrim" type="button" aria-label="Close ${card.title} New Jerusalem comparison" data-rich-dialog-close></button>
+          <div class="two-city-contrast-popup-panel">
+            <header>
+              <p class="eyebrow">${card.title}</p>
+              <h3 id="${newJerusalemPopupId}-title">New Jerusalem: The City of God</h3>
+              <button class="two-city-contrast-close" type="button" aria-label="Close ${card.title} New Jerusalem comparison" data-rich-dialog-close>&times;</button>
+            </header>
+            <p>${card.newJerusalem}</p>
+          </div>
+        </section>`;
+    })
+    .join("");
+
+  return {
   id: `${lessonId}-living-between-two-cities-discussion`,
   kind: "customHtml",
   title: "Step 5: Living Between Two Cities Discussion",
@@ -5020,6 +5119,206 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
         line-height: 1.72;
       }
 
+      .two-cities-contrast {
+        display: grid;
+        gap: 16px;
+      }
+
+      .two-cities-contrast header h2,
+      .two-cities-contrast header p {
+        margin: 0;
+      }
+
+      .two-cities-contrast header {
+        display: grid;
+        gap: 7px;
+      }
+
+      .two-city-contrast-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: clamp(14px, 2vw, 22px);
+      }
+
+      .two-city-contrast-card {
+        min-height: 320px;
+        perspective: 1200px;
+      }
+
+      .two-city-contrast-toggle {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+      }
+
+      .two-city-contrast-scene,
+      .two-city-contrast-inner,
+      .two-city-contrast-face {
+        width: 100%;
+        height: 100%;
+      }
+
+      .two-city-contrast-scene {
+        min-height: 320px;
+      }
+
+      .two-city-contrast-inner {
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 420ms ease;
+      }
+
+      .two-city-contrast-toggle:checked + .two-city-contrast-scene .two-city-contrast-inner {
+        transform: rotateY(180deg);
+      }
+
+      .two-city-contrast-face {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        border: 1px solid rgba(91, 58, 36, 0.24);
+        border-radius: 8px;
+        backface-visibility: hidden;
+      }
+
+      .two-city-contrast-front {
+        display: grid;
+        grid-template-rows: 1fr auto;
+        background: var(--paper);
+        cursor: pointer;
+      }
+
+      .two-city-contrast-front img {
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+        object-fit: cover;
+      }
+
+      .two-city-contrast-front span {
+        padding: 12px 14px;
+        background: var(--forest);
+        color: var(--paper);
+        font-weight: 850;
+        text-align: center;
+      }
+
+      .two-city-contrast-back {
+        display: grid;
+        grid-template-rows: 1fr auto;
+        gap: 14px;
+        padding: 22px;
+        background: #f7f3e8;
+        color: var(--forest);
+        transform: rotateY(180deg);
+      }
+
+      .two-city-contrast-return {
+        display: grid;
+        align-content: center;
+        gap: 8px;
+        cursor: pointer;
+        text-align: center;
+      }
+
+      .two-city-contrast-return strong {
+        font-size: 1.32rem;
+      }
+
+      .two-city-contrast-actions {
+        display: grid;
+        gap: 9px;
+      }
+
+      .two-city-contrast-actions button {
+        min-height: 48px;
+        border: 1px solid var(--forest);
+        border-radius: 6px;
+        padding: 8px 10px;
+        background: transparent;
+        color: var(--forest);
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.84rem;
+        font-weight: 800;
+      }
+
+      .two-city-contrast-actions button:hover,
+      .two-city-contrast-actions button:focus-visible {
+        background: var(--forest);
+        color: var(--paper);
+      }
+
+      .two-city-contrast-popup {
+        position: fixed;
+        inset: 0;
+        z-index: 900;
+        display: grid;
+        place-items: center;
+        padding: 20px;
+      }
+
+      .two-city-contrast-popup[hidden] {
+        display: none;
+      }
+
+      .two-city-contrast-scrim {
+        position: absolute;
+        inset: 0;
+        border: 0;
+        background: rgba(24, 31, 25, 0.72);
+        cursor: pointer;
+      }
+
+      .two-city-contrast-popup-panel {
+        position: relative;
+        z-index: 1;
+        width: min(100%, 620px);
+        border: 1px solid rgba(185, 146, 69, 0.62);
+        border-radius: 8px;
+        padding: clamp(22px, 4vw, 36px);
+        background: var(--paper);
+        box-shadow: 0 22px 50px rgba(0, 0, 0, 0.3);
+      }
+
+      .two-city-contrast-popup-panel header {
+        position: relative;
+        display: grid;
+        gap: 8px;
+        padding-right: 42px;
+      }
+
+      .two-city-contrast-popup-panel header h3,
+      .two-city-contrast-popup-panel header p,
+      .two-city-contrast-popup-panel > p {
+        margin: 0;
+      }
+
+      .two-city-contrast-popup-panel > p {
+        margin-top: 18px;
+        color: var(--ink);
+        font-size: 1.06rem;
+        line-height: 1.68;
+      }
+
+      .two-city-contrast-close {
+        position: absolute;
+        top: -5px;
+        right: 0;
+        width: 36px;
+        height: 36px;
+        border: 0;
+        border-radius: 50%;
+        background: var(--forest);
+        color: var(--paper);
+        cursor: pointer;
+        font-size: 1.5rem;
+        line-height: 1;
+      }
+
       @media (max-width: 700px) {
         .two-cities-foundation {
           grid-template-columns: 1fr;
@@ -5028,6 +5327,21 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
         .two-cities-foundation figure {
           width: min(100%, 376px);
           justify-self: center;
+        }
+
+        .two-city-contrast-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .two-city-contrast-card,
+        .two-city-contrast-scene {
+          min-height: 280px;
+        }
+      }
+
+      @media (max-width: 460px) {
+        .two-city-contrast-grid {
+          grid-template-columns: 1fr;
         }
       }
     </style>
@@ -5088,9 +5402,20 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
           According to the Bible, our economic interactions - like work, running a business, investing and drinking a Coke - must be grounded in our understanding of God. A triune God has engaged in economic interactions with humans throughout history. God’s “<em>economic work</em>” includes creation, extends to redemption and culminates in a new creation. Our role is not just to produce, allocate, and distribute material goods and services. It also involves recognising God’s guidance over every aspect of life, including what we do and what we own, to achieve His ultimate purpose of salvation. Therefore, our economic worldview cannot be grounded in this is how the world works, but must be built around who God is and what He is doing.
         </p>
       </section>
+
+      <section class="two-cities-contrast" aria-label="Contrasting the two cities">
+        <header>
+          <p class="eyebrow">Two city comparison</p>
+          <h2>Contrasting the Two Cities</h2>
+        </header>
+        <div class="two-city-contrast-grid">
+          ${contrastCardsMarkup}
+        </div>
+      </section>
     </section>
   `, { includeCompleteButton: false }),
-});
+  };
+};
 
 export const lessons: Lesson[] = curriculum.flatMap((level, levelIndex) =>
   level.sessions.map((sessionTitle, sessionIndex) => {

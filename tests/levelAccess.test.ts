@@ -321,6 +321,17 @@ describe("level access", () => {
     expect(discussionBody).toContain("God’s “<em>economic work</em>”");
     expect(discussionBody).toContain('class="two-cities-foundation"');
     expect(discussionBody).toContain("grid-template-columns: repeat(2, minmax(0, 1fr))");
+    expect(discussionBody).toContain("Contrasting the Two Cities");
+    expect(discussionBody.match(/class="two-city-contrast-card"/g)).toHaveLength(6);
+    expect(discussionBody.match(/Babylon: The City without God/g)).toHaveLength(12);
+    expect(discussionBody.match(/New Jerusalem: The City of God/g)).toHaveLength(12);
+    expect(discussionBody.match(/data-rich-dialog hidden/g)).toHaveLength(12);
+    expect(discussionBody).toContain("7638b6_855f1ad517a1435480e9d5cd9b73bb93");
+    expect(discussionBody).toContain("7638b6_511388be90cb42a986331931d222ca91");
+    expect(discussionBody).toContain("7638b6_bd952b5fa70d448ab15cccafa9c0e9d5");
+    expect(discussionBody).toContain("7638b6_84a6fb3b318649e9907772b5ac481411");
+    expect(discussionBody).toContain("7638b6_d3154fd777e74fbcb84f5aef137cb831");
+    expect(discussionBody).toContain("7638b6_d568232ec526406594c8b8c22c30d89b");
     expect(discussionBody).toContain('class="audio-discussion"');
     expect(discussionBody).toContain('class="audio-popup"');
     expect(discussionBody).not.toContain("data-classroom-complete");
