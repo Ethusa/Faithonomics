@@ -328,6 +328,7 @@ describe("level access", () => {
     expect(discussionBody).toContain("we participate in the economy without bowing to its idols");
     expect(discussionBody).toContain("7638b6_91a34d5451d44738b3dffa85f4495aa2~mv2.gif");
     expect(discussionBody).toContain(".two-cities-in-between-content {\n        display: grid;\n        gap: 24px;");
+    expect(discussionBody).toContain("grid-template-columns: repeat(6, minmax(0, 1fr));");
     expect(discussionBody.match(/class="two-city-contrast-card"/g)).toHaveLength(6);
     expect(discussionBody.match(/Babylon: The City without God/g)).toHaveLength(12);
     expect(discussionBody.match(/New Jerusalem: The City of God/g)).toHaveLength(12);

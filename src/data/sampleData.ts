@@ -5196,12 +5196,13 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
 
       .two-city-contrast-grid {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: clamp(14px, 2vw, 22px);
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 10px;
       }
 
       .two-city-contrast-card {
-        min-height: 320px;
+        min-height: 0;
+        aspect-ratio: 0.76;
         perspective: 1200px;
       }
 
@@ -5222,7 +5223,7 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
       }
 
       .two-city-contrast-scene {
-        min-height: 320px;
+        min-height: 0;
       }
 
       .two-city-contrast-inner {
@@ -5259,18 +5260,20 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
       }
 
       .two-city-contrast-front span {
-        padding: 12px 14px;
+        padding: 8px 6px;
         background: var(--forest);
         color: var(--paper);
+        font-size: clamp(0.68rem, 0.9vw, 0.9rem);
         font-weight: 850;
+        line-height: 1.2;
         text-align: center;
       }
 
       .two-city-contrast-back {
         display: grid;
         grid-template-rows: 1fr auto;
-        gap: 14px;
-        padding: 22px;
+        gap: 8px;
+        padding: 12px;
         background: #f7f3e8;
         color: var(--forest);
         transform: rotateY(180deg);
@@ -5279,30 +5282,30 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
       .two-city-contrast-return {
         display: grid;
         align-content: center;
-        gap: 8px;
+        gap: 5px;
         cursor: pointer;
         text-align: center;
       }
 
       .two-city-contrast-return strong {
-        font-size: 1.32rem;
+        font-size: clamp(0.78rem, 1vw, 1rem);
       }
 
       .two-city-contrast-actions {
         display: grid;
-        gap: 9px;
+        gap: 6px;
       }
 
       .two-city-contrast-actions button {
-        min-height: 48px;
+        min-height: 38px;
         border: 1px solid var(--forest);
         border-radius: 6px;
-        padding: 8px 10px;
+        padding: 6px;
         background: transparent;
         color: var(--forest);
         cursor: pointer;
         font: inherit;
-        font-size: 0.84rem;
+        font-size: clamp(0.6rem, 0.76vw, 0.76rem);
         font-weight: 800;
       }
 
@@ -5379,7 +5382,48 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
         line-height: 1;
       }
 
-        @media (max-width: 700px) {
+      @media (max-width: 850px) {
+        .two-city-contrast-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: clamp(14px, 2vw, 22px);
+        }
+
+        .two-city-contrast-card,
+        .two-city-contrast-scene {
+          min-height: 280px;
+          aspect-ratio: auto;
+        }
+
+        .two-city-contrast-front span {
+          padding: 12px 14px;
+          font-size: 1rem;
+        }
+
+        .two-city-contrast-back {
+          gap: 14px;
+          padding: 22px;
+        }
+
+        .two-city-contrast-return {
+          gap: 8px;
+        }
+
+        .two-city-contrast-return strong {
+          font-size: 1.32rem;
+        }
+
+        .two-city-contrast-actions {
+          gap: 9px;
+        }
+
+        .two-city-contrast-actions button {
+          min-height: 48px;
+          padding: 8px 10px;
+          font-size: 0.84rem;
+        }
+      }
+
+      @media (max-width: 700px) {
         .two-cities-foundation {
           grid-template-columns: 1fr;
         }
@@ -5389,9 +5433,9 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
           justify-self: center;
         }
 
-          .two-city-contrast-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-          }
+        .two-city-contrast-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
 
         .two-city-contrast-card,
         .two-city-contrast-scene {
