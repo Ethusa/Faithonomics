@@ -308,6 +308,7 @@ describe("level access", () => {
     const discussionBody = discussionStep?.body ?? "";
     expect(discussionStep?.kind).toBe("customHtml");
     expect(discussionBody).toContain("How Do We Live Between the Reality of Two Cities?");
+    expect(discussionBody).not.toContain("We live in the tension between the City without God");
     expect(discussionBody).not.toContain("Recognise the City without God");
     expect(discussionBody).not.toContain("Notice signs of the City of God");
     expect(discussionBody).not.toContain("Live faithfully between the two cities");
@@ -319,6 +320,7 @@ describe("level access", () => {
     expect(discussionBody).toContain("According to the Bible, our economic interactions");
     expect(discussionBody).toContain("God’s “<em>economic work</em>”");
     expect(discussionBody).toContain('class="two-cities-foundation"');
+    expect(discussionBody).toContain("grid-template-columns: repeat(2, minmax(0, 1fr))");
     expect(discussionBody).toContain('class="audio-discussion"');
     expect(discussionBody).toContain('class="audio-popup"');
     expect(discussionBody).not.toContain("data-classroom-complete");

@@ -4988,28 +4988,27 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
         gap: 10px;
       }
 
-      .two-cities-discussion .intro {
-        margin: 0;
-      }
-
       .two-cities-foundation {
         display: grid;
-        grid-template-columns: minmax(210px, 0.72fr) minmax(0, 1.28fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: clamp(20px, 4vw, 42px);
-        align-items: center;
+        align-items: stretch;
         padding: clamp(16px, 3vw, 28px) 0;
         border-top: 1px solid rgba(91, 58, 36, 0.2);
         border-bottom: 1px solid rgba(91, 58, 36, 0.2);
       }
 
       .two-cities-foundation figure {
+        display: grid;
+        place-items: center;
         margin: 0;
       }
 
       .two-cities-foundation img {
         display: block;
         width: 100%;
-        max-height: 520px;
+        height: 100%;
+        max-height: 480px;
         border-radius: 8px;
         object-fit: contain;
       }
@@ -5076,11 +5075,6 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
       <header>
         <p class="eyebrow">Two cities reflection</p>
         <h2>How Do We Live Between the Reality of Two Cities?</h2>
-        <p class="intro">
-          We live in the tension between the City without God, shaped by self-love, scarcity, status and control, and the
-          City of God, shaped by love of God and neighbour, gift, justice, stewardship and healing. Reflect on how
-          both trajectories appear in ordinary economic life and how faithful presence can point toward the New Jerusalem.
-        </p>
       </header>
 
       <section class="two-cities-foundation" aria-label="God's economic work">
