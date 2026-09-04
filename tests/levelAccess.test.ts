@@ -322,6 +322,8 @@ describe("level access", () => {
     expect(discussionBody).toContain('class="two-cities-foundation"');
     expect(discussionBody).toContain("grid-template-columns: repeat(2, minmax(0, 1fr))");
     expect(discussionBody).toContain("Contrasting the Two Cities");
+    expect(discussionBody).toContain("every economy is spiritual because it is built on what we love, value, and worship.");
+    expect(discussionBody).toContain("Babylon represents the City without God, while New Jerusalem embodies the City of God");
     expect(discussionBody.match(/class="two-city-contrast-card"/g)).toHaveLength(6);
     expect(discussionBody.match(/Babylon: The City without God/g)).toHaveLength(12);
     expect(discussionBody.match(/New Jerusalem: The City of God/g)).toHaveLength(12);

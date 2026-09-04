@@ -5134,6 +5134,19 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
         gap: 7px;
       }
 
+      .two-cities-contrast-intro {
+        display: grid;
+        gap: 10px;
+        max-width: 900px;
+        color: #4d5c51;
+        font-size: 16px;
+        line-height: 1.72;
+      }
+
+      .two-cities-contrast-intro p {
+        margin: 0;
+      }
+
       .two-city-contrast-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -5408,6 +5421,10 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
           <p class="eyebrow">Two city comparison</p>
           <h2>Contrasting the Two Cities</h2>
         </header>
+        <div class="two-cities-contrast-intro">
+          <p>Many economists and business leaders are taught that markets, money, and cities are just neutral, technical machines. However, the Bible shows us a far more beautiful and challenging truth: every economy is spiritual because it is built on what we love, value, and worship.</p>
+          <p>These flip cards help you explore two opposing pathways in our daily economic lives, influencing how we organize our lives, businesses, and desires. The city of Babylon and the New Jerusalem, as described in the Bible, are not merely ancient historical references; they symbolize two contrasting forces that shape our world, work, and sense of worth. Babylon represents the City without God, while New Jerusalem embodies the City of God, where God is central to its economic activities.</p>
+        </div>
         <div class="two-city-contrast-grid">
           ${contrastCardsMarkup}
         </div>
