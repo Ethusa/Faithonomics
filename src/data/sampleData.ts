@@ -5194,6 +5194,194 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
         line-height: 1.72;
       }
 
+      .faithful-presence {
+        display: grid;
+        gap: 18px;
+        padding-top: 8px;
+        border-top: 1px solid rgba(91, 58, 36, 0.2);
+      }
+
+      .faithful-presence header {
+        display: grid;
+        gap: 7px;
+      }
+
+      .faithful-presence header h2,
+      .faithful-presence header p,
+      .faithful-presence-intro p,
+      .faithful-presence-panel h3,
+      .faithful-presence-panel p {
+        margin: 0;
+      }
+
+      .faithful-presence-intro {
+        display: grid;
+        gap: 12px;
+        max-width: 960px;
+        color: #4d5c51;
+        font-size: 16px;
+        line-height: 1.72;
+      }
+
+      .faithful-presence-toggle {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+      }
+
+      .faithful-presence-tabs {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: min(100%, 420px);
+        padding: 6px;
+        border-radius: 8px;
+        background: #e7ded0;
+      }
+
+      .faithful-presence-tabs label {
+        min-height: 50px;
+        display: grid;
+        place-items: center;
+        border-radius: 6px;
+        color: var(--forest);
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 850;
+        text-align: center;
+      }
+
+      .faithful-presence-engage-toggle:checked ~ .faithful-presence-tabs [data-faithful-presence-tab="engage"],
+      .faithful-presence-resist-toggle:checked ~ .faithful-presence-tabs [data-faithful-presence-tab="resist"] {
+        background: var(--forest);
+        box-shadow: 0 6px 16px rgba(24, 61, 50, 0.2);
+        color: var(--paper);
+      }
+
+      .faithful-presence-panels {
+        display: grid;
+      }
+
+      .faithful-presence-panel {
+        display: none;
+        grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+        gap: clamp(24px, 5vw, 64px);
+        align-items: center;
+        padding: clamp(26px, 5vw, 54px);
+        border: 1px solid rgba(91, 58, 36, 0.16);
+        border-radius: 8px;
+        background: #fbf8f0;
+        box-shadow: 0 12px 28px rgba(69, 55, 33, 0.1);
+      }
+
+      .faithful-presence-engage-toggle:checked ~ .faithful-presence-panels .faithful-presence-panel--engage,
+      .faithful-presence-resist-toggle:checked ~ .faithful-presence-panels .faithful-presence-panel--resist {
+        display: grid;
+      }
+
+      .faithful-presence-panel-copy {
+        display: grid;
+        gap: 14px;
+        color: #425249;
+        font-size: 18px;
+        line-height: 1.5;
+      }
+
+      .faithful-presence-panel-copy h3 {
+        color: var(--forest);
+        font-size: clamp(1.25rem, 2.1vw, 1.72rem);
+      }
+
+      .faithful-presence-callout {
+        display: grid;
+        gap: 16px;
+        padding: 24px;
+        border-left: 5px solid var(--gold);
+        background: #f0e4cf;
+        color: var(--forest);
+      }
+
+      .faithful-presence-callout p {
+        font-size: 18px;
+        font-weight: 800;
+        line-height: 1.35;
+      }
+
+      .faithful-presence-popup-button {
+        width: fit-content;
+        min-height: 42px;
+        border: 1px solid var(--forest);
+        border-radius: 6px;
+        padding: 9px 13px;
+        background: var(--forest);
+        color: var(--paper);
+        cursor: pointer;
+        font: inherit;
+        font-weight: 800;
+      }
+
+      .faithful-presence-popup-button:hover,
+      .faithful-presence-popup-button:focus-visible {
+        background: #315746;
+      }
+
+      .faithful-presence-popup {
+        position: fixed;
+        inset: 0;
+        z-index: 900;
+        display: grid;
+        place-items: center;
+        padding: 20px;
+      }
+
+      .faithful-presence-popup[hidden] {
+        display: none;
+      }
+
+      .faithful-presence-popup-scrim {
+        position: absolute;
+        inset: 0;
+        border: 0;
+        background: rgba(24, 31, 25, 0.72);
+        cursor: pointer;
+      }
+
+      .faithful-presence-popup-panel {
+        position: relative;
+        z-index: 1;
+        width: min(100%, 1080px);
+        max-height: min(90vh, 760px);
+        overflow: auto;
+        border: 1px solid rgba(185, 146, 69, 0.62);
+        border-radius: 8px;
+        padding: 12px;
+        background: var(--paper);
+        box-shadow: 0 22px 50px rgba(0, 0, 0, 0.3);
+      }
+
+      .faithful-presence-popup-panel img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .faithful-presence-popup-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 36px;
+        height: 36px;
+        border: 0;
+        border-radius: 50%;
+        background: var(--forest);
+        color: var(--paper);
+        cursor: pointer;
+        font-size: 1.5rem;
+        line-height: 1;
+      }
+
       .two-city-contrast-grid {
         display: grid;
         grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -5428,6 +5616,21 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
           grid-template-columns: 1fr;
         }
 
+        .faithful-presence-tabs {
+          width: 100%;
+        }
+
+        .faithful-presence-panel {
+          grid-template-columns: 1fr;
+          gap: 22px;
+          padding: 24px;
+        }
+
+        .faithful-presence-panel-copy,
+        .faithful-presence-callout p {
+          font-size: 16px;
+        }
+
         .two-cities-foundation figure {
           width: min(100%, 376px);
           justify-self: center;
@@ -5540,6 +5743,60 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
             />
           </figure>
         </div>
+      </section>
+
+      <section class="faithful-presence" aria-label="Being Citizens of God's City">
+        <input class="faithful-presence-toggle faithful-presence-engage-toggle" type="radio" name="${lessonId}-faithful-presence" id="${lessonId}-faithful-presence-engage" checked />
+        <input class="faithful-presence-toggle faithful-presence-resist-toggle" type="radio" name="${lessonId}-faithful-presence" id="${lessonId}-faithful-presence-resist" />
+        <header>
+          <p class="eyebrow">Faithful presence</p>
+          <h2>Being Citizens of God’s City: Faithful Presence in the City of Man</h2>
+        </header>
+        <div class="faithful-presence-intro">
+          <p>How do we actually live as citizens of God’s coming city while working inside the everyday markets of our world [20, 31]? The Bible shows us that faithful presence is not about running away to hide in isolated communities, nor is it about blindly blending in with the crowd [20, 31]. Instead, it is a delicate daily dance guided by two powerful commands: <strong>the call to resist</strong> and <strong>the call to engage</strong> [31].</p>
+          <p>These two movements act like our economic compass [20]. They show us exactly when we must stand our ground to protect human dignity, and when we must roll up our sleeves to bring God’s love and repair directly into our workplaces [20, 31].</p>
+          <p>Here is how we navigate this tension:</p>
+        </div>
+        <div class="faithful-presence-tabs" role="tablist" aria-label="Faithful presence commands">
+          <label data-faithful-presence-tab="engage" for="${lessonId}-faithful-presence-engage" role="tab">Engage</label>
+          <label data-faithful-presence-tab="resist" for="${lessonId}-faithful-presence-resist" role="tab">Resist</label>
+        </div>
+        <div class="faithful-presence-panels">
+          <article class="faithful-presence-panel faithful-presence-panel--engage">
+            <div class="faithful-presence-panel-copy">
+              <h3>&#x1F331; The Command to Engage</h3>
+              <p>Engagement brings curiosity, skill, and presence into the places where work happens [16, 31]. It asks us to listen closely, contribute generously, and seek repair from within the relationships we have been given [16, 31].</p>
+            </div>
+            <aside class="faithful-presence-callout">
+              <p>Engage when participation can make room for truth, care, and a more humane shared life [16, 31].</p>
+              <button class="faithful-presence-popup-button" type="button" data-rich-dialog-open="#${lessonId}-faithful-presence-engage-guide">Open engagement guide</button>
+            </aside>
+          </article>
+          <article class="faithful-presence-panel faithful-presence-panel--resist">
+            <div class="faithful-presence-panel-copy">
+              <h3>&#x1F6E1;&#xFE0F; The Command to Resist</h3>
+              <p>Resistance refuses the patterns that deform people and communities [20, 31]. It may look like setting a boundary, telling the truth about harm, declining a false measure of success, or protecting a different rhythm of rest and worship [16, 20, 31].</p>
+            </div>
+            <aside class="faithful-presence-callout">
+              <p>Resist when the cost of belonging to the system is silence, complicity, or the erosion of what matters most [20, 31].</p>
+              <button class="faithful-presence-popup-button" type="button" data-rich-dialog-open="#${lessonId}-faithful-presence-resist-guide">Open resistance guide</button>
+            </aside>
+          </article>
+        </div>
+        <section id="${lessonId}-faithful-presence-engage-guide" class="faithful-presence-popup" role="dialog" aria-label="Engagement guide" data-rich-dialog hidden>
+          <button class="faithful-presence-popup-scrim" type="button" data-rich-dialog-close aria-label="Close engagement guide"></button>
+          <div class="faithful-presence-popup-panel">
+            <button class="faithful-presence-popup-close" type="button" data-rich-dialog-close aria-label="Close engagement guide">&times;</button>
+            <img src="https://static.wixstatic.com/media/7638b6_1f432e0ca93f47f78f97f71a15b2a228~mv2.png" alt="Engagement guide" />
+          </div>
+        </section>
+        <section id="${lessonId}-faithful-presence-resist-guide" class="faithful-presence-popup" role="dialog" aria-label="Resistance guide" data-rich-dialog hidden>
+          <button class="faithful-presence-popup-scrim" type="button" data-rich-dialog-close aria-label="Close resistance guide"></button>
+          <div class="faithful-presence-popup-panel">
+            <button class="faithful-presence-popup-close" type="button" data-rich-dialog-close aria-label="Close resistance guide">&times;</button>
+            <img src="https://static.wixstatic.com/media/7638b6_a2821415eaa34850898577caa2a7ddf7~mv2.png" alt="Resistance guide" />
+          </div>
+        </section>
       </section>
     </section>
   `, { includeCompleteButton: false }),

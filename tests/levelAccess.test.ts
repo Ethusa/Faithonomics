@@ -329,10 +329,17 @@ describe("level access", () => {
     expect(discussionBody).toContain("7638b6_91a34d5451d44738b3dffa85f4495aa2~mv2.gif");
     expect(discussionBody).toContain(".two-cities-in-between-content {\n        display: grid;\n        gap: 24px;");
     expect(discussionBody).toContain("grid-template-columns: repeat(6, minmax(0, 1fr));");
+    expect(discussionBody).toContain("Being Citizens of God’s City: Faithful Presence in the City of Man");
+    expect(discussionBody).toContain("the call to resist");
+    expect(discussionBody).toContain("the call to engage");
+    expect(discussionBody).toContain("Open engagement guide");
+    expect(discussionBody).toContain("Open resistance guide");
+    expect(discussionBody).toContain("7638b6_1f432e0ca93f47f78f97f71a15b2a228");
+    expect(discussionBody).toContain("7638b6_a2821415eaa34850898577caa2a7ddf7");
     expect(discussionBody.match(/class="two-city-contrast-card"/g)).toHaveLength(6);
     expect(discussionBody.match(/Babylon: The City without God/g)).toHaveLength(12);
     expect(discussionBody.match(/New Jerusalem: The City of God/g)).toHaveLength(12);
-    expect(discussionBody.match(/data-rich-dialog hidden/g)).toHaveLength(12);
+    expect(discussionBody.match(/data-rich-dialog hidden/g)).toHaveLength(14);
     expect(discussionBody).toContain("7638b6_855f1ad517a1435480e9d5cd9b73bb93");
     expect(discussionBody).toContain("7638b6_511388be90cb42a986331931d222ca91");
     expect(discussionBody).toContain("7638b6_bd952b5fa70d448ab15cccafa9c0e9d5");
