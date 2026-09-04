@@ -326,7 +326,7 @@ describe("level access", () => {
     expect(discussionBody).toContain("Babylon represents the City without God, while New Jerusalem embodies the City of God");
     expect(discussionBody).toContain("Living in the In-Between");
     expect(discussionBody).toContain('In the <strong>"in-between"</strong> of Babylon and the New Jerusalem');
-    expect(discussionBody).toContain("we participate in the economy without bowing to its idols");
+    expect(discussionBody).toContain("we participate in everyday economic life without bowing to its idols");
     expect(discussionBody).toContain("7638b6_91a34d5451d44738b3dffa85f4495aa2~mv2.gif");
     expect(discussionBody).toContain(".two-cities-in-between-content {\n        display: grid;\n        gap: 24px;");
     expect(discussionBody).toContain("grid-template-columns: repeat(6, minmax(0, 1fr));");
@@ -336,6 +336,10 @@ describe("level access", () => {
     expect(discussionBody).toContain("The Command to Engage");
     expect(discussionBody).toContain("The Command to Resist");
     expect(discussionBody).not.toContain("[20, 31]");
+    expect(discussionBody).toContain("Read Matthew 7:24-27 and Revelation 18");
+    expect(discussionBody).toContain("Matthew 7 and Revelation 18 economic reflection");
+    expect(discussionBody).toContain("Write your reflection here...");
+    expect(discussionBody).toContain("Complete step");
     expect(discussionBody).toContain("7638b6_1f432e0ca93f47f78f97f71a15b2a228");
     expect(discussionBody).toContain("7638b6_a2821415eaa34850898577caa2a7ddf7");
     expect(discussionBody.match(/class="two-city-contrast-card"/g)).toHaveLength(6);
@@ -350,7 +354,7 @@ describe("level access", () => {
     expect(discussionBody).toContain("7638b6_d568232ec526406594c8b8c22c30d89b");
     expect(discussionBody).toContain('class="audio-discussion"');
     expect(discussionBody).toContain('class="audio-popup"');
-    expect(discussionBody).not.toContain("data-classroom-complete");
+    expect(discussionBody).toContain("data-classroom-complete");
     expect(competingParadigms?.content.some((block) => block.id.endsWith("-session-reflection"))).toBe(false);
 
     const twoCitiesForum = activities.find(

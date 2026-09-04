@@ -5391,6 +5391,41 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
         line-height: 1;
       }
 
+      .economic-foundation-reflection {
+        display: grid;
+        gap: 16px;
+        padding: 20px;
+        border: 1px solid rgba(185, 146, 69, 0.48);
+        border-left: 5px solid var(--gold);
+        border-radius: 8px;
+        background: #eee0bf;
+      }
+
+      .economic-foundation-reflection h2,
+      .economic-foundation-reflection p {
+        margin: 0;
+      }
+
+      .economic-foundation-reflection h2 {
+        color: var(--forest);
+        font-size: clamp(1.1rem, 1.75vw, 1.35rem);
+      }
+
+      .economic-foundation-reflection p {
+        color: #4d5c51;
+        font-size: 16px;
+        line-height: 1.72;
+      }
+
+      .economic-foundation-reflection textarea {
+        min-height: 180px;
+        margin: 0;
+      }
+
+      .economic-foundation-reflection-complete {
+        justify-self: start;
+      }
+
       .two-city-contrast-grid {
         display: grid;
         grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -5803,6 +5838,13 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
             <img src="https://static.wixstatic.com/media/7638b6_a2821415eaa34850898577caa2a7ddf7~mv2.png" alt="Resistance guide" />
           </div>
         </section>
+      </section>
+
+      <section class="economic-foundation-reflection" aria-label="Matthew 7 and Revelation 18 reflection">
+        <h2>Read Matthew 7:24-27 and Revelation 18</h2>
+        <p>Revelation 18 describes how a corrupt economic system that did not have God at its centre comes to a fall. Thus, one day all systems that operate in greed, exploitation, oppression, idolatry, and a rejection of God’s justice will come to a fall. It does not matter whether it is capitalistic or socialistic in nature. Jesus teaches that applying His teaching will last. Consider whether in all our economic dealings we place God at the centre and build upon the rock.</p>
+        <textarea aria-label="Matthew 7 and Revelation 18 economic reflection" rows="8" placeholder="Write your reflection here..."></textarea>
+        <button class="complete-button economic-foundation-reflection-complete" data-classroom-complete data-score="5" data-max-score="5">Complete step</button>
       </section>
     </section>
   `, { includeCompleteButton: false }),
