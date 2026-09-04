@@ -5147,6 +5147,53 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
         margin: 0;
       }
 
+      .two-cities-in-between {
+        display: grid;
+        gap: 16px;
+        padding-top: 8px;
+        border-top: 1px solid rgba(91, 58, 36, 0.2);
+      }
+
+      .two-cities-in-between header {
+        display: grid;
+        gap: 7px;
+      }
+
+      .two-cities-in-between header h2,
+      .two-cities-in-between header p,
+      .two-cities-in-between-copy p {
+        margin: 0;
+      }
+
+      .two-cities-in-between-content {
+        display: grid;
+        grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+        gap: clamp(22px, 4vw, 52px);
+        align-items: center;
+      }
+
+      .two-cities-in-between figure {
+        margin: 0;
+        overflow: hidden;
+        border: 1px solid rgba(91, 58, 36, 0.24);
+        border-radius: 8px;
+        background: #f6efdc;
+      }
+
+      .two-cities-in-between figure img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .two-cities-in-between-copy {
+        display: grid;
+        gap: 14px;
+        color: #243d32;
+        font-size: 16px;
+        line-height: 1.72;
+      }
+
       .two-city-contrast-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -5332,7 +5379,7 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
         line-height: 1;
       }
 
-      @media (max-width: 700px) {
+        @media (max-width: 700px) {
         .two-cities-foundation {
           grid-template-columns: 1fr;
         }
@@ -5342,9 +5389,13 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
           justify-self: center;
         }
 
-        .two-city-contrast-grid {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
+          .two-city-contrast-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+
+          .two-cities-in-between-content {
+            grid-template-columns: 1fr;
+          }
 
         .two-city-contrast-card,
         .two-city-contrast-scene {
@@ -5427,6 +5478,27 @@ const createTwoCitiesDiscussionStep = (lessonId: string): Lesson["content"][numb
         </div>
         <div class="two-city-contrast-grid">
           ${contrastCardsMarkup}
+        </div>
+      </section>
+
+      <section class="two-cities-in-between" aria-label="Living in the in-between">
+        <header>
+          <p class="eyebrow">Two cities reflection</p>
+          <h2>Living in the In-Between</h2>
+        </header>
+        <div class="two-cities-in-between-content">
+          <figure>
+            <img
+              src="https://static.wixstatic.com/media/7638b6_91a34d5451d44738b3dffa85f4495aa2~mv2.gif"
+              alt="Animated illustration of living between Babylon and the New Jerusalem"
+            />
+          </figure>
+          <div class="two-cities-in-between-copy">
+            <p>We do not live in a perfect world, nor do we live in a completely hopeless one. Instead, <strong>we live in the "in-between"</strong>.</p>
+            <p>Every single day, we have to navigate the messy, practical overlap between two opposite forces: <strong>Babylon (the City without God)</strong> and the <strong>New Jerusalem (the City of God)</strong>.</p>
+            <p>As we go to our classes, work at our jobs, and buy our food, we are constantly pulled in two directions. One side tempts us to make decisions out of fear and self-interest, treating our neighbours as rivals. The other side invites us to trust in God’s generous provision, using our everyday choices to bring justice and healing to those around us.</p>
+            <p>Living faithfully in this space means <strong>we participate in the economy without bowing to its idols</strong>. We do not run away from society, but we refuse to let greed dictate how we treat others or how we value our work.</p>
+          </div>
         </div>
       </section>
     </section>
